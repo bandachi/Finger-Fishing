@@ -36,6 +36,7 @@
 
     <Button
         android:id="@+id/settings"
+        android:onClick="changeToSettings"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginBottom="8dp"

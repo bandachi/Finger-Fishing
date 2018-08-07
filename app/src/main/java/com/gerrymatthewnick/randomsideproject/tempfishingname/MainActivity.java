@@ -14,12 +14,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    //Change activity to gameActivity
     public void changeToGame(View view) {
         Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
-
     }
 
+    public void changeToSettings(View view) {
+        Intent intent = new Intent(this, settingsActivity.class);
+        startActivity(intent);
+    }
 
 
 }
