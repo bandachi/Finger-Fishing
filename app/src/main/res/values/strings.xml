@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">tempFishingName</string>
+    <string name="play">PLAY</string>
+    <string name="settings">SETTINGS</string>
 </resources>
