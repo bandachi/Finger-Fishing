@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Handler;
 
 public class Fish {
@@ -16,12 +17,13 @@ public class Fish {
     private float velX;
     private float velY;
     private android.os.Handler changeVel;
+    private android.os.Handler frames;
 
 
 
     private ImageView fish;
 
-    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, android.os.Handler CHANGE_FISH_VELOCITY) {
+    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, android.os.Handler CHANGE_FISH_VELOCITY, android.os.Handler MOVE_FISH) {
 
         type = fishType;
         changeFreq = change;
@@ -29,37 +31,58 @@ public class Fish {
         rl = relativeL;
         context = current;
         changeVel = CHANGE_FISH_VELOCITY;
-
+        frames = MOVE_FISH;
 
     }
 
-
-
     public void setX(float x) {
         fish.setX(x);
-
     }
     public void setY(float y) {
         fish.setY(y);
     }
 
-    Runnable runnable = new Runnable() {
+    Runnable runnableChange = new Runnable() {
         @Override
         public void run() {
             try {
                 velX = (float)(Math.random() * maxVel);
                 velY = (float)(Math.random() * maxVel);
-                fish.setX(velX);
-                fish.setY(velY);
+
+                int rand1 = (int)(Math.floor(Math.random() * 10)+ 1);
+                int rand2 = (int)(Math.floor(Math.random() * 10)+ 1);
+
+                if (rand1 > 5) {
+                    velX = -velX;
+                }
+                if (rand2 > 5) {
+                    velY = -velY;
+                }
             }
             finally {
-                changeVel.postDelayed(runnable, changeFreq);
+                changeVel.postDelayed(runnableChange, changeFreq);
             }
         }
     };
 
     public void startChangeVelocity() {
-        runnable.run();
+        runnableChange.run();
+    }
+
+    Runnable runnableVelocity = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                fish.setX(fish.getX() + velX);
+                fish.setY(fish.getY() + velY);
+            }
+            finally {
+                frames.postDelayed(runnableVelocity, 50);
+            }
+        }
+    };
+    public void startVelocity() {
+        runnableVelocity.run();
     }
 
 

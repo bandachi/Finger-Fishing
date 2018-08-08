@@ -15,6 +15,8 @@ public class gameActivity extends AppCompatActivity {
     private ImageView line;
     final Handler START_SPAWN_FISH = new Handler();
     Handler CHANGE_FISH_VELOCITY;
+    Handler MOVE_FISH;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +32,18 @@ public class gameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 CHANGE_FISH_VELOCITY = new Handler();
+                MOVE_FISH = new Handler();
 
                 int id = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
 
-                Fish fish = new Fish(id, 1000, 10, rl, getApplicationContext(), CHANGE_FISH_VELOCITY);
+                Fish fish = new Fish(id, 1000, 10, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
                 fish.spawnFish();
                 fish.setX(300);
                 fish.setY(300);
 
                 fish.startChangeVelocity();
+                fish.startVelocity();
             }
         }, 3000);
 
