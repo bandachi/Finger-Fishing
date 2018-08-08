@@ -29,9 +29,12 @@ public class gameActivity extends AppCompatActivity {
         START_SPAWN_FISH.postDelayed(new Runnable() {
             @Override
             public void run() {
-                spawnFish();
+                //spawnFish();
                 int id = getResources().getIdentifier("fish1" , "drawable", getPackageName());
                 Fish fish = new Fish(id, 1000, rl, getApplicationContext());
+                fish.spawnFish();
+                fish.setX(300);
+                fish.setY(300);
             }
         }, 3000);
 

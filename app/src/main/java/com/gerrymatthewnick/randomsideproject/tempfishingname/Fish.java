@@ -11,6 +11,8 @@ public class Fish {
     private RelativeLayout rl;
     private static Context context;
 
+    private ImageView fish;
+
     public Fish(int fishType, int change, RelativeLayout relativeL, Context current) {
 
         type = fishType;
@@ -19,13 +21,17 @@ public class Fish {
         context = current;
 
     }
-    public void setX() {
+    public void setX(float x) {
+        fish.setX(x);
 
+    }
+    public void setY(float y) {
+        fish.setY(y);
     }
 
 
     public void spawnFish() {
-        final ImageView fish = new ImageView(context);
+        fish = new ImageView(context);
         fish.setImageResource(type);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         fish.setLayoutParams(lp);
