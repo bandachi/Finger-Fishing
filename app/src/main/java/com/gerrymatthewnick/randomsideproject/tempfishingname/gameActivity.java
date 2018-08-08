@@ -13,7 +13,8 @@ public class gameActivity extends AppCompatActivity {
 
     private RelativeLayout rl;
     private ImageView line;
-    final Handler startSpawnFish = new Handler();
+    final Handler START_SPAWN_FISH = new Handler();
+    final Handler CHANGE_FISH_VELOCITY = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +24,42 @@ public class gameActivity extends AppCompatActivity {
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
 
-        startSpawnFish.postDelayed(new Runnable() {
+        //Start fish spawning method after 3 seconds
+        START_SPAWN_FISH.postDelayed(new Runnable() {
             @Override
             public void run() {
                 spawnFish();
             }
         }, 3000);
 
+
+
+    }
+
+
+    public class changeVelocity implements Runnable {
+
+        private ImageView fish;
+        final int CHANGE = 1000;
+        public changeVelocity(ImageView img) {
+            this.fish = img;
+        }
+
+        @Override
+        public void run() {
+            try {
+                moveFish(fish);
+            }
+            finally {
+                CHANGE_FISH_VELOCITY.postDelayed(this, CHANGE);
+            }
+        }
     }
 
     public void spawnFish() {
 
         //Add fish to layout
-        ImageView fish = new ImageView(this);
+        final ImageView fish = new ImageView(this);
         fish.setImageResource(R.drawable.fish1);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         fish.setLayoutParams(lp);
@@ -44,6 +68,18 @@ public class gameActivity extends AppCompatActivity {
         fish.setX(300);
         fish.setY(300);
 
+        changeVelocity obj = new changeVelocity(fish);
+        obj.run();
+
+    }
+
+
+    public void moveFish(ImageView img) {
+        int newX = (int) (Math.random()* 400);
+        int newY = (int) (Math.random()* 500);
+
+        img.setX(newX);
+        img.setY(newY);
     }
     //keep fishing line image on screen touch
     @Override
