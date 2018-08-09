@@ -2,17 +2,16 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
 import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 public class gameActivity extends AppCompatActivity {
 
@@ -21,6 +20,7 @@ public class gameActivity extends AppCompatActivity {
     private RelativeLayout rl;
     public static ImageView line;
     public static TextView change;
+    public static ProgressBar health;
     final Handler START_SPAWN_FISH = new Handler();
     Handler CHANGE_FISH_VELOCITY;
     Handler MOVE_FISH;
@@ -34,6 +34,7 @@ public class gameActivity extends AppCompatActivity {
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
         change = findViewById(R.id.textView2);
+        health = findViewById(R.id.healthbar);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 

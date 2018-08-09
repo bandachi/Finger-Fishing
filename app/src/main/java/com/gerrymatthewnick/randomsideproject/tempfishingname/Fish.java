@@ -5,9 +5,9 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.change;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.health;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
@@ -142,9 +142,11 @@ public class Fish {
         rc2.top = rc2.bottom - 10;
         if (rc1.contains(rc2)) {
             change.setText("true");
+            health.incrementProgressBy(3);
         }
         else {
             change.setText("false");
+            health.incrementProgressBy(-3);
         }
     }
 
