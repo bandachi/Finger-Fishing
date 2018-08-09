@@ -135,52 +135,6 @@ public class Fish {
     }
 
 
-/*
-    public void overlap(ImageView first, ImageView second) {
 
-        Rect rc1 = new Rect();
-        Rect rc2 = new Rect();
-
-        first.getHitRect(rc1);
-        second.getHitRect(rc2);
-
-        rc2.top = rc2.bottom - 10;
-        if (rc1.contains(rc2)) {
-            change.setText("true");
-            health.incrementProgressBy(3);
-        }
-        else {
-            change.setText("false");
-            health.incrementProgressBy(-3);
-        }
-
-        if (health.getProgress() < 10) {
-
-            System.exit(0);
-            health.setProgress(500);
-            ((Activity)context).finish();
-            changeVel.removeCallbacks(runnableChange);
-            frames.removeCallbacks(runnableVelocity);
-            Intent intent = new Intent(context, loseActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            context.startActivity(intent);
-
-
-        }
-        if (health.getProgress() > 990) {
-
-            System.exit(0);
-            health.setProgress(500);
-            ((Activity)context).finish();
-            frames.removeCallbacks(runnableVelocity);
-            changeVel.removeCallbacks(runnableChange);
-            Intent intent = new Intent(context, winActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            context.startActivity(intent);
-
-        }
-
-    }
-*/
 
 }

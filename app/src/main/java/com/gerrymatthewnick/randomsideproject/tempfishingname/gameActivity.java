@@ -38,7 +38,6 @@ public class gameActivity extends AppCompatActivity {
 
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
-        change = findViewById(R.id.textView2);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);

@@ -1,7 +1,9 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 public class winActivity extends AppCompatActivity {
 
@@ -9,5 +11,13 @@ public class winActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
+    }
+    public void onWin (View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+    public void onWinAgain (View view) {
+        Intent intent = new Intent(this, gameActivity.class);
+        startActivity(intent);
     }
 }
