@@ -2,11 +2,16 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
@@ -21,6 +26,8 @@ public class Healthbar {
     private int currentFish;
     private ImageView fish;
 
+    ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
+    Future end;
 
 
 
@@ -47,7 +54,7 @@ public class Healthbar {
         fish = act.findViewById(currentFish);
     }
 
-    public void overlap(ImageView first, ImageView second) {
+    public boolean overlap(ImageView first, ImageView second) {
         Rect fishRect = new Rect();
         Rect lineRect = new Rect();
 
@@ -63,21 +70,43 @@ public class Healthbar {
             health.incrementProgressBy(-3);
         }
 
+
+        if (health.getProgress() < 10) {
+            end.cancel(true);
+            act.finish();
+            Intent intent = new Intent(con, loseActivity.class);
+            con.startActivity(intent);
+            return true;
+        }
+        else if (health.getProgress() > 990) {
+            end.cancel(true);
+            act.finish();
+            Intent intent = new Intent(con, winActivity.class);
+            con.startActivity(intent);
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 
     Runnable check = new Runnable() {
+        boolean done = false;
 
         @Override
         public void run() {
-            try {
-               overlap(fish, line);
-            }
-            finally {
-                checkOverlap.postDelayed(check, 50);
-            }
+            end.cancel(true);
+               done = overlap(fish, line);
+               if (!done) {
+                   checkOverlap.postDelayed(check, 50);
+               }
+
         }
     };
     public void startCheck() {
+
+        end = threadPoolExecutor.submit(check);
         check.run();
     }
 

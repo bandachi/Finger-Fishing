@@ -85,6 +85,7 @@ public class gameActivity extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
+
     //keep fishing line image on screen touch
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -111,5 +112,8 @@ public class gameActivity extends AppCompatActivity {
         return false;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
