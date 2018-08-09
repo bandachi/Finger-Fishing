@@ -2,9 +2,13 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.change;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
 
@@ -19,9 +23,6 @@ public class Fish {
     private float velY;
     private android.os.Handler changeVel;
     private android.os.Handler frames;
-
-
-
 
 
     private ImageView fish;
@@ -45,6 +46,7 @@ public class Fish {
         fish.setY(y);
     }
 
+    //Every changeFreq, change the fish's direction and speed
     Runnable runnableChange = new Runnable() {
         @Override
         public void run() {
@@ -94,10 +96,14 @@ public class Fish {
         runnableChange.run();
     }
 
+    //handler to move the fish smoothly
     Runnable runnableVelocity = new Runnable() {
         @Override
         public void run() {
             try {
+                overlap(fish, line);
+
+
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
 
@@ -116,6 +122,7 @@ public class Fish {
     }
 
 
+    //add the fish to the layout
     public void spawnFish() {
         fish = new ImageView(context);
         fish.setImageResource(type);
@@ -123,5 +130,22 @@ public class Fish {
         fish.setLayoutParams(lp);
         rl.addView(fish);
     }
+
+
+    public void overlap(ImageView first, ImageView second) {
+        Rect rc1 = new Rect();
+        Rect rc2 = new Rect();
+
+        first.getHitRect(rc1);
+        second.getHitRect(rc2);
+
+        if (Rect.intersects(rc1, rc2)) {
+            change.setText("true");
+        }
+        else {
+            change.setText("false");
+        }
+    }
+
 
 }

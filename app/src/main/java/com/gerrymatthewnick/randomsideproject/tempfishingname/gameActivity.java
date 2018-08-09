@@ -2,6 +2,7 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,12 +10,17 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class gameActivity extends AppCompatActivity {
 
 
+    private int id;
     private RelativeLayout rl;
-    private ImageView line;
+    public static ImageView line;
+    public static TextView change;
     final Handler START_SPAWN_FISH = new Handler();
     Handler CHANGE_FISH_VELOCITY;
     Handler MOVE_FISH;
@@ -27,6 +33,7 @@ public class gameActivity extends AppCompatActivity {
 
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
+        change = findViewById(R.id.textView2);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -37,10 +44,10 @@ public class gameActivity extends AppCompatActivity {
                 CHANGE_FISH_VELOCITY = new Handler();
                 MOVE_FISH = new Handler();
 
-                int id = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+                id = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
 
-                Fish fish = new Fish(id, 1000, 20, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
+                Fish fish = new Fish(id, 1000, 15, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
                 fish.spawnFish();
                 fish.setX(300);
                 fish.setY(300);
@@ -64,6 +71,7 @@ public class gameActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 line.setX(x);
@@ -83,8 +91,6 @@ public class gameActivity extends AppCompatActivity {
         }
         return false;
     }
-
-
 
 
 }
