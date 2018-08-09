@@ -1,13 +1,14 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.change;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.health;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
@@ -17,7 +18,7 @@ public class Fish {
     private int type;
     private int changeFreq;
     private RelativeLayout rl;
-    private static Context context;
+    private Context context;
     private int maxVel;
     private float velX;
     private float velY;
@@ -101,8 +102,7 @@ public class Fish {
         @Override
         public void run() {
             try {
-                overlap(fish, line);
-
+                //overlap(fish, line);
 
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
@@ -131,8 +131,9 @@ public class Fish {
         rl.addView(fish);
     }
 
-
+/*
     public void overlap(ImageView first, ImageView second) {
+
         Rect rc1 = new Rect();
         Rect rc2 = new Rect();
 
@@ -148,7 +149,34 @@ public class Fish {
             change.setText("false");
             health.incrementProgressBy(-3);
         }
-    }
 
+        if (health.getProgress() < 10) {
+
+            System.exit(0);
+            health.setProgress(500);
+            ((Activity)context).finish();
+            changeVel.removeCallbacks(runnableChange);
+            frames.removeCallbacks(runnableVelocity);
+            Intent intent = new Intent(context, loseActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+
+
+        }
+        if (health.getProgress() > 990) {
+
+            System.exit(0);
+            health.setProgress(500);
+            ((Activity)context).finish();
+            frames.removeCallbacks(runnableVelocity);
+            changeVel.removeCallbacks(runnableChange);
+            Intent intent = new Intent(context, winActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            context.startActivity(intent);
+
+        }
+
+    }
+*/
 
 }

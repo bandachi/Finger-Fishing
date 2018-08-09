@@ -1,6 +1,8 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -16,15 +18,15 @@ import android.widget.TextView;
 public class gameActivity extends AppCompatActivity {
 
 
-    private int id;
+    private int fishId;
     private RelativeLayout rl;
+    private Context con = this;
     public static ImageView line;
     public static TextView change;
-    public static ProgressBar health;
+
     final Handler START_SPAWN_FISH = new Handler();
     Handler CHANGE_FISH_VELOCITY;
     Handler MOVE_FISH;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class gameActivity extends AppCompatActivity {
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
         change = findViewById(R.id.textView2);
-        health = findViewById(R.id.healthbar);
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -45,10 +47,11 @@ public class gameActivity extends AppCompatActivity {
                 CHANGE_FISH_VELOCITY = new Handler();
                 MOVE_FISH = new Handler();
 
-                id = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+                fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
-
-                Fish fish = new Fish(id, 1000, 15, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
+                Healthbar healthbar = new Healthbar(rl, con);
+                healthbar.spawnHealth();
+                Fish fish = new Fish(fishId, 1000, 15, rl, con, CHANGE_FISH_VELOCITY, MOVE_FISH);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);
@@ -65,7 +68,6 @@ public class gameActivity extends AppCompatActivity {
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
-
 
     //keep fishing line image on screen touch
     @Override
