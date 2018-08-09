@@ -49,8 +49,8 @@ public class gameActivity extends AppCompatActivity {
 
                 Fish fish = new Fish(id, 1000, 15, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
                 fish.spawnFish();
-                fish.setX(300);
-                fish.setY(300);
+                fish.setX(getScreenWidth()/2);
+                fish.setY(getScreenHeight()/2);
 
                 fish.startChangeVelocity();
                 fish.startVelocity();

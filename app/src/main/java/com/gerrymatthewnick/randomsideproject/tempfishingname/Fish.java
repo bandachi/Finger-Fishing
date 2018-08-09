@@ -79,7 +79,7 @@ public class Fish {
                 if (fish.getX() > (getScreenWidth() - fish.getWidth())) {
                     velX = -Math.abs(velX);
                 }
-                if (fish.getY() < 0) {
+                if (fish.getY() < getScreenHeight()/3) {
                     velY = Math.abs(velY);
                 }
                 if (fish.getY() > (getScreenHeight() - fish.getHeight())) {
@@ -107,7 +107,7 @@ public class Fish {
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
 
-                if (fish.getX() < 0 || fish.getX() > (getScreenWidth() - fish.getWidth()) || fish.getY() < 0 || fish.getY() > (getScreenHeight() - fish.getHeight())) {
+                if (fish.getX() < 0 || fish.getX() > (getScreenWidth() - fish.getWidth()) || fish.getY() < getScreenHeight()/3 || fish.getY() > (getScreenHeight() - fish.getHeight())) {
                     changeVel.removeCallbacks(runnableChange);
                     runnableChange.run();
                 }
@@ -139,7 +139,8 @@ public class Fish {
         first.getHitRect(rc1);
         second.getHitRect(rc2);
 
-        if (Rect.intersects(rc1, rc2)) {
+        rc2.top = rc2.bottom - 10;
+        if (rc1.contains(rc2)) {
             change.setText("true");
         }
         else {
