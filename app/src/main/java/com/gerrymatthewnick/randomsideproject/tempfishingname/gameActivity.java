@@ -37,7 +37,7 @@ public class gameActivity extends AppCompatActivity {
                 int id = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
 
-                Fish fish = new Fish(id, 1000, 10, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
+                Fish fish = new Fish(id, 1000, 20, rl, getApplicationContext(), CHANGE_FISH_VELOCITY, MOVE_FISH);
                 fish.spawnFish();
                 fish.setX(300);
                 fish.setY(300);

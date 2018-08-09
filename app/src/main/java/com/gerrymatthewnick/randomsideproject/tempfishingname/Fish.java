@@ -4,9 +4,6 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.logging.Handler;
-
 public class Fish {
 
     private int type;
@@ -45,6 +42,13 @@ public class Fish {
     Runnable runnableChange = new Runnable() {
         @Override
         public void run() {
+            velX = 0;
+            velY = 0;
+            try {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException e) {
+            }
             try {
                 velX = (float)(Math.random() * maxVel);
                 velY = (float)(Math.random() * maxVel);
@@ -73,6 +77,7 @@ public class Fish {
         @Override
         public void run() {
             try {
+
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
             }
