@@ -1,6 +1,7 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,8 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,12 +22,14 @@ public class gameActivity extends AppCompatActivity {
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
+    private Activity act = this;
     public static ImageView line;
     public static TextView change;
 
     final Handler START_SPAWN_FISH = new Handler();
     Handler CHANGE_FISH_VELOCITY;
     Handler MOVE_FISH;
+    Handler checkOverlap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +49,31 @@ public class gameActivity extends AppCompatActivity {
             public void run() {
                 CHANGE_FISH_VELOCITY = new Handler();
                 MOVE_FISH = new Handler();
+                checkOverlap = new Handler();
 
+                int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
-                Healthbar healthbar = new Healthbar(rl, con);
-                healthbar.spawnHealth();
-                Fish fish = new Fish(fishId, 1000, 15, rl, con, CHANGE_FISH_VELOCITY, MOVE_FISH);
+
+
+                Fish fish = new Fish(fishId, 1000, 10, rl, con, currentFish, CHANGE_FISH_VELOCITY, MOVE_FISH);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);
 
                 fish.startChangeVelocity();
                 fish.startVelocity();
+
+                try {
+                    Thread.sleep(100);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish);
+                healthbar.spawnHealth();
+
+               healthbar.startCheck();
             }
         }, 3000);
 

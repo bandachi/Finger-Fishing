@@ -19,6 +19,7 @@ public class Fish {
     private int changeFreq;
     private RelativeLayout rl;
     private Context context;
+    private int currentFish;
     private int maxVel;
     private float velX;
     private float velY;
@@ -28,13 +29,14 @@ public class Fish {
 
     private ImageView fish;
 
-    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, android.os.Handler CHANGE_FISH_VELOCITY, android.os.Handler MOVE_FISH) {
+    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, int currentFish, android.os.Handler CHANGE_FISH_VELOCITY, android.os.Handler MOVE_FISH) {
 
         type = fishType;
         changeFreq = change;
         maxVel = vel;
         rl = relativeL;
         context = current;
+        this.currentFish = currentFish;
         changeVel = CHANGE_FISH_VELOCITY;
         frames = MOVE_FISH;
 
@@ -113,7 +115,7 @@ public class Fish {
                 }
             }
             finally {
-                frames.postDelayed(runnableVelocity, 50);
+                frames.postDelayed(runnableVelocity, 20);
             }
         }
     };
@@ -128,8 +130,10 @@ public class Fish {
         fish.setImageResource(type);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         fish.setLayoutParams(lp);
+        fish.setId(currentFish);
         rl.addView(fish);
     }
+
 
 /*
     public void overlap(ImageView first, ImageView second) {
