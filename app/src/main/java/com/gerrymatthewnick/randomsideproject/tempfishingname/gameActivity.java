@@ -1,9 +1,11 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
+import android.content.res.Resources;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,7 +27,8 @@ public class gameActivity extends AppCompatActivity {
 
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
-
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         //Start fish spawning method after 3 seconds
         START_SPAWN_FISH.postDelayed(new Runnable() {
@@ -47,6 +50,12 @@ public class gameActivity extends AppCompatActivity {
             }
         }, 3000);
 
+    }
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
 

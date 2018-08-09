@@ -1,8 +1,12 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
+
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenHeight;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
 
 public class Fish {
 
@@ -15,6 +19,8 @@ public class Fish {
     private float velY;
     private android.os.Handler changeVel;
     private android.os.Handler frames;
+
+
 
 
 
@@ -45,7 +51,7 @@ public class Fish {
             velX = 0;
             velY = 0;
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             }
             catch (InterruptedException e) {
             }
@@ -56,11 +62,26 @@ public class Fish {
                 int rand1 = (int)(Math.floor(Math.random() * 10)+ 1);
                 int rand2 = (int)(Math.floor(Math.random() * 10)+ 1);
 
+                //randomly make value velocity negative
                 if (rand1 > 5) {
                     velX = -velX;
                 }
                 if (rand2 > 5) {
                     velY = -velY;
+                }
+
+                //check if fish is off the screen, if make the fish go back
+                if (fish.getX() < 0) {
+                    velX = Math.abs(velX);
+                }
+                if (fish.getX() > (getScreenWidth() - fish.getWidth())) {
+                    velX = -Math.abs(velX);
+                }
+                if (fish.getY() < 0) {
+                    velY = Math.abs(velY);
+                }
+                if (fish.getY() > (getScreenHeight() - fish.getHeight())) {
+                    velY = -Math.abs(velY);
                 }
             }
             finally {
@@ -77,9 +98,13 @@ public class Fish {
         @Override
         public void run() {
             try {
-
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
+
+                if (fish.getX() < 0 || fish.getX() > (getScreenWidth() - fish.getWidth()) || fish.getY() < 0 || fish.getY() > (getScreenHeight() - fish.getHeight())) {
+                    changeVel.removeCallbacks(runnableChange);
+                    runnableChange.run();
+                }
             }
             finally {
                 frames.postDelayed(runnableVelocity, 50);
