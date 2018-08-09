@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.change;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenHeight;
@@ -60,7 +61,7 @@ public class Fish {
             }
             catch (InterruptedException e) {
             }
-            try {
+
                 velX = (float)(Math.random() * maxVel);
                 velY = (float)(Math.random() * maxVel);
 
@@ -88,10 +89,15 @@ public class Fish {
                 if (fish.getY() > (getScreenHeight() - fish.getHeight())) {
                     velY = -Math.abs(velY);
                 }
-            }
-            finally {
-                changeVel.postDelayed(runnableChange, changeFreq);
-            }
+
+                if (active) {
+                    changeVel.postDelayed(runnableChange, changeFreq);
+                }
+                else {
+                    changeVel.removeCallbacks(runnableChange);
+                }
+
+
         }
     };
 
@@ -103,9 +109,6 @@ public class Fish {
     Runnable runnableVelocity = new Runnable() {
         @Override
         public void run() {
-            try {
-                //overlap(fish, line);
-
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
 
@@ -113,10 +116,15 @@ public class Fish {
                     changeVel.removeCallbacks(runnableChange);
                     runnableChange.run();
                 }
-            }
-            finally {
-                frames.postDelayed(runnableVelocity, 20);
-            }
+
+                if (active) {
+                    frames.postDelayed(runnableVelocity, 20);
+                }
+                else {
+                    frames.removeCallbacks(runnableVelocity);
+                }
+
+
         }
     };
     public void startVelocity() {
@@ -133,7 +141,6 @@ public class Fish {
         fish.setId(currentFish);
         rl.addView(fish);
     }
-
 
 
 

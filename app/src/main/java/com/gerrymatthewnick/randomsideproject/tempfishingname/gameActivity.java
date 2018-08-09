@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class gameActivity extends AppCompatActivity {
 
-
+    static boolean active = false;
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
@@ -110,9 +110,15 @@ public class gameActivity extends AppCompatActivity {
         }
         return false;
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = true;
+    }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
+        active = false;
     }
 }
