@@ -121,4 +121,9 @@ public class gameActivity extends AppCompatActivity {
         super.onStop();
         active = false;
     }
+
+    @Override
+    public void onBackPressed() {
+        //prevent back button
+    }
 }

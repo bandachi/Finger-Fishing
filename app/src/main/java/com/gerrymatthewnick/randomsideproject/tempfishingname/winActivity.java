@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
+
 public class winActivity extends AppCompatActivity {
 
     @Override
@@ -19,5 +21,11 @@ public class winActivity extends AppCompatActivity {
     public void onWinAgain (View view) {
         Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = false;
     }
 }

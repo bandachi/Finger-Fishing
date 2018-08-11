@@ -123,8 +123,6 @@ public class Fish {
                 else {
                     frames.removeCallbacks(runnableVelocity);
                 }
-
-
         }
     };
     public void startVelocity() {

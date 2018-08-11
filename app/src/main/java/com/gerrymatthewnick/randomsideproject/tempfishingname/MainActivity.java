@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,5 +27,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = false;
+    }
 
 }

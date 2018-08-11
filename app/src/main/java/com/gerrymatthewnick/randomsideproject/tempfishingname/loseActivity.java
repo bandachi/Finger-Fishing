@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
+
 public class loseActivity extends AppCompatActivity {
 
     @Override
@@ -20,5 +22,11 @@ public class loseActivity extends AppCompatActivity {
     public void onLoseAgain(View view) {
         Intent intent = new Intent(this, gameActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = false;
     }
 }
