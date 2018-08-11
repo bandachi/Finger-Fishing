@@ -1,18 +1,13 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.change;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenHeight;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 
 public class Fish {
 

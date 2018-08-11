@@ -17,17 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".gameActivity" android:noHistory="true" android:screenOrientation="portrait"/>
-        <activity android:name=".settingsActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".winActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".loseActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".Dispatcher">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-            </intent-filter>
-
-        </activity>
+        <activity android:name=".GameActivity" android:noHistory="true" android:screenOrientation="portrait"/>
+        <activity android:name=".SettingsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".WinActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".LoseActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 
-public class winActivity extends AppCompatActivity {
+public class WinActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class winActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void onWinAgain (View view) {
-        Intent intent = new Intent(this, gameActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 

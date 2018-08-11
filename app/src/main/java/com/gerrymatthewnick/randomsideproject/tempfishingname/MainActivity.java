@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,14 +15,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    //Change activity to gameActivity
+    //Change activity to GameActivity
     public void changeToGame(View view) {
-        Intent intent = new Intent(this, gameActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 
     public void changeToSettings(View view) {
-        Intent intent = new Intent(this, settingsActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 

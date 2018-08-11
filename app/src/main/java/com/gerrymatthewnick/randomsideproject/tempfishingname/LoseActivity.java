@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 
-public class loseActivity extends AppCompatActivity {
+public class LoseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class loseActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void onLoseAgain(View view) {
-        Intent intent = new Intent(this, gameActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 

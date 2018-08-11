@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -13,12 +12,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.getScreenWidth;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.gameActivity.line;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
 
 public class Healthbar {
     private ProgressBar health;
-
     private RelativeLayout rl;
     private Context con;
     private Activity act;
@@ -28,8 +27,6 @@ public class Healthbar {
 
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
-
-
 
     public Healthbar(RelativeLayout rl, Context con, Activity act, android.os.Handler checkOverlap, int currentFish) {
         this.rl = rl;
@@ -64,7 +61,7 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (fishRect.contains(lineRect)) {
-            health.incrementProgressBy(3);
+            health.incrementProgressBy(6);
         }
         else {
             health.incrementProgressBy(-3);
@@ -74,21 +71,25 @@ public class Healthbar {
         if (health.getProgress() < 10) {
             end.cancel(true);
             act.finish();
-            Intent intent = new Intent(con, loseActivity.class);
-            con.startActivity(intent);
+            if (active) {
+                Intent intent = new Intent(con, LoseActivity.class);
+                con.startActivity(intent);
+            }
+
             return true;
         }
         else if (health.getProgress() > 990) {
             end.cancel(true);
             act.finish();
-            Intent intent = new Intent(con, winActivity.class);
-            con.startActivity(intent);
+            if (active) {
+                Intent intent = new Intent(con, WinActivity.class);
+                con.startActivity(intent);
+            }
             return true;
         }
         else {
             return false;
         }
-
     }
 
     Runnable check = new Runnable() {
@@ -98,16 +99,14 @@ public class Healthbar {
         public void run() {
             end.cancel(true);
                done = overlap(fish, line);
-               if (!done) {
+               if (!done && active) {
                    checkOverlap.postDelayed(check, 50);
                }
 
         }
     };
     public void startCheck() {
-
         end = threadPoolExecutor.submit(check);
         check.run();
     }
-
 }

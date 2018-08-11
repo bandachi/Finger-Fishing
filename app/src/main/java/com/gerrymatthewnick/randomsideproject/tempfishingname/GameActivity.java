@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-public class gameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     static boolean active = false;
     private int fishId;
@@ -113,6 +113,12 @@ public class gameActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        active = false;
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         active = true;
     }
 
@@ -125,5 +131,10 @@ public class gameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //prevent back button
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        active = false;
     }
 }
