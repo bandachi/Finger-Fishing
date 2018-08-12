@@ -19,6 +19,7 @@ public class LoseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
     public void onLoseAgain(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);

@@ -11,30 +11,31 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 
 public class Fish {
 
-    private int type;
-    private int changeFreq;
-    private RelativeLayout rl;
-    private Context context;
     private int currentFish;
-    private int maxVel;
+    private int vel;
+    private int fishType;
+    private int change;
     private float velX;
     private float velY;
+
+    private RelativeLayout relativeL;
+    private Context current;
+    private ImageView fish;
+
     private android.os.Handler changeVel;
     private android.os.Handler frames;
 
 
-    private ImageView fish;
+    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, int currentFish, android.os.Handler changeVel, android.os.Handler frames) {
 
-    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, int currentFish, android.os.Handler CHANGE_FISH_VELOCITY, android.os.Handler MOVE_FISH) {
-
-        type = fishType;
-        changeFreq = change;
-        maxVel = vel;
-        rl = relativeL;
-        context = current;
+        this.fishType = fishType;
+        this.change = change;
+        this.vel = vel;
+        this.relativeL = relativeL;
+        this.current = current;
         this.currentFish = currentFish;
-        changeVel = CHANGE_FISH_VELOCITY;
-        frames = MOVE_FISH;
+        this.changeVel = changeVel;
+        this.frames = frames;
 
     }
 
@@ -45,7 +46,7 @@ public class Fish {
         fish.setY(y);
     }
 
-    //Every changeFreq, change the fish's direction and speed
+    //Every change, change the fish's direction and speed
     Runnable runnableChange = new Runnable() {
         @Override
         public void run() {
@@ -56,9 +57,8 @@ public class Fish {
             }
             catch (InterruptedException e) {
             }
-
-                velX = (float)(Math.random() * maxVel);
-                velY = (float)(Math.random() * maxVel);
+                velX = (float)(Math.random() * vel);
+                velY = (float)(Math.random() * vel);
 
                 int rand1 = (int)(Math.floor(Math.random() * 10)+ 1);
                 int rand2 = (int)(Math.floor(Math.random() * 10)+ 1);
@@ -86,13 +86,11 @@ public class Fish {
                 }
 
                 if (active) {
-                    changeVel.postDelayed(runnableChange, changeFreq);
+                    changeVel.postDelayed(runnableChange, change);
                 }
                 else {
                     changeVel.removeCallbacks(runnableChange);
                 }
-
-
         }
     };
 
@@ -123,18 +121,13 @@ public class Fish {
     public void startVelocity() {
         runnableVelocity.run();
     }
-
-
     //add the fish to the layout
     public void spawnFish() {
-        fish = new ImageView(context);
-        fish.setImageResource(type);
+        fish = new ImageView(current);
+        fish.setImageResource(fishType);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         fish.setLayoutParams(lp);
         fish.setId(currentFish);
-        rl.addView(fish);
+        relativeL.addView(fish);
     }
-
-
-
 }

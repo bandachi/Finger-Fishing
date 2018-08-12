@@ -17,13 +17,15 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
 
 public class Healthbar {
+
     private ProgressBar health;
+    private int currentFish;
+    private ImageView fish;
+
     private RelativeLayout rl;
     private Context con;
     private Activity act;
     private android.os.Handler checkOverlap;
-    private int currentFish;
-    private ImageView fish;
 
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;

@@ -3,7 +3,6 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -19,16 +18,16 @@ import android.widget.TextView;
 public class GameActivity extends AppCompatActivity {
 
     static boolean active = false;
+
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
     private Activity act = this;
     public static ImageView line;
-    public static TextView change;
-
-    final Handler START_SPAWN_FISH = new Handler();
-    Handler CHANGE_FISH_VELOCITY;
-    Handler MOVE_FISH;
+    
+    Handler startSpawnFish = new Handler();
+    Handler changeFishVelocity;
+    Handler moveFish;
     Handler checkOverlap;
 
     @Override
@@ -43,19 +42,17 @@ public class GameActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         //Start fish spawning method after 3 seconds
-        START_SPAWN_FISH.postDelayed(new Runnable() {
+        startSpawnFish.postDelayed(new Runnable() {
             @Override
             public void run() {
-                CHANGE_FISH_VELOCITY = new Handler();
-                MOVE_FISH = new Handler();
+                changeFishVelocity = new Handler();
+                moveFish = new Handler();
                 checkOverlap = new Handler();
 
                 int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
-
-
-                Fish fish = new Fish(fishId, 1000, 10, rl, con, currentFish, CHANGE_FISH_VELOCITY, MOVE_FISH);
+                Fish fish = new Fish(fishId, 1000, 10, rl, con, currentFish, changeFishVelocity, moveFish);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);
@@ -65,7 +62,6 @@ public class GameActivity extends AppCompatActivity {
 
                 try {
                     Thread.sleep(100);
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
