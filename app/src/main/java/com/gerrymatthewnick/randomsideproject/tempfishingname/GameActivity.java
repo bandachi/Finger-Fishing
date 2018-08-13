@@ -21,6 +21,7 @@ public class GameActivity extends AppCompatActivity {
     static boolean active = false;
     static int level;
     public static int currentItemId = -1;
+    public static final int SPAWN_DELAY = 4000;
 
     private int fishId;
     private RelativeLayout rl;
@@ -29,10 +30,11 @@ public class GameActivity extends AppCompatActivity {
     public static ImageView line;
 
 
-    private final int SPAWN_DELAY = 4000;
+
 
     Handler startSpawnFish = new Handler();
     Handler itemSpawnDelay = new Handler();
+    Handler removeItemDelay = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
@@ -88,6 +90,7 @@ public class GameActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                currentItemId = -1;
                 Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
@@ -108,8 +111,9 @@ public class GameActivity extends AppCompatActivity {
     Runnable runnableSpawnItem = new Runnable() {
         @Override
         public void run() {
+
             currentItemId = View.generateViewId();
-            Item item = new Item(rl, con);
+            Item item = new Item(rl, con, removeItemDelay);
             item.spawn();
 
             if (active) {

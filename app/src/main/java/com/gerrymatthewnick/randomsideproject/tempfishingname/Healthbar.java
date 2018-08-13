@@ -123,13 +123,16 @@ public class Healthbar {
         @Override
         public void run() {
             end.cancel(true);
-            if (currentItemId != -1) {
+            if (currentItemId != -1 && act.findViewById(currentItemId) != null) {
                 overlapItem(line);
             }
 
             done = overlap(fish, line);
             if (!done && active) {
                 checkOverlap.postDelayed(check, 50);
+            }
+            else {
+                rl.removeAllViews();
             }
 
         }

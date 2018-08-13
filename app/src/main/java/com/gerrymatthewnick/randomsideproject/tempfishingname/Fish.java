@@ -52,13 +52,8 @@ public class Fish {
     Runnable runnableChange = new Runnable() {
         @Override
         public void run() {
-            velX = 0;
-            velY = 0;
-            try {
-                Thread.sleep(100);
-            }
-            catch (InterruptedException e) {
-            }
+                velX = 0;
+                velY = 0;
                 velX = (float)(Math.random() * vel);
                 velY = (float)(Math.random() * vel);
 
