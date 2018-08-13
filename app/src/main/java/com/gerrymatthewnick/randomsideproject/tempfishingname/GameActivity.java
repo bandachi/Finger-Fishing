@@ -69,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
 
-                Fish fish = new Fish(fishId, 1000, 10 + level, rl, con, currentFish, changeFishVelocity, moveFish);
+                Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);

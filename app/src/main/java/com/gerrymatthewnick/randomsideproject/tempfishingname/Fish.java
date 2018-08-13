@@ -63,8 +63,8 @@ public class Fish {
                 velY = (float)(Math.random() * vel);
 
                 if (level >= 2) {
-                    velX = (float)(Math.random() * (10 + (0.3*level*level) - level)) + level;
-                    velY = (float)(Math.random() * (10 + (0.3*level*level) - level)) + level;
+                    velX = (float)(Math.random() * (9 + (0.3*level*level) - level)) + level;
+                    velY = (float)(Math.random() * (9 + (0.3*level*level) - level)) + level;
                 }
 
                 int rand1 = (int)(Math.floor(Math.random() * 10)+ 1);
