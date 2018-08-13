@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 
 public class Fish {
 
@@ -86,7 +87,7 @@ public class Fish {
                 }
 
                 if (active) {
-                    changeVel.postDelayed(runnableChange, change);
+                    changeVel.postDelayed(runnableChange, change/level);
                 }
                 else {
                     changeVel.removeCallbacks(runnableChange);
