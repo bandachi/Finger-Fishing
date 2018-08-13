@@ -3,7 +3,9 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,11 +62,14 @@ public class GameActivity extends AppCompatActivity {
 
                 TextView levelText = findViewById(R.id.levelDisplay);
                 levelText.setText("Level: " + level);
+                levelText.setTextColor(Color.BLACK);
+                levelText.setTextSize(22);
 
                 int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
-                Fish fish = new Fish(fishId, 1000, 10, rl, con, currentFish, changeFishVelocity, moveFish);
+
+                Fish fish = new Fish(fishId, 1000, 10 + level, rl, con, currentFish, changeFishVelocity, moveFish);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);

@@ -47,6 +47,7 @@ public class Fish {
         fish.setY(y);
     }
 
+
     //Every change, change the fish's direction and speed
     Runnable runnableChange = new Runnable() {
         @Override
@@ -60,6 +61,11 @@ public class Fish {
             }
                 velX = (float)(Math.random() * vel);
                 velY = (float)(Math.random() * vel);
+
+                if (level >= 2) {
+                    velX = (float)(Math.random() * (10 + (0.3*level*level) - level)) + level;
+                    velY = (float)(Math.random() * (10 + (0.3*level*level) - level)) + level;
+                }
 
                 int rand1 = (int)(Math.floor(Math.random() * 10)+ 1);
                 int rand2 = (int)(Math.floor(Math.random() * 10)+ 1);
@@ -87,7 +93,7 @@ public class Fish {
                 }
 
                 if (active) {
-                    changeVel.postDelayed(runnableChange, change/level);
+                    changeVel.postDelayed(runnableChange, change+(level*200));
                 }
                 else {
                     changeVel.removeCallbacks(runnableChange);
