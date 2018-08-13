@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemId;
+
 
 public class Item {
 
@@ -20,11 +22,15 @@ public class Item {
 
     public void spawn() {
         item = new ImageView(con);
+        item.setId(currentItemId);
         item.setImageResource(con.getResources().getIdentifier("item1", "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         item.setLayoutParams(lp);
         item.setX(300);
         item.setY(300);
         rl.addView(item);
+    }
+    public static void removeItem(ImageView item, RelativeLayout rl) {
+        rl.removeView(item);
     }
 }

@@ -7,12 +7,14 @@ import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemId;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
@@ -43,12 +45,12 @@ public class Healthbar {
         health = new ProgressBar(con, null, android.R.attr.progressBarStyleHorizontal);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         health.setLayoutParams(lp);
-        health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth()-200, 50));
+        health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
         rl.addView(health);
         health.setMax(1000);
         health.setProgress(250);
         health.setX(100);
-        health.setMinimumWidth(getScreenWidth()/2);
+        health.setMinimumWidth(getScreenWidth() / 2);
         health.setY(100);
 
         fish = act.findViewById(currentFish);
@@ -65,8 +67,7 @@ public class Healthbar {
 
         if (fishRect.contains(lineRect)) {
             health.incrementProgressBy(6);
-        }
-        else {
+        } else {
             health.incrementProgressBy(-3);
         }
 
@@ -80,8 +81,7 @@ public class Healthbar {
             }
 
             return true;
-        }
-        else if (health.getProgress() > 990) {
+        } else if (health.getProgress() > 990) {
             end.cancel(true);
             act.finish();
             if (active) {
@@ -90,10 +90,31 @@ public class Healthbar {
                 con.startActivity(intent);
             }
             return true;
-        }
-        else {
+        } else {
             return false;
         }
+    }
+
+    public void overlapItem(ImageView line) {
+        ImageView item = act.findViewById(currentItemId);
+
+        Rect lineRect = new Rect();
+        Rect itemRect = new Rect();
+
+        line.getHitRect(lineRect);
+        item.getHitRect(itemRect);
+
+        lineRect.top = lineRect.bottom - 10;
+
+        if (itemRect.contains(lineRect)) {
+            TextView score = act.findViewById(R.id.scoreDisplay);
+            int temp = Integer.parseInt(score.getText().toString());
+            temp++;
+            score.setText(Integer.toString(temp));
+            Item.removeItem(item, rl);
+            currentItemId = -1;
+        }
+
     }
 
     Runnable check = new Runnable() {
@@ -102,10 +123,14 @@ public class Healthbar {
         @Override
         public void run() {
             end.cancel(true);
-               done = overlap(fish, line);
-               if (!done && active) {
-                   checkOverlap.postDelayed(check, 50);
-               }
+            if (currentItemId != -1) {
+                overlapItem(line);
+            }
+
+            done = overlap(fish, line);
+            if (!done && active) {
+                checkOverlap.postDelayed(check, 50);
+            }
 
         }
     };

@@ -20,12 +20,14 @@ public class GameActivity extends AppCompatActivity {
 
     static boolean active = false;
     static int level;
+    public static int currentItemId = -1;
 
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
     private Activity act = this;
     public static ImageView line;
+
 
     private final int SPAWN_DELAY = 4000;
 
@@ -90,11 +92,6 @@ public class GameActivity extends AppCompatActivity {
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
-                try {
-                    Thread.sleep(SPAWN_DELAY);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 runnableSpawnItem.run();
             }
         }, 3000);
@@ -111,6 +108,7 @@ public class GameActivity extends AppCompatActivity {
     Runnable runnableSpawnItem = new Runnable() {
         @Override
         public void run() {
+            currentItemId = View.generateViewId();
             Item item = new Item(rl, con);
             item.spawn();
 

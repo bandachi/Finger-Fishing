@@ -38,14 +38,14 @@
         android:textColor="#000000"/>
 
     <TextView
-        android:id="@+id/timeDisplay"
+        android:id="@+id/scoreDisplay"
         android:layout_width="23dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
-        android:text=""
+        android:text="0"
         android:textSize="22sp"
         android:textStyle="bold" />
 
