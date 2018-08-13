@@ -112,6 +112,7 @@ public class Fish {
                 fish.setX(fish.getX() + velX);
                 fish.setY(fish.getY() + velY);
 
+
                 if (fish.getX() < 0 || fish.getX() > (getScreenWidth() - fish.getWidth()) || fish.getY() < getScreenHeight()/3 || fish.getY() > (getScreenHeight() - fish.getHeight())) {
                     changeVel.removeCallbacks(runnableChange);
                     runnableChange.run();
@@ -128,6 +129,7 @@ public class Fish {
     public void startVelocity() {
         runnableVelocity.run();
     }
+
     //add the fish to the layout
     public void spawnFish() {
         fish = new ImageView(current);

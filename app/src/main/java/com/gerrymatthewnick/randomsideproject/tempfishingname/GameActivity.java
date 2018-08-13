@@ -27,10 +27,14 @@ public class GameActivity extends AppCompatActivity {
     private Activity act = this;
     public static ImageView line;
 
+    private final int SPAWN_DELAY = 4000;
+
     Handler startSpawnFish = new Handler();
+    Handler itemSpawnDelay = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +88,17 @@ public class GameActivity extends AppCompatActivity {
                 }
                 Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish);
                 healthbar.spawnHealth();
+                healthbar.startCheck();
 
-               healthbar.startCheck();
+                try {
+                    Thread.sleep(SPAWN_DELAY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runnableSpawnItem.run();
             }
         }, 3000);
+
     }
 
     public static int getScreenWidth() {
@@ -96,6 +107,22 @@ public class GameActivity extends AppCompatActivity {
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
+
+    Runnable runnableSpawnItem = new Runnable() {
+        @Override
+        public void run() {
+            Item item = new Item(rl, con);
+            item.spawn();
+
+            if (active) {
+                itemSpawnDelay.postDelayed(runnableSpawnItem, SPAWN_DELAY);
+            }
+            else {
+                itemSpawnDelay.removeCallbacks(runnableSpawnItem);
+            }
+
+        }
+    };
 
     //keep fishing line image on screen touch
     @Override
