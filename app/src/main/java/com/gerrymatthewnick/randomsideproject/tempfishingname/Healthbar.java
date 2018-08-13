@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
 
 public class Healthbar {
@@ -85,6 +86,7 @@ public class Healthbar {
             act.finish();
             if (active) {
                 Intent intent = new Intent(con, WinActivity.class);
+                intent.putExtra("levelNumber", level + 1);
                 con.startActivity(intent);
             }
             return true;

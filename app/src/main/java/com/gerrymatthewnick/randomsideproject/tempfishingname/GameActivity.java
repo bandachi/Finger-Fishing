@@ -14,17 +14,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 public class GameActivity extends AppCompatActivity {
 
     static boolean active = false;
+    static int level;
 
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
     private Activity act = this;
     public static ImageView line;
-    
+
     Handler startSpawnFish = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
@@ -41,13 +41,25 @@ public class GameActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        //Start fish spawning method after 3 seconds
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            level = extras.getInt("levelNumber");
+        }
+        else {
+            level = 1;
+        }
+
+        //Start the fish spawning method after 3 seconds
         startSpawnFish.postDelayed(new Runnable() {
             @Override
             public void run() {
                 changeFishVelocity = new Handler();
                 moveFish = new Handler();
                 checkOverlap = new Handler();
+
+                TextView levelText = findViewById(R.id.levelDisplay);
+                levelText.setText("Level: " + level);
 
                 int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
@@ -71,15 +83,14 @@ public class GameActivity extends AppCompatActivity {
                healthbar.startCheck();
             }
         }, 3000);
-
     }
+
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
-
 
     //keep fishing line image on screen touch
     @Override
@@ -106,6 +117,7 @@ public class GameActivity extends AppCompatActivity {
         }
         return false;
     }
+
     @Override
     public void onStart() {
         super.onStart();

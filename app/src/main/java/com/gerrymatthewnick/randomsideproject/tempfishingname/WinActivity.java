@@ -9,10 +9,20 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 
 public class WinActivity extends AppCompatActivity {
 
+    int levelPass;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
+
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            levelPass = extras.getInt("levelNumber");
+        }
     }
     public void onWin (View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -20,6 +30,7 @@ public class WinActivity extends AppCompatActivity {
     }
     public void onWinAgain (View view) {
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("levelNumber", levelPass);
         startActivity(intent);
     }
 
