@@ -41,13 +41,12 @@
         android:id="@+id/scoreDisplay"
         android:layout_width="183dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/fishingLine"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
         android:text="0"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="22sp"
-        android:textAlignment="center"
         android:textStyle="bold" />
 
 

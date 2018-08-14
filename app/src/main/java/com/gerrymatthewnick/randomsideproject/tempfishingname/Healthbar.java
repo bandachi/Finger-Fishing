@@ -77,6 +77,11 @@ public class Healthbar {
             act.finish();
             if (active) {
                 Intent intent = new Intent(con, LoseActivity.class);
+                TextView score = act.findViewById(R.id.scoreDisplay);
+
+                int temp = Integer.parseInt(score.getText().toString());
+                intent.putExtra("scoreNumber", temp);
+
                 con.startActivity(intent);
             }
 
