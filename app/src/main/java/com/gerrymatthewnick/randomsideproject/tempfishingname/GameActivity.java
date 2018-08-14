@@ -22,13 +22,13 @@ public class GameActivity extends AppCompatActivity {
     static int level;
     public static int currentItemId = -1;
     public static final int SPAWN_DELAY = 4000;
+    public static ImageView line;
 
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
     private Activity act = this;
-    public static ImageView line;
-
+    private int score = 0;
 
 
 
@@ -55,6 +55,7 @@ public class GameActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             level = extras.getInt("levelNumber");
+            score = extras.getInt("scoreNumber");
         }
         else {
             level = 1;
@@ -73,11 +74,18 @@ public class GameActivity extends AppCompatActivity {
                 levelText.setTextColor(Color.BLACK);
                 levelText.setTextSize(22);
 
+                TextView scoreText = findViewById(R.id.scoreDisplay);
+                scoreText.setText(Integer.toString(score));
+
                 int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
+<<<<<<< Updated upstream
 
                 Fish fish = new Fish(fishId, 1000, 8 + level, rl, con, currentFish, changeFishVelocity, moveFish);
+=======
+                Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish);
+>>>>>>> Stashed changes
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);

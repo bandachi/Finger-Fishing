@@ -10,6 +10,7 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 public class WinActivity extends AppCompatActivity {
 
     int levelPass;
+    int score;
 
 
     @Override
@@ -22,6 +23,7 @@ public class WinActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             levelPass = extras.getInt("levelNumber");
+            score = extras.getInt("scoreNumber");
         }
     }
     public void onWin (View view) {
@@ -31,6 +33,7 @@ public class WinActivity extends AppCompatActivity {
     public void onWinAgain (View view) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("levelNumber", levelPass);
+        intent.putExtra("scoreNumber", score);
         startActivity(intent);
     }
 

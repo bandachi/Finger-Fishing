@@ -87,6 +87,11 @@ public class Healthbar {
             if (active) {
                 Intent intent = new Intent(con, WinActivity.class);
                 intent.putExtra("levelNumber", level + 1);
+
+                TextView score = act.findViewById(R.id.scoreDisplay);
+                int temp =  Integer.parseInt(score.getText().toString());
+                intent.putExtra("scoreNumber", temp);
+
                 con.startActivity(intent);
             }
             return true;
@@ -109,7 +114,7 @@ public class Healthbar {
         if (itemRect.contains(lineRect)) {
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
-            temp++;
+            temp+= 100;
             score.setText(Integer.toString(temp));
             Item.removeItem(item, rl);
             currentItemId = -1;
@@ -134,7 +139,6 @@ public class Healthbar {
             else {
                 rl.removeAllViews();
             }
-
         }
     };
     public void startCheck() {
