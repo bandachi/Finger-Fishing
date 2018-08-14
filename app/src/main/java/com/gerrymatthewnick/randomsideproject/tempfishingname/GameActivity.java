@@ -116,7 +116,7 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
 
             currentItemId = View.generateViewId();
-            Item item = new Item(rl, con, removeItemDelay);
+            Item item = new Item(rl, con, removeItemDelay, "cherry"/*change later for adding more items*/);
             item.spawn();
 
             if (active) {
@@ -183,3 +183,5 @@ public class GameActivity extends AppCompatActivity {
         active = false;
     }
 }
+
+//TODO make fish face direction of velocity

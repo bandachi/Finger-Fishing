@@ -3,6 +3,7 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -43,6 +44,7 @@ public class Healthbar {
 
     public void spawnHealth() {
         health = new ProgressBar(con, null, android.R.attr.progressBarStyleHorizontal);
+        health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         health.setLayoutParams(lp);
         health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
