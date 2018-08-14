@@ -5,8 +5,10 @@ import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemId;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_CHERRY;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdCherry;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdWorm;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 
@@ -29,7 +31,17 @@ public class Item {
 
     public void spawn() {
         item = new ImageView(con);
-        item.setId(currentItemId);
+        int temp = 4000;
+
+        if (itemType.equals("cherry")) {
+            item.setId(currentItemIdCherry);
+            temp = SPAWN_DELAY_CHERRY;
+        }
+        else if (itemType.equals("worm")) {
+            item.setId(currentItemIdWorm);
+            temp = SPAWN_DELAY_WORM;
+        }
+
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         item.setLayoutParams(lp);
@@ -46,7 +58,7 @@ public class Item {
                     rl.removeView(item);
                 }
             }
-        }, SPAWN_DELAY);
+        }, temp);
 
     }
     public static void removeItem(ImageView item, RelativeLayout rl) {

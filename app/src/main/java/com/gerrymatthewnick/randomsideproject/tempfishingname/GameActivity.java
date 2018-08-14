@@ -3,7 +3,6 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
@@ -13,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,8 +20,10 @@ public class GameActivity extends AppCompatActivity {
 
     static boolean active = false;
     static int level;
-    public static int currentItemId = -1;
-    public static final int SPAWN_DELAY = 4000;
+    public static int currentItemIdCherry = -1;
+    public static int currentItemIdWorm = -1;
+    public static final int SPAWN_DELAY_CHERRY = 4000;
+    public static final int SPAWN_DELAY_WORM = 6000;
     public static ImageView line;
 
     private int fishId;
@@ -31,10 +33,11 @@ public class GameActivity extends AppCompatActivity {
     private int score = 0;
 
 
-
     Handler startSpawnFish = new Handler();
-    Handler itemSpawnDelay = new Handler();
-    Handler removeItemDelay = new Handler();
+    Handler itemSpawnDelayCherry = new Handler();
+    Handler itemSpawnDelayWorm = new Handler();
+    Handler removeItemDelayCherry = new Handler();
+    Handler removeItemDelayWorm = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
@@ -93,12 +96,14 @@ public class GameActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                currentItemId = -1;
+                currentItemIdCherry = -1;
+                currentItemIdWorm = -1;
                 Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
-                runnableSpawnItem.run();
+                runnableSpawnItemCherry.run();
+                runnableSpawnItemWorm.run();
             }
         }, 3000);
 
@@ -111,21 +116,37 @@ public class GameActivity extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    Runnable runnableSpawnItem = new Runnable() {
+    Runnable runnableSpawnItemWorm = new Runnable() {
         @Override
         public void run() {
 
-            currentItemId = View.generateViewId();
-            Item item = new Item(rl, con, removeItemDelay, "cherry"/*change later for adding more items*/);
+            currentItemIdWorm = View.generateViewId();
+            Item item = new Item(rl, con, removeItemDelayWorm, "worm");
             item.spawn();
 
             if (active) {
-                itemSpawnDelay.postDelayed(runnableSpawnItem, SPAWN_DELAY);
+                itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, SPAWN_DELAY_WORM);
             }
             else {
-                itemSpawnDelay.removeCallbacks(runnableSpawnItem);
+                itemSpawnDelayCherry.removeCallbacks(runnableSpawnItemWorm);
             }
+        }
+    };
 
+    Runnable runnableSpawnItemCherry = new Runnable() {
+        @Override
+        public void run() {
+
+            currentItemIdCherry = View.generateViewId();
+            Item item = new Item(rl, con, removeItemDelayCherry, "cherry");
+            item.spawn();
+
+            if (active) {
+                itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, SPAWN_DELAY_CHERRY);
+            }
+            else {
+                itemSpawnDelayCherry.removeCallbacks(runnableSpawnItemCherry);
+            }
         }
     };
 

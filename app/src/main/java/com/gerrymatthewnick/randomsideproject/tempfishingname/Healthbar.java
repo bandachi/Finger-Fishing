@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemId;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdCherry;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
@@ -73,7 +73,6 @@ public class Healthbar {
             health.incrementProgressBy(-3);
         }
 
-
         if (health.getProgress() < 10) {
             end.cancel(true);
             act.finish();
@@ -108,7 +107,7 @@ public class Healthbar {
     }
 
     public void overlapItem(ImageView line) {
-        ImageView item = act.findViewById(currentItemId);
+        ImageView item = act.findViewById(currentItemIdCherry);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
@@ -124,7 +123,7 @@ public class Healthbar {
             temp+= 100 * level;
             score.setText(Integer.toString(temp));
             Item.removeItem(item, rl);
-            currentItemId = -1;
+            currentItemIdCherry = -1;
         }
 
     }
@@ -135,7 +134,7 @@ public class Healthbar {
         @Override
         public void run() {
             end.cancel(true);
-            if (currentItemId != -1 && act.findViewById(currentItemId) != null) {
+            if (currentItemIdCherry != -1 && act.findViewById(currentItemIdCherry) != null) {
                 overlapItem(line);
             }
 
