@@ -16,6 +16,7 @@ import java.util.concurrent.Future;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdCherry;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdWorm;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
@@ -106,7 +107,7 @@ public class Healthbar {
         }
     }
 
-    public void overlapItem(ImageView line) {
+    public void overlapItemCherry(ImageView line) {
         ImageView item = act.findViewById(currentItemIdCherry);
 
         Rect lineRect = new Rect();
@@ -128,6 +129,24 @@ public class Healthbar {
 
     }
 
+    public void overlapItemWorm(ImageView line) {
+        ImageView item = act.findViewById(currentItemIdWorm);
+
+        Rect lineRect = new Rect();
+        Rect itemRect = new Rect();
+
+        line.getHitRect(lineRect);
+        item.getHitRect(itemRect);
+
+        lineRect.top = lineRect.bottom - 10;
+
+        if (itemRect.contains(lineRect)) {
+            health.incrementProgressBy(100);
+            Item.removeItem(item, rl);
+            currentItemIdWorm = -1;
+        }
+    }
+
     Runnable check = new Runnable() {
         boolean done = false;
 
@@ -135,7 +154,10 @@ public class Healthbar {
         public void run() {
             end.cancel(true);
             if (currentItemIdCherry != -1 && act.findViewById(currentItemIdCherry) != null) {
-                overlapItem(line);
+                overlapItemCherry(line);
+            }
+            if (currentItemIdWorm != -1 && act.findViewById(currentItemIdWorm) != null) {
+                overlapItemWorm(line);
             }
 
             done = overlap(fish, line);
