@@ -114,7 +114,7 @@ public class Healthbar {
         if (itemRect.contains(lineRect)) {
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
-            temp+= 100;
+            temp+= 100 * level;
             score.setText(Integer.toString(temp));
             Item.removeItem(item, rl);
             currentItemId = -1;

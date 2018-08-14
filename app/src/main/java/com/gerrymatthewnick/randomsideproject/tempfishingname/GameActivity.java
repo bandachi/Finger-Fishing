@@ -80,12 +80,7 @@ public class GameActivity extends AppCompatActivity {
                 int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
-<<<<<<< Updated upstream
-
-                Fish fish = new Fish(fishId, 1000, 8 + level, rl, con, currentFish, changeFishVelocity, moveFish);
-=======
                 Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish);
->>>>>>> Stashed changes
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);
