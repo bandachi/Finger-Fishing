@@ -8,10 +8,12 @@ import android.widget.RelativeLayout;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_CHERRY;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdCherry;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdWorm;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
 
 
 public class Item {
@@ -19,7 +21,6 @@ public class Item {
     private RelativeLayout rl;
     private Context con;
     private Handler removeItemDelay;
-    private Handler check;
 
     private String itemType;
     private ImageView item;
@@ -30,34 +31,10 @@ public class Item {
         this.removeItemDelay = removeItemDelay;
         this.itemType = itemType;
     }
-    Runnable runnableCheck = new Runnable() {
-        @Override
-        public void run() {
-            if (item.getId() != currentItemIdWorm && item.getId() != currentItemIdCherry) {
-                rl.removeView(item);
-            }
-
-            if (active && item != null) {
-                check.postDelayed(runnableCheck, 20);
-            }
-            else {
-                check.removeCallbacks(runnableCheck);
-            }
-        }
-    };
 
     public void spawn() {
         item = new ImageView(con);
         int temp = 4000;
-
-        if (itemType.equals("cherry")) {
-            item.setId(currentItemIdCherry);
-            temp = SPAWN_DELAY_CHERRY;
-        }
-        else if (itemType.equals("worm")) {
-            item.setId(currentItemIdWorm);
-            temp = SPAWN_DELAY_WORM;
-        }
 
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -67,6 +44,17 @@ public class Item {
         item.setX(x);
         item.setY(y);
         rl.addView(item);
+
+        if (itemType.equals("cherry")) {
+            temp = SPAWN_DELAY_CHERRY;
+            cherryImage = item;
+            cherryExist = true;
+        }
+        else if (itemType.equals("worm")) {
+            temp = SPAWN_DELAY_WORM;
+            wormImage = item;
+            wormExist = true;
+        }
 
         removeItemDelay.postDelayed(new Runnable() {
             @Override

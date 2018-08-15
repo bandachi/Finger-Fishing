@@ -23,11 +23,13 @@ public class GameActivity extends AppCompatActivity {
     public static int highscore = 0;
     static boolean active = false;
     static int level;
-    public static int currentItemIdCherry = -1;
-    public static int currentItemIdWorm = -1;
     public static final int SPAWN_DELAY_CHERRY = 4000;
     public static final int SPAWN_DELAY_WORM = 6000;
     public static ImageView line;
+    public static ImageView cherryImage;
+    public static boolean cherryExist = false;
+    public static ImageView wormImage;
+    public static boolean wormExist = false;
 
     private int fishId;
     private RelativeLayout rl;
@@ -104,9 +106,7 @@ public class GameActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                currentItemIdCherry = -1;
-                currentItemIdWorm = -1;
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay);
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
@@ -127,8 +127,6 @@ public class GameActivity extends AppCompatActivity {
     Runnable runnableSpawnItemWorm = new Runnable() {
         @Override
         public void run() {
-
-            currentItemIdWorm = View.generateViewId();
             Item item = new Item(rl, con, removeItemDelayWorm, "worm");
             item.spawn();
 
@@ -136,7 +134,7 @@ public class GameActivity extends AppCompatActivity {
                 itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, SPAWN_DELAY_WORM);
             }
             else {
-                itemSpawnDelayCherry.removeCallbacks(runnableSpawnItemWorm);
+                itemSpawnDelayWorm.removeCallbacksAndMessages(runnableSpawnItemWorm);
             }
         }
     };
@@ -144,8 +142,6 @@ public class GameActivity extends AppCompatActivity {
     Runnable runnableSpawnItemCherry = new Runnable() {
         @Override
         public void run() {
-
-            currentItemIdCherry = View.generateViewId();
             Item item = new Item(rl, con, removeItemDelayCherry, "cherry");
             item.spawn();
 
@@ -153,7 +149,7 @@ public class GameActivity extends AppCompatActivity {
                 itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, SPAWN_DELAY_CHERRY);
             }
             else {
-                itemSpawnDelayCherry.removeCallbacks(runnableSpawnItemCherry);
+                itemSpawnDelayCherry.removeCallbacksAndMessages(runnableSpawnItemCherry);
             }
         }
     };

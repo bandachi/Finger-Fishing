@@ -16,12 +16,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdCherry;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdWorm;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
 
+//TODO make healthbar not an object
 public class Healthbar {
 
     private ProgressBar health;
@@ -33,17 +36,21 @@ public class Healthbar {
     private Activity act;
     private android.os.Handler checkOverlap;
     private Handler changeDelay;
+    private Handler itemSpawnDelayWorm;
+    private Handler itemSpawnDelayCherry;
 
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay) {
+    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry) {
         this.rl = rl;
         this.con = con;
         this.act = act;
         this.checkOverlap = checkOverlap;
         this.currentFish = currentFish;
         this.changeDelay = changeDelay;
+        this.itemSpawnDelayCherry = itemSpawnDelayCherry;
+        this.itemSpawnDelayWorm = itemSpawnDelayWorm;
     }
 
     public void spawnHealth() {
@@ -79,6 +86,8 @@ public class Healthbar {
 
         if (health.getProgress() < 10 && active) {
             end.cancel(true);
+            itemSpawnDelayWorm.removeCallbacksAndMessages(null);
+            itemSpawnDelayCherry.removeCallbacksAndMessages(null);
 
             act.finish();
             Intent intent = new Intent(con, LoseActivity.class);
@@ -88,10 +97,12 @@ public class Healthbar {
             intent.putExtra("scoreNumber", temp);
             con.startActivity(intent);
 
-
             return true;
         } else if (health.getProgress() > 990 && active) {
             end.cancel(true);
+            itemSpawnDelayWorm.removeCallbacksAndMessages(null);
+            itemSpawnDelayCherry.removeCallbacksAndMessages(null);
+
             act.finish();
             Intent intent = new Intent(con, WinActivity.class);
             intent.putExtra("levelNumber", level + 1);
@@ -109,13 +120,12 @@ public class Healthbar {
     }
 
     public void overlapItemCherry(ImageView line) {
-        ImageView item = act.findViewById(currentItemIdCherry);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        item.getHitRect(itemRect);
+        cherryImage.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
@@ -124,27 +134,26 @@ public class Healthbar {
             int temp = Integer.parseInt(score.getText().toString());
             temp += 100 * level;
             score.setText(Integer.toString(temp));
-            Item.removeItem(item, rl);
-            currentItemIdCherry = -1;
+            Item.removeItem(cherryImage, rl);
+            cherryExist = false;
         }
 
     }
 
     public void overlapItemWorm(ImageView line) {
-        ImageView item = act.findViewById(currentItemIdWorm);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        item.getHitRect(itemRect);
+        wormImage.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
             health.incrementProgressBy(100);
-            Item.removeItem(item, rl);
-            currentItemIdWorm = -1;
+            Item.removeItem(wormImage, rl);
+            wormExist = false;
         }
     }
 
@@ -153,11 +162,14 @@ public class Healthbar {
 
         @Override
         public void run() {
+
+            TextView testForItem = act.findViewById(R.id.textView4);
+            testForItem.setText("C" + Boolean.toString(cherryExist) + " W" + Boolean.toString(wormExist));
             end.cancel(true);
-            if (currentItemIdCherry != -1 && act.findViewById(currentItemIdCherry) != null) {
+            if (cherryExist == true) {
                 overlapItemCherry(line);
             }
-            if (currentItemIdWorm != -1 && act.findViewById(currentItemIdWorm) != null) {
+            if (wormExist == true) {
                 overlapItemWorm(line);
             }
 
