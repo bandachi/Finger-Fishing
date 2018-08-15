@@ -24,17 +24,16 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
 
-//TODO make healthbar not an object
 public class Healthbar {
 
     private ProgressBar health;
     private int currentFish;
     private ImageView fish;
-
     private RelativeLayout rl;
     private Context con;
     private Activity act;
-    private android.os.Handler checkOverlap;
+
+    private Handler checkOverlap;
     private Handler changeDelay;
     private Handler itemSpawnDelayWorm;
     private Handler itemSpawnDelayCherry;
@@ -53,6 +52,7 @@ public class Healthbar {
         this.itemSpawnDelayWorm = itemSpawnDelayWorm;
     }
 
+    //spawn the healthbar
     public void spawnHealth() {
         health = new ProgressBar(con, null, android.R.attr.progressBarStyleHorizontal);
         health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
@@ -69,6 +69,7 @@ public class Healthbar {
         fish = act.findViewById(currentFish);
     }
 
+    //check if line is overlapping the fish
     public boolean overlap(ImageView first, ImageView second) {
         Rect fishRect = new Rect();
         Rect lineRect = new Rect();
@@ -84,6 +85,7 @@ public class Healthbar {
             health.incrementProgressBy(-1);
         }
 
+        //check if healthbar is below 10, if so, go to lose activity
         if (health.getProgress() < 10 && active) {
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
@@ -98,7 +100,9 @@ public class Healthbar {
             con.startActivity(intent);
 
             return true;
-        } else if (health.getProgress() > 990 && active) {
+        }
+        //check if healthbar is above 990, if so, go to win activity
+        else if (health.getProgress() > 990 && active) {
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
             itemSpawnDelayCherry.removeCallbacksAndMessages(null);
@@ -119,6 +123,7 @@ public class Healthbar {
         }
     }
 
+    //check if line is overlapping a cherry
     public void overlapItemCherry(ImageView line) {
 
         Rect lineRect = new Rect();
@@ -140,6 +145,7 @@ public class Healthbar {
 
     }
 
+    //check if line is overlapping a worm
     public void overlapItemWorm(ImageView line) {
 
         Rect lineRect = new Rect();
@@ -157,14 +163,13 @@ public class Healthbar {
         }
     }
 
+    //check if line is overlapping any important image views
     Runnable check = new Runnable() {
         boolean done = false;
 
         @Override
         public void run() {
 
-            TextView testForItem = act.findViewById(R.id.textView4);
-            testForItem.setText("C" + Boolean.toString(cherryExist) + " W" + Boolean.toString(wormExist));
             end.cancel(true);
             if (cherryExist == true) {
                 overlapItemCherry(line);

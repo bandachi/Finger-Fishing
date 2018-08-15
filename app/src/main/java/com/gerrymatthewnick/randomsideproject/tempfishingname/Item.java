@@ -7,7 +7,6 @@ import android.widget.RelativeLayout;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_CHERRY;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
@@ -21,7 +20,6 @@ public class Item {
     private RelativeLayout rl;
     private Context con;
     private Handler removeItemDelay;
-
     private String itemType;
     private ImageView item;
 

@@ -13,7 +13,6 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,7 +36,6 @@ public class GameActivity extends AppCompatActivity {
     private Activity act = this;
     private int score = 0;
 
-
     Handler startSpawnFish = new Handler();
     Handler itemSpawnDelayCherry = new Handler();
     Handler itemSpawnDelayWorm = new Handler();
@@ -60,11 +58,13 @@ public class GameActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
+        //load highscore to display on game_activity activity
         SharedPreferences settings = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
         highscore = settings.getInt("highest", 0);
         TextView highDis = findViewById(R.id.highscoreDisplay);
         highDis.setText(highDis.getText().toString() + Integer.toString(highscore));
 
+        //get level and score from previous game levels
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             level = extras.getInt("levelNumber");
@@ -82,17 +82,21 @@ public class GameActivity extends AppCompatActivity {
                 moveFish = new Handler();
                 checkOverlap = new Handler();
 
+                //Display level text
                 TextView levelText = findViewById(R.id.levelDisplay);
                 levelText.setText("Level: " + level);
                 levelText.setTextColor(Color.BLACK);
                 levelText.setTextSize(22);
 
+                //Display score text
                 TextView scoreText = findViewById(R.id.scoreDisplay);
                 scoreText.setText(Integer.toString(score));
 
+                //Get fish image from resources
                 int currentFish = View.generateViewId();
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
+                //Create fish object and start moving it
                 Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
@@ -106,10 +110,12 @@ public class GameActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                //Create healthbar and start checking for overlaps
                 Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
+                //Run item spawn runnables
                 runnableSpawnItemCherry.run();
                 runnableSpawnItemWorm.run();
             }
@@ -127,6 +133,7 @@ public class GameActivity extends AppCompatActivity {
     Runnable runnableSpawnItemWorm = new Runnable() {
         @Override
         public void run() {
+            //spawn worm randomly on screen every SPAWN_DELAY_WORM
             Item item = new Item(rl, con, removeItemDelayWorm, "worm");
             item.spawn();
 
@@ -142,6 +149,7 @@ public class GameActivity extends AppCompatActivity {
     Runnable runnableSpawnItemCherry = new Runnable() {
         @Override
         public void run() {
+            //spawn cherry randomly on screen every SPAWN_DELAY_CHERRY
             Item item = new Item(rl, con, removeItemDelayCherry, "cherry");
             item.spawn();
 
