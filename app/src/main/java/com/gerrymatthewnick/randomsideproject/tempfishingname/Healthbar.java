@@ -72,9 +72,9 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (fishRect.contains(lineRect)) {
-            health.incrementProgressBy(6);
+            health.incrementProgressBy(3);
         } else {
-            health.incrementProgressBy(-3);
+            health.incrementProgressBy(-1);
         }
 
         if (health.getProgress() < 10 && active) {
@@ -163,10 +163,9 @@ public class Healthbar {
 
             done = overlap(fish, line);
             if (!done && active) {
-                checkOverlap.postDelayed(check, 20);
+                checkOverlap.postDelayed(check, 10);
             } else {
                 checkOverlap.removeCallbacks(check);
-                //rl.removeAllViews();
             }
         }
     };

@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_CHERRY;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdCherry;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.currentItemIdWorm;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
@@ -18,6 +19,7 @@ public class Item {
     private RelativeLayout rl;
     private Context con;
     private Handler removeItemDelay;
+    private Handler check;
 
     private String itemType;
     private ImageView item;
@@ -28,6 +30,21 @@ public class Item {
         this.removeItemDelay = removeItemDelay;
         this.itemType = itemType;
     }
+    Runnable runnableCheck = new Runnable() {
+        @Override
+        public void run() {
+            if (item.getId() != currentItemIdWorm && item.getId() != currentItemIdCherry) {
+                rl.removeView(item);
+            }
+
+            if (active && item != null) {
+                check.postDelayed(runnableCheck, 20);
+            }
+            else {
+                check.removeCallbacks(runnableCheck);
+            }
+        }
+    };
 
     public void spawn() {
         item = new ImageView(con);
@@ -59,7 +76,6 @@ public class Item {
                 }
             }
         }, temp);
-
     }
     public static void removeItem(ImageView item, RelativeLayout rl) {
         rl.removeView(item);
