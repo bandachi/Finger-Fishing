@@ -3,6 +3,7 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Handler;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
 
+    public static final String PREFRENCES_HIGHSCORE = "highscore";
+    public static int highscore = 0;
     static boolean active = false;
     static int level;
     public static int currentItemIdCherry = -1;
@@ -54,6 +57,10 @@ public class GameActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
+        SharedPreferences settings = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+        highscore = settings.getInt("highest", 0);
+        TextView highDis = findViewById(R.id.highscoreDisplay);
+        highDis.setText(highDis.getText().toString() + Integer.toString(highscore));
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

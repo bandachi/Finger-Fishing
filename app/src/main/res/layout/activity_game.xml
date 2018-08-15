@@ -49,5 +49,18 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/highscoreDisplay"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="123dp"
+        android:text="Highscore: "
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
 
 </RelativeLayout>

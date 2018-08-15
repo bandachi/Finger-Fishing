@@ -1,12 +1,15 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFRENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.highscore;
 
 public class LoseActivity extends AppCompatActivity {
 
@@ -23,6 +26,16 @@ public class LoseActivity extends AppCompatActivity {
 
         TextView scoreText = findViewById(R.id.scoreLoseDisplay);
         scoreText.setText(scoreText.getText() + Integer.toString(score));
+
+        if (score > highscore) {
+            SharedPreferences highscoreFile = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+            SharedPreferences.Editor editor = highscoreFile.edit();
+            editor.putInt("highest", score);
+            editor.apply();
+
+            TextView loseText = findViewById(R.id.lose);
+            loseText.setText("New Highscore!");
+        }
     }
 
     public void onLose(View view) {
