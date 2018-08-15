@@ -44,6 +44,7 @@ public class GameActivity extends AppCompatActivity {
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
+    Handler changeDelay;
 
 
     @Override
@@ -105,7 +106,7 @@ public class GameActivity extends AppCompatActivity {
                 }
                 currentItemIdCherry = -1;
                 currentItemIdWorm = -1;
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish);
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 

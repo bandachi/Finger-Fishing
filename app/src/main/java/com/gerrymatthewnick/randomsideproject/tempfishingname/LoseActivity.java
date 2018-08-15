@@ -1,7 +1,9 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,9 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 public class LoseActivity extends AppCompatActivity {
 
     int score;
+    private boolean delay = false;
+    Handler handlerDelay = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,16 +41,27 @@ public class LoseActivity extends AppCompatActivity {
             TextView loseText = findViewById(R.id.lose);
             loseText.setText("New Highscore!");
         }
+
+        handlerDelay.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                delay = true;
+            }
+        }, 400);
     }
 
     public void onLose(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if (delay) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void onLoseAgain(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
+        if (delay) {
+            Intent intent = new Intent(this, GameActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -54,3 +70,4 @@ public class LoseActivity extends AppCompatActivity {
         active = false;
     }
 }
+//TODO bug when both cherry and worm at the same spot

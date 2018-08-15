@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -31,16 +32,18 @@ public class Healthbar {
     private Context con;
     private Activity act;
     private android.os.Handler checkOverlap;
+    private Handler changeDelay;
 
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, android.os.Handler checkOverlap, int currentFish) {
+    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay) {
         this.rl = rl;
         this.con = con;
         this.act = act;
         this.checkOverlap = checkOverlap;
         this.currentFish = currentFish;
+        this.changeDelay = changeDelay;
     }
 
     public void spawnHealth() {
@@ -74,33 +77,31 @@ public class Healthbar {
             health.incrementProgressBy(-3);
         }
 
-        if (health.getProgress() < 10) {
+        if (health.getProgress() < 10 && active) {
             end.cancel(true);
+
             act.finish();
-            if (active) {
-                Intent intent = new Intent(con, LoseActivity.class);
-                TextView score = act.findViewById(R.id.scoreDisplay);
+            Intent intent = new Intent(con, LoseActivity.class);
+            TextView score = act.findViewById(R.id.scoreDisplay);
 
-                int temp = Integer.parseInt(score.getText().toString());
-                intent.putExtra("scoreNumber", temp);
+            int temp = Integer.parseInt(score.getText().toString());
+            intent.putExtra("scoreNumber", temp);
+            con.startActivity(intent);
 
-                con.startActivity(intent);
-            }
 
             return true;
-        } else if (health.getProgress() > 990) {
+        } else if (health.getProgress() > 990 && active) {
             end.cancel(true);
             act.finish();
-            if (active) {
-                Intent intent = new Intent(con, WinActivity.class);
-                intent.putExtra("levelNumber", level + 1);
+            Intent intent = new Intent(con, WinActivity.class);
+            intent.putExtra("levelNumber", level + 1);
 
-                TextView score = act.findViewById(R.id.scoreDisplay);
-                int temp =  Integer.parseInt(score.getText().toString());
-                intent.putExtra("scoreNumber", temp);
+            TextView score = act.findViewById(R.id.scoreDisplay);
+            int temp = Integer.parseInt(score.getText().toString());
+            intent.putExtra("scoreNumber", temp);
 
-                con.startActivity(intent);
-            }
+            con.startActivity(intent);
+
             return true;
         } else {
             return false;
@@ -121,7 +122,7 @@ public class Healthbar {
         if (itemRect.contains(lineRect)) {
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
-            temp+= 100 * level;
+            temp += 100 * level;
             score.setText(Integer.toString(temp));
             Item.removeItem(item, rl);
             currentItemIdCherry = -1;
@@ -162,10 +163,10 @@ public class Healthbar {
 
             done = overlap(fish, line);
             if (!done && active) {
-                checkOverlap.postDelayed(check, 50);
-            }
-            else {
-                rl.removeAllViews();
+                checkOverlap.postDelayed(check, 20);
+            } else {
+                checkOverlap.removeCallbacks(check);
+                //rl.removeAllViews();
             }
         }
     };
