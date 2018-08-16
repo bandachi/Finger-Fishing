@@ -30,7 +30,8 @@
         <activity
             android:name=".LoseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".InstructionActivity"></activity>
+        <activity android:name=".InstructionActivity" />
+        <activity android:name=".ShopActivity"></activity>
     </application>
 
 </manifest>

@@ -25,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
-    public void instructionButton (View view) {
+    public void changeToInstructions(View view) {
         Intent intent = new Intent(this, InstructionActivity.class);
         startActivity(intent);
     }
+    public void changeToShop(View view) {
+        Intent intent = new Intent(this, ShopActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onStart() {
         super.onStart();
