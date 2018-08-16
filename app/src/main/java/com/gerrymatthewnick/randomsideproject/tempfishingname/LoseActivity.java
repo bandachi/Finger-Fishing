@@ -23,21 +23,30 @@ public class LoseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lose);
 
+        TextView loseText = findViewById(R.id.lose);
+        TextView scoreText = findViewById(R.id.scoreLoseDisplay);
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             score = extras.getInt("scoreNumber");
         }
 
-        TextView scoreText = findViewById(R.id.scoreLoseDisplay);
         scoreText.setText(scoreText.getText() + Integer.toString(score));
+
+        scoreText.setVisibility(View.VISIBLE);
+        scoreText.setAlpha(0.0f);
+        scoreText.animate().alpha(1.0f).setListener(null).setDuration(1500);
+
+        loseText.setVisibility(View.VISIBLE);
+        loseText.setAlpha(0.0f);
+        loseText.animate().alpha(1.0f).setListener(null).setDuration(2000);
 
         if (score > highscore) {
             SharedPreferences highscoreFile = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
             SharedPreferences.Editor editor = highscoreFile.edit();
             editor.putInt("highest", score);
             editor.apply();
-
-            TextView loseText = findViewById(R.id.lose);
             loseText.setText("New Highscore!");
         }
 

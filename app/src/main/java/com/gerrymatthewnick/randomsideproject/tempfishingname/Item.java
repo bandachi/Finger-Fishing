@@ -40,8 +40,8 @@ public class Item {
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         item.setLayoutParams(lp);
-        int x = (int)Math.floor(Math.random() * (getScreenWidth() - ITEM_SIZE));
-        int y = (int)Math.floor(Math.random() * (getScreenHeight()/2 - ITEM_SIZE)) + getScreenHeight()/2 - ITEM_SIZE;
+        int x = (int)Math.floor(Math.random() * (getScreenWidth() - ITEM_SIZE*2));
+        int y = (int)Math.floor(Math.random() * (getScreenHeight()/2 - ITEM_SIZE*2)) + getScreenHeight()/2 - ITEM_SIZE;
 
         item.setX(x);
         item.setY(y);
@@ -71,4 +71,3 @@ public class Item {
         rl.removeView(item);
     }
 }
-//TODO spawn after delay
