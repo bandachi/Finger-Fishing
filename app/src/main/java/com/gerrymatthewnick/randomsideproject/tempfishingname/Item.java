@@ -1,9 +1,11 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_CHERRY;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
@@ -17,6 +19,7 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 
 public class Item {
 
+    private final int ITEM_SIZE = 64;
     private RelativeLayout rl;
     private Context con;
     private Handler removeItemDelay;
@@ -37,8 +40,9 @@ public class Item {
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         item.setLayoutParams(lp);
-        int x = (int)Math.floor(Math.random() * (getScreenWidth() - item.getWidth()));
-        int y = (int)Math.floor(Math.random() * (getScreenHeight()/2 - item.getHeight() * 2) + getScreenHeight()/2);
+        int x = (int)Math.floor(Math.random() * (getScreenWidth() - ITEM_SIZE));
+        int y = (int)Math.floor(Math.random() * (getScreenHeight()/2 - ITEM_SIZE)) + getScreenHeight()/2 - ITEM_SIZE;
+
         item.setX(x);
         item.setY(y);
         rl.addView(item);
