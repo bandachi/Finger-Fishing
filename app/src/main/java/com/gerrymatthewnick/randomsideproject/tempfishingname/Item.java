@@ -67,3 +67,4 @@ public class Item {
         rl.removeView(item);
     }
 }
+//TODO spawn after delay

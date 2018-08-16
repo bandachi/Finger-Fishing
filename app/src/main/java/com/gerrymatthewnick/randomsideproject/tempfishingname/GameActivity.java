@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
     private Activity act = this;
     private int score = 0;
 
+    Handler initialDelay = new Handler();
     Handler startSpawnFish = new Handler();
     Handler itemSpawnDelayCherry = new Handler();
     Handler itemSpawnDelayWorm = new Handler();
@@ -105,19 +106,20 @@ public class GameActivity extends AppCompatActivity {
                 fish.startChangeVelocity();
                 fish.startVelocity();
 
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 //Create healthbar and start checking for overlaps
                 Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
                 //Run item spawn runnables
-                runnableSpawnItemCherry.run();
-                runnableSpawnItemWorm.run();
+                initialDelay.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        runnableSpawnItemCherry.run();
+                        runnableSpawnItemWorm.run();
+                    }
+                }, 3000);
+
             }
         }, 3000);
 

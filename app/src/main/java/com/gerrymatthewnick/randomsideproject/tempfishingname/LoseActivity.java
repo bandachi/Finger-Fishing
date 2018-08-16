@@ -1,6 +1,5 @@
 package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -70,4 +69,3 @@ public class LoseActivity extends AppCompatActivity {
         active = false;
     }
 }
-//TODO bug when both cherry and worm at the same spot
