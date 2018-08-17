@@ -3,6 +3,7 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -15,11 +16,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFERENCES_COINS;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinImage;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coins;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
@@ -39,11 +43,12 @@ public class Healthbar {
     private Handler changeDelay;
     private Handler itemSpawnDelayWorm;
     private Handler itemSpawnDelayCherry;
+    private Handler itemSpawnDelayCoin;
 
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry) {
+    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin) {
         this.rl = rl;
         this.con = con;
         this.act = act;
@@ -52,6 +57,7 @@ public class Healthbar {
         this.changeDelay = changeDelay;
         this.itemSpawnDelayCherry = itemSpawnDelayCherry;
         this.itemSpawnDelayWorm = itemSpawnDelayWorm;
+        this.itemSpawnDelayCoin = itemSpawnDelayCoin;
     }
 
     //spawn the healthbar
@@ -92,6 +98,7 @@ public class Healthbar {
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
             itemSpawnDelayCherry.removeCallbacksAndMessages(null);
+            itemSpawnDelayCoin.removeCallbacksAndMessages(null);
 
             act.finish();
             Intent intent = new Intent(con, LoseActivity.class);
@@ -108,6 +115,7 @@ public class Healthbar {
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
             itemSpawnDelayCherry.removeCallbacksAndMessages(null);
+            itemSpawnDelayCoin.removeCallbacksAndMessages(null);
 
             act.finish();
             Intent intent = new Intent(con, WinActivity.class);
@@ -177,7 +185,15 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            health.incrementProgressBy(200);
+            coins++;
+            SharedPreferences coinsFile = act.getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
+            SharedPreferences.Editor editor = coinsFile.edit();
+            editor.putInt("coinCount", coins);
+            editor.apply();
+
+            TextView coin = act.findViewById(R.id.coinDisplay);
+            coin.setText(Integer.toString(coins));
+
             Item.removeItem(coinImage, rl);
             coinExist = false;
         }

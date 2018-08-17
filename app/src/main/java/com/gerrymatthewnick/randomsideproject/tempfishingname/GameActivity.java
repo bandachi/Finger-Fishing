@@ -19,7 +19,9 @@ import android.widget.TextView;
 public class GameActivity extends AppCompatActivity {
 
     public static final String PREFRENCES_HIGHSCORE = "highscore";
+    public static final String PREFERENCES_COINS = "coins";
     public static int highscore = 0;
+    public static int coins = 0;
     static boolean active = false;
     static int level;
     public static final int SPAWN_DELAY_CHERRY = 4000;
@@ -66,10 +68,16 @@ public class GameActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         //load highscore to display on game_activity activity
-        SharedPreferences settings = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
-        highscore = settings.getInt("highest", 0);
+        SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+        highscore = settingsHigh.getInt("highest", 0);
         TextView highDis = findViewById(R.id.highscoreDisplay);
         highDis.setText(highDis.getText().toString() + Integer.toString(highscore));
+
+        //load coins to display on game activity activity
+        SharedPreferences settingsCoin = getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
+        coins = settingsCoin.getInt("coinCount", 0);
+        TextView coinDis = findViewById(R.id.coinDisplay);
+        coinDis.setText(Integer.toString(coins));
 
         //get level and score from previous game levels
         Bundle extras = getIntent().getExtras();
@@ -113,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
                 fish.startVelocity();
 
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry);
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
