@@ -24,11 +24,15 @@ public class GameActivity extends AppCompatActivity {
     static int level;
     public static final int SPAWN_DELAY_CHERRY = 4000;
     public static final int SPAWN_DELAY_WORM = 6000;
+    public static final int SPAWN_DELAY_COIN = 7000;
     public static ImageView line;
+
     public static ImageView cherryImage;
     public static boolean cherryExist = false;
     public static ImageView wormImage;
     public static boolean wormExist = false;
+    public static ImageView coinImage;
+    public static boolean coinExist = false;
 
     private int fishId;
     private RelativeLayout rl;
@@ -40,8 +44,10 @@ public class GameActivity extends AppCompatActivity {
     Handler startSpawnFish = new Handler();
     Handler itemSpawnDelayCherry = new Handler();
     Handler itemSpawnDelayWorm = new Handler();
+    Handler itemSpawnDelayCoin = new Handler();
     Handler removeItemDelayCherry = new Handler();
     Handler removeItemDelayWorm = new Handler();
+    Handler removeItemDelayCoin = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
@@ -117,6 +123,7 @@ public class GameActivity extends AppCompatActivity {
                     public void run() {
                         runnableSpawnItemCherry.run();
                         runnableSpawnItemWorm.run();
+                        runnableSpawnItemCoin.run();
                     }
                 }, 3000);
 
@@ -160,6 +167,22 @@ public class GameActivity extends AppCompatActivity {
             }
             else {
                 itemSpawnDelayCherry.removeCallbacksAndMessages(runnableSpawnItemCherry);
+            }
+        }
+    };
+
+    Runnable runnableSpawnItemCoin = new Runnable() {
+        @Override
+        public void run() {
+            //spawn coin randomly on screen every SPAWN_DELAY_COIN
+            Item item = new Item(rl, con, removeItemDelayCoin, "coin");
+            item.spawn();
+
+            if (active) {
+                itemSpawnDelayCoin.postDelayed(runnableSpawnItemCoin, SPAWN_DELAY_COIN);
+            }
+            else {
+                itemSpawnDelayCoin.removeCallbacksAndMessages(runnableSpawnItemCoin);
             }
         }
     };

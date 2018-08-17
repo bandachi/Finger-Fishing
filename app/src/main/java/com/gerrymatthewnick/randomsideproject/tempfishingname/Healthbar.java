@@ -18,6 +18,8 @@ import java.util.concurrent.Future;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
@@ -70,12 +72,12 @@ public class Healthbar {
     }
 
     //check if line is overlapping the fish
-    public boolean overlap(ImageView first, ImageView second) {
+    public boolean overlap(ImageView first) {
         Rect fishRect = new Rect();
         Rect lineRect = new Rect();
 
         first.getHitRect(fishRect);
-        second.getHitRect(lineRect);
+        line.getHitRect(lineRect);
 
         lineRect.top = lineRect.bottom - 10;
 
@@ -124,7 +126,7 @@ public class Healthbar {
     }
 
     //check if line is overlapping a cherry
-    public void overlapItemCherry(ImageView line) {
+    public void overlapItemCherry() {
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
@@ -146,7 +148,7 @@ public class Healthbar {
     }
 
     //check if line is overlapping a worm
-    public void overlapItemWorm(ImageView line) {
+    public void overlapItemWorm() {
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
@@ -163,6 +165,24 @@ public class Healthbar {
         }
     }
 
+    //check if line is overlapping a coin
+    public void overlapItemCoin() {
+
+        Rect lineRect = new Rect();
+        Rect itemRect = new Rect();
+
+        line.getHitRect(lineRect);
+        coinImage.getHitRect(itemRect);
+
+        lineRect.top = lineRect.bottom - 10;
+
+        if (itemRect.contains(lineRect)) {
+            health.incrementProgressBy(200);
+            Item.removeItem(coinImage, rl);
+            coinExist = false;
+        }
+    }
+
     //check if line is overlapping any important image views
     Runnable check = new Runnable() {
         boolean done = false;
@@ -171,14 +191,17 @@ public class Healthbar {
         public void run() {
 
             end.cancel(true);
-            if (cherryExist == true) {
-                overlapItemCherry(line);
+            if (cherryExist) {
+                overlapItemCherry();
             }
-            if (wormExist == true) {
-                overlapItemWorm(line);
+            if (wormExist) {
+                overlapItemWorm();
+            }
+            if (coinExist) {
+                overlapItemCoin();
             }
 
-            done = overlap(fish, line);
+            done = overlap(fish);
             if (!done && active) {
                 checkOverlap.postDelayed(check, 10);
             } else {

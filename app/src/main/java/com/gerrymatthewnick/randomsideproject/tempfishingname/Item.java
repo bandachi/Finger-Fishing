@@ -11,6 +11,8 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
@@ -47,15 +49,27 @@ public class Item {
         item.setY(y);
         rl.addView(item);
 
-        if (itemType.equals("cherry")) {
-            temp = SPAWN_DELAY_CHERRY;
-            cherryImage = item;
-            cherryExist = true;
-        }
-        else if (itemType.equals("worm")) {
-            temp = SPAWN_DELAY_WORM;
-            wormImage = item;
-            wormExist = true;
+        switch (itemType) {
+            case "cherry":
+                temp = SPAWN_DELAY_CHERRY;
+                cherryImage = item;
+                cherryExist = true;
+                break;
+
+            case "worm":
+                temp = SPAWN_DELAY_WORM;
+                wormImage = item;
+                wormExist = true;
+                break;
+
+            case "coin":
+                temp = SPAWN_DELAY_WORM;
+                coinImage = item;
+                coinExist = true;
+                break;
+
+            default:
+                break;
         }
 
         removeItemDelay.postDelayed(new Runnable() {
