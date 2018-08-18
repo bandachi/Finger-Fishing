@@ -83,5 +83,17 @@
         android:textSize="22sp"
         android:textStyle="bold" />
 
+    <ProgressBar
+        android:id="@+id/healthBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="200dp"
+        android:layout_weight=".70"
+        android:max="1000"
+        android:progress="250"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp" />
+
 
 </RelativeLayout>

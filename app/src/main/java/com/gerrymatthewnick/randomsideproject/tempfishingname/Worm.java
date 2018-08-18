@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.RelativeLayout;
 
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
+import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
+
 public class Worm extends Item {
 
     private final int ITEM_DELAY = 6000;
@@ -16,6 +19,9 @@ public class Worm extends Item {
 
     public void spawnWorm() {
         super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE);
+        wormImage = getImage();
+        wormExist = true;
+
     }
 
     public int getItemDelay() {

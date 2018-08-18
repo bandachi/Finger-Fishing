@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -60,6 +61,13 @@ public class GameActivity extends AppCompatActivity {
 
         rl = findViewById(R.id.rlGame);
         line = findViewById(R.id.fishingLine);
+
+        ProgressBar health = findViewById(R.id.healthBar);
+        health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
+        health.setX(100);
+        health.setY(100);
+        health.setMinimumWidth(getScreenWidth()/2);
+        health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);

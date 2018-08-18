@@ -62,18 +62,7 @@ public class Healthbar {
 
     //spawn the healthbar
     public void spawnHealth() {
-        health = new ProgressBar(con, null, android.R.attr.progressBarStyleHorizontal);
-        health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        health.setLayoutParams(lp);
-        health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
-        rl.addView(health);
-        health.setMax(1000);
-        health.setProgress(250);
-        health.setX(100);
-        health.setMinimumWidth(getScreenWidth() / 2);
-        health.setY(100);
-
+        health = act.findViewById(R.id.healthBar);
         fish = act.findViewById(currentFish);
     }
 
