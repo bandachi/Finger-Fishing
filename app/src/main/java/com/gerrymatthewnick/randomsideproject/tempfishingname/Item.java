@@ -7,16 +7,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_CHERRY;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.SPAWN_DELAY_WORM;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinImage;
+
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
 
 
 public class Item {

@@ -16,4 +16,8 @@ public class Cherry extends Item {
     public void spawnCherry() {
         super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE);
     }
+
+    public int getItemDelay() {
+        return ITEM_DELAY;
+    }
 }

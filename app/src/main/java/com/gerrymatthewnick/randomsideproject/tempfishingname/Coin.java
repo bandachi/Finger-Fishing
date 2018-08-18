@@ -17,4 +17,8 @@ public class Coin extends Item {
     public void spawnCoin() {
         super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE);
     }
+
+    public int getItemDelay() {
+        return ITEM_DELAY;
+    }
 }

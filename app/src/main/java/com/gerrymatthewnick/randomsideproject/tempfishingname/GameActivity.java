@@ -24,9 +24,6 @@ public class GameActivity extends AppCompatActivity {
     public static int coins = 0;
     static boolean active = false;
     static int level;
-    public static final int SPAWN_DELAY_CHERRY = 4000;
-    public static final int SPAWN_DELAY_WORM = 6000;
-    public static final int SPAWN_DELAY_COIN = 7000;
     public static ImageView line;
 
     public static ImageView cherryImage;
@@ -158,7 +155,7 @@ public class GameActivity extends AppCompatActivity {
             cherry.spawnCherry();
 
             if (active) {
-                itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, SPAWN_DELAY_CHERRY);
+                itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, cherry.getItemDelay());
             }
             else {
                 itemSpawnDelayCherry.removeCallbacksAndMessages(runnableSpawnItemCherry);
@@ -174,7 +171,7 @@ public class GameActivity extends AppCompatActivity {
             worm.spawnWorm();
 
             if (active) {
-                itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, SPAWN_DELAY_WORM);
+                itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, worm.getItemDelay());
             }
             else {
                 itemSpawnDelayWorm.removeCallbacksAndMessages(runnableSpawnItemWorm);
@@ -192,7 +189,7 @@ public class GameActivity extends AppCompatActivity {
             coin.spawnCoin();
 
             if (active) {
-                itemSpawnDelayCoin.postDelayed(runnableSpawnItemCoin, SPAWN_DELAY_COIN);
+                itemSpawnDelayCoin.postDelayed(runnableSpawnItemCoin, coin.getItemDelay());
             }
             else {
                 itemSpawnDelayCoin.removeCallbacksAndMessages(runnableSpawnItemCoin);
