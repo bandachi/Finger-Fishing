@@ -41,3 +41,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+//TODO different fish skins for coins

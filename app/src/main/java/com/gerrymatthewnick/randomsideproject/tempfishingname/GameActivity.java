@@ -147,28 +147,15 @@ public class GameActivity extends AppCompatActivity {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    Runnable runnableSpawnItemWorm = new Runnable() {
-        @Override
-        public void run() {
-            //spawn worm randomly on screen every SPAWN_DELAY_WORM
-            Item item = new Item(rl, con, removeItemDelayWorm, "worm");
-            item.spawn();
-
-            if (active) {
-                itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, SPAWN_DELAY_WORM);
-            }
-            else {
-                itemSpawnDelayWorm.removeCallbacksAndMessages(runnableSpawnItemWorm);
-            }
-        }
-    };
-
     Runnable runnableSpawnItemCherry = new Runnable() {
         @Override
         public void run() {
             //spawn cherry randomly on screen every SPAWN_DELAY_CHERRY
-            Item item = new Item(rl, con, removeItemDelayCherry, "cherry");
-            item.spawn();
+            //Item item = new Item(rl, con, removeItemDelayCherry, "cherry");
+            //item.spawn();
+
+            Cherry cherry = new Cherry(rl, con, removeItemDelayCherry);
+            cherry.spawnCherry();
 
             if (active) {
                 itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, SPAWN_DELAY_CHERRY);
@@ -179,12 +166,30 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    Runnable runnableSpawnItemWorm = new Runnable() {
+        @Override
+        public void run() {
+            //spawn worm randomly on screen every SPAWN_DELAY_WORM
+            Worm worm = new Worm(rl, con, removeItemDelayWorm);
+            worm.spawnWorm();
+
+            if (active) {
+                itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, SPAWN_DELAY_WORM);
+            }
+            else {
+                itemSpawnDelayWorm.removeCallbacksAndMessages(runnableSpawnItemWorm);
+            }
+        }
+    };
+
+
+
     Runnable runnableSpawnItemCoin = new Runnable() {
         @Override
         public void run() {
             //spawn coin randomly on screen every SPAWN_DELAY_COIN
-            Item item = new Item(rl, con, removeItemDelayCoin, "coin");
-            item.spawn();
+            Coin coin = new Coin(rl, con, removeItemDelayCoin);
+            coin.spawnCoin();
 
             if (active) {
                 itemSpawnDelayCoin.postDelayed(runnableSpawnItemCoin, SPAWN_DELAY_COIN);
