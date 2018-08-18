@@ -27,11 +27,8 @@ public class GameActivity extends AppCompatActivity {
     static int level;
     public static ImageView line;
 
-    public static ImageView cherryImage;
     public static boolean cherryExist = false;
-    public static ImageView wormImage;
     public static boolean wormExist = false;
-    public static ImageView coinImage;
     public static boolean coinExist = false;
 
     private int fishId;
@@ -134,9 +131,10 @@ public class GameActivity extends AppCompatActivity {
                 initialDelay.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        runnableSpawnItemCoin.run();
                         runnableSpawnItemCherry.run();
                         runnableSpawnItemWorm.run();
-                        runnableSpawnItemCoin.run();
+
                     }
                 }, 3000);
 
@@ -156,8 +154,6 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             //spawn cherry randomly on screen every SPAWN_DELAY_CHERRY
-            //Item item = new Item(rl, con, removeItemDelayCherry, "cherry");
-            //item.spawn();
 
             Cherry cherry = new Cherry(rl, con, removeItemDelayCherry);
             cherry.spawnCherry();

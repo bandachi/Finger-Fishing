@@ -29,8 +29,9 @@ public class Item {
         return item;
     }
 
-    public void spawn(int itemDelay, String itemType, int itemSize) {
+    public void spawn(int itemDelay, String itemType, int itemSize, int id) {
         item = new ImageView(con);
+        item.setId(id);
 
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -56,4 +57,4 @@ public class Item {
     }
 }
 
-//TODO make imageviews not static 
+//TODO make imageviews not static

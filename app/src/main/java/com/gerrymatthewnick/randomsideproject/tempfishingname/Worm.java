@@ -2,12 +2,13 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.content.Context;
 import android.os.Handler;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
 
 public class Worm extends Item {
+    public static int wormId;
 
     private final int ITEM_DELAY = 6000;
     private final String ITEM_TYPE = "worm";
@@ -18,10 +19,9 @@ public class Worm extends Item {
     }
 
     public void spawnWorm() {
-        super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE);
-        wormImage = getImage();
+        wormId = View.generateViewId();
+        super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE, wormId);
         wormExist = true;
-
     }
 
     public int getItemDelay() {

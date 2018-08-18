@@ -20,15 +20,11 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFERENCES_COINS;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinImage;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coins;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormImage;
 
 public class Healthbar {
 
@@ -124,6 +120,7 @@ public class Healthbar {
 
     //check if line is overlapping a cherry
     public void overlapItemCherry() {
+        ImageView cherryImage = act.findViewById(Cherry.cherryId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
@@ -134,18 +131,20 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
+            Item.removeItem(cherryImage, rl);
+            cherryExist = false;
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
             temp += 100 * level;
             score.setText(Integer.toString(temp));
-            Item.removeItem(cherryImage, rl);
-            cherryExist = false;
+
         }
 
     }
 
     //check if line is overlapping a worm
     public void overlapItemWorm() {
+        ImageView wormImage = act.findViewById(Worm.wormId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
@@ -156,17 +155,20 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            health.incrementProgressBy(100);
             Item.removeItem(wormImage, rl);
             wormExist = false;
+            health.incrementProgressBy(100);
+
         }
     }
 
     //check if line is overlapping a coin
     public void overlapItemCoin() {
+        ImageView coinImage = act.findViewById(Coin.coinId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
+
 
         line.getHitRect(lineRect);
         coinImage.getHitRect(itemRect);
@@ -174,6 +176,9 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
+            Item.removeItem(coinImage, rl);
+            coinExist = false;
+
             coins++;
             SharedPreferences coinsFile = act.getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
             SharedPreferences.Editor editor = coinsFile.edit();
@@ -183,8 +188,6 @@ public class Healthbar {
             TextView coin = act.findViewById(R.id.coinDisplay);
             coin.setText(Integer.toString(coins));
 
-            Item.removeItem(coinImage, rl);
-            coinExist = false;
         }
     }
 
@@ -196,13 +199,13 @@ public class Healthbar {
         public void run() {
 
             end.cancel(true);
-            if (cherryExist) {
+            if (cherryExist && act.findViewById(Cherry.cherryId) != null) {
                 overlapItemCherry();
             }
-            if (wormExist) {
+            if (wormExist && act.findViewById(Worm.wormId) != null) {
                 overlapItemWorm();
             }
-            if (coinExist) {
+            if (coinExist && act.findViewById(Coin.coinId) != null) {
                 overlapItemCoin();
             }
 

@@ -2,13 +2,13 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 import android.content.Context;
 import android.os.Handler;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinImage;
-
 
 public class Coin extends Item {
+    public static int coinId;
 
     private final int ITEM_DELAY = 7000;
     private final String ITEM_TYPE = "coin";
@@ -19,8 +19,8 @@ public class Coin extends Item {
     }
 
     public void spawnCoin() {
-        super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE);
-        coinImage = getImage();
+        coinId = View.generateViewId();
+        super.spawn(ITEM_DELAY, ITEM_TYPE, ITEM_SIZE, coinId);
         coinExist = true;
     }
 
