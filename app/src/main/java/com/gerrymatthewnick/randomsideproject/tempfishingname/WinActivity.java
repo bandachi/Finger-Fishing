@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 
@@ -14,12 +16,17 @@ public class WinActivity extends AppCompatActivity {
     int levelPass;
     int score;
     private boolean delay = false;
+    private AdView adview;
     Handler delayHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
+
+        adview = findViewById(R.id.adViewWin);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adview.loadAd(adRequest);
 
         TextView winText = findViewById(R.id.win);
         TextView winScoreText = findViewById(R.id.winScreenScore);

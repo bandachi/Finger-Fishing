@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFRENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
@@ -16,6 +18,7 @@ public class LoseActivity extends AppCompatActivity {
 
     int score;
     private boolean delay = false;
+    private AdView adview;
     Handler handlerDelay = new Handler();
 
     @Override
@@ -26,6 +29,9 @@ public class LoseActivity extends AppCompatActivity {
         TextView loseText = findViewById(R.id.lose);
         TextView scoreText = findViewById(R.id.scoreLoseDisplay);
 
+        adview = findViewById(R.id.adViewLose);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adview.loadAd(adRequest);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
