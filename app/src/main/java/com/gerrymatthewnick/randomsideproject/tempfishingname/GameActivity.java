@@ -23,9 +23,8 @@ public class GameActivity extends AppCompatActivity {
     public static final String PREFERENCES_COINS = "coins";
     public static int highscore = 0;
     public static int coins = 0;
-    static boolean active = false;
-    static int level;
-    public static ImageView line;
+    public static boolean active = false;
+    public static int level;
 
     public static boolean cherryExist = false;
     public static boolean wormExist = false;
@@ -57,7 +56,6 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         rl = findViewById(R.id.rlGame);
-        line = findViewById(R.id.fishingLine);
 
         ProgressBar health = findViewById(R.id.healthBar);
         health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
@@ -122,8 +120,10 @@ public class GameActivity extends AppCompatActivity {
                 fish.startChangeVelocity();
                 fish.startVelocity();
 
+                ImageView line = findViewById(R.id.fishingLine);
+
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin);
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
@@ -206,6 +206,7 @@ public class GameActivity extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
+        ImageView line = findViewById(R.id.fishingLine);
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:

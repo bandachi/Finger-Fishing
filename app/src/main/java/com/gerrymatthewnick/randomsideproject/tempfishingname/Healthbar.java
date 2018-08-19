@@ -23,7 +23,6 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coins;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.line;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
 
 public class Healthbar {
@@ -31,6 +30,7 @@ public class Healthbar {
     private ProgressBar health;
     private int currentFish;
     private ImageView fish;
+    private ImageView line;
     private RelativeLayout rl;
     private Context con;
     private Activity act;
@@ -44,7 +44,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin) {
+    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line) {
         this.rl = rl;
         this.con = con;
         this.act = act;
@@ -54,6 +54,7 @@ public class Healthbar {
         this.itemSpawnDelayCherry = itemSpawnDelayCherry;
         this.itemSpawnDelayWorm = itemSpawnDelayWorm;
         this.itemSpawnDelayCoin = itemSpawnDelayCoin;
+        this.line = line;
     }
 
     //spawn the healthbar
@@ -74,8 +75,10 @@ public class Healthbar {
 
         if (fishRect.contains(lineRect)) {
             health.incrementProgressBy(3);
+            this.fish.setColorFilter(Color.CYAN);
         } else {
             health.incrementProgressBy(-1);
+            this.fish.clearColorFilter();
         }
 
         //check if healthbar is below 10, if so, go to lose activity
@@ -169,7 +172,6 @@ public class Healthbar {
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
-
         line.getHitRect(lineRect);
         coinImage.getHitRect(itemRect);
 
@@ -222,3 +224,5 @@ public class Healthbar {
         check.run();
     }
 }
+
+//TODO Future and make line not static
