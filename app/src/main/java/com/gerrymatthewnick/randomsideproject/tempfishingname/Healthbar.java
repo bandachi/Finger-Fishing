@@ -21,14 +21,14 @@ import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivit
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coins;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
 
 public class Healthbar {
 
     private ProgressBar health;
     private int currentFish;
+    private int coins;
+    private int level;
     private ImageView fish;
     private ImageView line;
     private RelativeLayout rl;
@@ -44,7 +44,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line) {
+    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level) {
         this.rl = rl;
         this.con = con;
         this.act = act;
@@ -55,6 +55,8 @@ public class Healthbar {
         this.itemSpawnDelayWorm = itemSpawnDelayWorm;
         this.itemSpawnDelayCoin = itemSpawnDelayCoin;
         this.line = line;
+        this.coins = coins;
+        this.level = level;
     }
 
     //spawn the healthbar

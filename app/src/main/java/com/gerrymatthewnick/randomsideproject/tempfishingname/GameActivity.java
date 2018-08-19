@@ -21,15 +21,13 @@ public class GameActivity extends AppCompatActivity {
 
     public static final String PREFRENCES_HIGHSCORE = "highscore";
     public static final String PREFERENCES_COINS = "coins";
-    public static int highscore = 0;
-    public static int coins = 0;
     public static boolean active = false;
-    public static int level;
 
     public static boolean cherryExist = false;
     public static boolean wormExist = false;
     public static boolean coinExist = false;
 
+    public int level;
     private int fishId;
     private RelativeLayout rl;
     private Context con = this;
@@ -69,13 +67,13 @@ public class GameActivity extends AppCompatActivity {
 
         //load highscore to display on game_activity activity
         SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
-        highscore = settingsHigh.getInt("highest", 0);
+        int highscore = settingsHigh.getInt("highest", 0);
         TextView highDis = findViewById(R.id.highscoreDisplay);
         highDis.setText(highDis.getText().toString() + Integer.toString(highscore));
 
         //load coins to display on game activity activity
         SharedPreferences settingsCoin = getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
-        coins = settingsCoin.getInt("coinCount", 0);
+        final int coins = settingsCoin.getInt("coinCount", 0);
         TextView coinDis = findViewById(R.id.coinDisplay);
         coinDis.setText(Integer.toString(coins));
 
@@ -112,7 +110,7 @@ public class GameActivity extends AppCompatActivity {
                 fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
 
                 //Create fish object and start moving it
-                Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish);
+                Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish, level);
                 fish.spawnFish();
                 fish.setX(getScreenWidth()/2);
                 fish.setY(getScreenHeight()/2);
@@ -123,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line);
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 

@@ -2,17 +2,18 @@ package com.gerrymatthewnick.randomsideproject.tempfishingname;
 
 
 import android.content.Context;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.level;
 
 public class Fish {
 
     private int currentFish;
+    private int level;
     private int vel;
     private int fishType;
     private int change;
@@ -27,7 +28,7 @@ public class Fish {
     private android.os.Handler frames;
 
 
-    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, int currentFish, android.os.Handler changeVel, android.os.Handler frames) {
+    public Fish(int fishType, int change, int vel, RelativeLayout relativeL, Context current, int currentFish, Handler changeVel, Handler frames, int level) {
 
         this.fishType = fishType;
         this.change = change;
@@ -37,6 +38,7 @@ public class Fish {
         this.currentFish = currentFish;
         this.changeVel = changeVel;
         this.frames = frames;
+        this.level = level;
 
     }
 

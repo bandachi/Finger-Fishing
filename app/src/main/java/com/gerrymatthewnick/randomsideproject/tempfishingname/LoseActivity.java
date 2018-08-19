@@ -12,7 +12,6 @@ import com.google.android.gms.ads.AdView;
 
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFRENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.highscore;
 
 public class LoseActivity extends AppCompatActivity {
 
@@ -47,6 +46,9 @@ public class LoseActivity extends AppCompatActivity {
         loseText.setVisibility(View.VISIBLE);
         loseText.setAlpha(0.0f);
         loseText.animate().alpha(1.0f).setListener(null).setDuration(2000);
+
+        SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+        int highscore = settingsHigh.getInt("highest", 0);
 
         if (score > highscore) {
             SharedPreferences highscoreFile = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
