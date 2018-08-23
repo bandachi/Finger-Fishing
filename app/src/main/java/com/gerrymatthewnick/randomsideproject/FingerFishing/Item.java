@@ -50,7 +50,7 @@ public class Item {
                     rl.removeView(item);
                 }
             }
-        }, itemDelay);
+        }, itemDelay/4);
     }
     public static void removeItem(ImageView item, RelativeLayout rl) {
         rl.removeView(item);

@@ -142,11 +142,8 @@ public class Healthbar {
             int temp = Integer.parseInt(score.getText().toString());
             temp += 100 * level;
             score.setText(Integer.toString(temp));
-
         }
-
     }
-
     //check if line is overlapping a worm
     public void overlapItemWorm() {
         ImageView wormImage = act.findViewById(Worm.wormId);
@@ -163,7 +160,6 @@ public class Healthbar {
             Item.removeItem(wormImage, rl);
             wormExist = false;
             health.incrementProgressBy(100);
-
         }
     }
 
