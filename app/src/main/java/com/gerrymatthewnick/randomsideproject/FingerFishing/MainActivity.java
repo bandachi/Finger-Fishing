@@ -5,14 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 
 public class MainActivity extends AppCompatActivity {
+
+    private AdView adview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        adview = findViewById(R.id.adViewMain);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adview.loadAd(adRequest);
     }
 
     //Change activity to GameActivity

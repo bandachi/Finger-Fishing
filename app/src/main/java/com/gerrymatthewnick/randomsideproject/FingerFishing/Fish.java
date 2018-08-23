@@ -49,7 +49,6 @@ public class Fish {
         fish.setY(y);
     }
 
-
     //Every change, change the fish's direction and speed
     Runnable runnableChange = new Runnable() {
         @Override
