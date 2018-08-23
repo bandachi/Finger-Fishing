@@ -1,5 +1,6 @@
 package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -21,6 +22,7 @@ public class LoseActivity extends AppCompatActivity {
     int score;
     private boolean delay = false;
     private AdView adview;
+    private Context con = this;
     Handler handlerDelay = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
@@ -66,21 +68,20 @@ public class LoseActivity extends AppCompatActivity {
         changeFishVelocity = new Handler();
         moveFish = new Handler();
 
-        int fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
-        RelativeLayout rl = findViewById(R.id.rlLose);
-
-        Fish fish = new Fish(fishId, 1000, 10, rl, this, View.generateViewId(), changeFishVelocity, moveFish, 2);
-        fish.spawnFish();
-        fish.setX(getScreenWidth()/2);
-        fish.setY(getScreenHeight()/2);
-
-        fish.startChangeVelocity();
-        fish.startVelocity();
-
         handlerDelay.postDelayed(new Runnable() {
             @Override
             public void run() {
                 delay = true;
+                int fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+                RelativeLayout rl = findViewById(R.id.rlLose);
+
+                Fish fish = new Fish(fishId, 1000, 10, rl, con, View.generateViewId(), changeFishVelocity, moveFish, 2);
+                fish.spawnFish();
+                fish.setX(getScreenWidth()/2);
+                fish.setY(getScreenHeight()/2);
+
+                fish.startChangeVelocity();
+                fish.startVelocity();
             }
         }, 400);
     }
