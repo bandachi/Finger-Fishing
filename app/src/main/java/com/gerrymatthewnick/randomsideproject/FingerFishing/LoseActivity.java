@@ -70,6 +70,7 @@ public class LoseActivity extends AppCompatActivity {
         if (delay) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 
@@ -77,6 +78,7 @@ public class LoseActivity extends AppCompatActivity {
         if (delay) {
             Intent intent = new Intent(this, GameActivity.class);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 

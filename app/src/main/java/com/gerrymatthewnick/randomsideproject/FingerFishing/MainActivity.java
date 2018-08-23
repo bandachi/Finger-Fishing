@@ -19,19 +19,23 @@ public class MainActivity extends AppCompatActivity {
     public void changeToGame(View view) {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public void changeToSettings(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
     public void changeToInstructions(View view) {
         Intent intent = new Intent(this, InstructionActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
     public void changeToShop(View view) {
         Intent intent = new Intent(this, ShopActivity.class);
         startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override

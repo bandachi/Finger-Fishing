@@ -62,6 +62,7 @@ public class WinActivity extends AppCompatActivity {
         if (delay) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
     public void onWinAgain (View view) {
@@ -70,6 +71,7 @@ public class WinActivity extends AppCompatActivity {
             intent.putExtra("levelNumber", levelPass);
             intent.putExtra("scoreNumber", score);
             startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }
     }
 

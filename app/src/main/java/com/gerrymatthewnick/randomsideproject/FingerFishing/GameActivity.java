@@ -134,10 +134,10 @@ public class GameActivity extends AppCompatActivity {
                         runnableSpawnItemWorm.run();
 
                     }
-                }, 3000);
+                }, 2000);
 
             }
-        }, 3000);
+        }, 1500);
 
     }
 
