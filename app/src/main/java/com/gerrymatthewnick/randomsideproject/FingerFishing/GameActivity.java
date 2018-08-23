@@ -34,7 +34,9 @@ public class GameActivity extends AppCompatActivity {
     private Activity act = this;
     private int score = 0;
 
-    Handler initialDelay = new Handler();
+    Handler initialDelayCherry = new Handler();
+    Handler initialDelayWorm = new Handler();
+    Handler initialDelayCoin = new Handler();
     Handler startSpawnFish = new Handler();
     Handler itemSpawnDelayCherry = new Handler();
     Handler itemSpawnDelayWorm = new Handler();
@@ -126,16 +128,26 @@ public class GameActivity extends AppCompatActivity {
                 healthbar.startCheck();
 
                 //Run item spawn runnables
-                initialDelay.postDelayed(new Runnable() {
+                initialDelayCherry.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        runnableSpawnItemCoin.run();
                         runnableSpawnItemCherry.run();
-                        runnableSpawnItemWorm.run();
-
                     }
                 }, 2000);
 
+                initialDelayWorm.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        runnableSpawnItemWorm.run();
+                    }
+                }, 3000);
+
+                initialDelayCoin.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        runnableSpawnItemCoin.run();
+                    }
+                }, 4000);
             }
         }, 1500);
 
