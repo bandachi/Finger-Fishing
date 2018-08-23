@@ -1,11 +1,11 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Context;
 import android.os.Handler;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.coinExist;
 
 public class Coin extends Item {
     public static int coinId;

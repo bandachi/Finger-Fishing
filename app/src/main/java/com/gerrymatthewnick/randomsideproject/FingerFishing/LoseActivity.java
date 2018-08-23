@@ -1,4 +1,4 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFRENCES_HIGHSCORE;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFRENCES_HIGHSCORE;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 
 public class LoseActivity extends AppCompatActivity {
 

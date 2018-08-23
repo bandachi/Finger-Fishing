@@ -1,4 +1,4 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import org.junit.Test;
 

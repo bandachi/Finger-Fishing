@@ -1,4 +1,4 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 
 public class WinActivity extends AppCompatActivity {
 
@@ -77,5 +77,10 @@ public class WinActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         active = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //prevent back button
     }
 }

@@ -1,4 +1,4 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.gerrymatthewnick.randomsideproject.tempfishingname", appContext.getPackageName());
+        assertEquals("com.gerrymatthewnick.randomsideproject.FingerFishing", appContext.getPackageName());
     }
 }

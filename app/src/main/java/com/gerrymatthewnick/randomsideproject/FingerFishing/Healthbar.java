@@ -1,4 +1,4 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,11 +17,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.PREFERENCES_COINS;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.cherryExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.coinExist;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.wormExist;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.cherryExist;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.coinExist;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.wormExist;
 
 public class Healthbar {
 

@@ -1,4 +1,4 @@
-package com.gerrymatthewnick.randomsideproject.tempfishingname;
+package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenHeight;
-import static com.gerrymatthewnick.randomsideproject.tempfishingname.GameActivity.getScreenWidth;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenHeight;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenWidth;
 
 
 public class Item {
