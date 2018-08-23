@@ -181,8 +181,6 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-
-
     Runnable runnableSpawnItemCoin = new Runnable() {
         @Override
         public void run() {
@@ -242,6 +240,8 @@ public class GameActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         active = false;
+        changeFishVelocity.removeCallbacksAndMessages(null);
+        moveFish.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -252,6 +252,8 @@ public class GameActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         active = false;
+        changeFishVelocity.removeCallbacksAndMessages(null);
+        moveFish.removeCallbacksAndMessages(null);
     }
 }
 

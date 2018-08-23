@@ -89,11 +89,7 @@ public class Fish {
                 velY = -Math.abs(velY);
             }
 
-            if (active) {
-                changeVel.postDelayed(runnableChange, change + (level * 200));
-            } else {
-                changeVel.removeCallbacks(runnableChange);
-            }
+            changeVel.postDelayed(runnableChange, change + (level * 200));
         }
     };
 
@@ -113,11 +109,7 @@ public class Fish {
                 runnableChange.run();
             }
 
-            if (active) {
-                frames.postDelayed(runnableVelocity, 20);
-            } else {
-                frames.removeCallbacks(runnableVelocity);
-            }
+            frames.postDelayed(runnableVelocity, 20);
         }
     };
     public void startVelocity() {

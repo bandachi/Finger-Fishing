@@ -77,14 +77,14 @@ public class Healthbar {
 
         if (fishRect.contains(lineRect)) {
             health.incrementProgressBy(3);
-            this.fish.setColorFilter(Color.CYAN);
+            this.fish.setColorFilter(Color.CYAN * health.getProgress());
         } else {
             health.incrementProgressBy(-1);
             this.fish.clearColorFilter();
         }
 
-        //check if healthbar is below 10, if so, go to lose activity
-        if (health.getProgress() < 10 && active) {
+        //check if healthbar is below 0, if so, go to lose activity
+        if (health.getProgress() <= 0 && active) {
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
             itemSpawnDelayCherry.removeCallbacksAndMessages(null);
@@ -100,8 +100,8 @@ public class Healthbar {
 
             return true;
         }
-        //check if healthbar is above 990, if so, go to win activity
-        else if (health.getProgress() > 990 && active) {
+        //check if healthbar is above 1000, if so, go to win activity
+        else if (health.getProgress() >= 1000 && active) {
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
             itemSpawnDelayCherry.removeCallbacksAndMessages(null);

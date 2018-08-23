@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         active = false;
     }
+    @Override
+    public void onBackPressed() {
+        //prevent back press
+    }
 
 }
 //TODO different fish skins for coins

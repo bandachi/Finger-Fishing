@@ -6,12 +6,15 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFRENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenHeight;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenWidth;
 
 public class LoseActivity extends AppCompatActivity {
 
@@ -19,6 +22,8 @@ public class LoseActivity extends AppCompatActivity {
     private boolean delay = false;
     private AdView adview;
     Handler handlerDelay = new Handler();
+    Handler changeFishVelocity;
+    Handler moveFish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,20 @@ public class LoseActivity extends AppCompatActivity {
             loseText.setText("New Highscore!");
         }
 
+        changeFishVelocity = new Handler();
+        moveFish = new Handler();
+
+        int fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+        RelativeLayout rl = findViewById(R.id.rlLose);
+
+        Fish fish = new Fish(fishId, 1000, 10, rl, this, View.generateViewId(), changeFishVelocity, moveFish, 2);
+        fish.spawnFish();
+        fish.setX(getScreenWidth()/2);
+        fish.setY(getScreenHeight()/2);
+
+        fish.startChangeVelocity();
+        fish.startVelocity();
+
         handlerDelay.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -86,5 +105,10 @@ public class LoseActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         active = false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //prevent back button
     }
 }
