@@ -70,10 +70,6 @@ public class Fish {
             //randomly make value velocity negative
             if (rand1 > 5) {
                 velX = -velX;
-                fish.setScaleX(1f);
-            }
-            else {
-                fish.setScaleX(-1f);
             }
             if (rand2 > 5) {
                 velY = -velY;
@@ -107,6 +103,13 @@ public class Fish {
         public void run() {
             fish.setX(fish.getX() + velX);
             fish.setY(fish.getY() + velY);
+
+            if (velX > 0) {
+                fish.setScaleX(-1f);
+            }
+            else {
+                fish.setScaleX(1f);
+            }
 
             if (fish.getX() < 0 || fish.getX() > (getScreenWidth() - fish.getWidth()) || fish.getY() < getScreenHeight() / 3 || fish.getY() > (getScreenHeight() - fish.getHeight())) {
                 changeVel.removeCallbacks(runnableChange);
