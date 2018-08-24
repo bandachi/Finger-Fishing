@@ -53,6 +53,7 @@ public class Fish {
     Runnable runnableChange = new Runnable() {
         @Override
         public void run() {
+
             velX = 0;
             velY = 0;
             velX = (float)(Math.random() * vel);
@@ -69,6 +70,10 @@ public class Fish {
             //randomly make value velocity negative
             if (rand1 > 5) {
                 velX = -velX;
+                fish.setScaleX(1f);
+            }
+            else {
+                fish.setScaleX(-1f);
             }
             if (rand2 > 5) {
                 velY = -velY;
