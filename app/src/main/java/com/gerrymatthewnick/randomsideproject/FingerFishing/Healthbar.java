@@ -97,6 +97,7 @@ public class Healthbar {
             int temp = Integer.parseInt(score.getText().toString());
             intent.putExtra("scoreNumber", temp);
             con.startActivity(intent);
+            act.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
             return true;
         }
@@ -116,6 +117,7 @@ public class Healthbar {
             intent.putExtra("scoreNumber", temp);
 
             con.startActivity(intent);
+            act.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
             return true;
         } else {
