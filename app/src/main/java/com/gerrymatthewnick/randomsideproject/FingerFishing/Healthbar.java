@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -34,6 +35,8 @@ public class Healthbar {
     private RelativeLayout rl;
     private Context con;
     private Activity act;
+    private SoundPool mSoundPool;
+    private int soundIdWormPickup;
 
     private Handler checkOverlap;
     private Handler changeDelay;
@@ -44,7 +47,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level) {
+    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, SoundPool mSoundPool) {
         this.rl = rl;
         this.con = con;
         this.act = act;
@@ -57,12 +60,18 @@ public class Healthbar {
         this.line = line;
         this.coins = coins;
         this.level = level;
+        this.mSoundPool = mSoundPool;
     }
 
     //spawn the healthbar
     public void spawnHealth() {
         health = act.findViewById(R.id.healthBar);
         fish = act.findViewById(currentFish);
+    }
+
+    //init soundPool
+    public void initSound() {
+        soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
     }
 
     //check if line is overlapping the fish
@@ -162,6 +171,7 @@ public class Healthbar {
             Item.removeItem(wormImage, rl);
             wormExist = false;
             health.incrementProgressBy(100);
+            mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
         }
     }
 

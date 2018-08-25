@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
     private Context con = this;
     private Activity act = this;
     private int score = 0;
+    private SoundPool mSoundPool;
 
     Handler initialDelayCherry = new Handler();
     Handler initialDelayWorm = new Handler();
@@ -62,6 +65,8 @@ public class GameActivity extends AppCompatActivity {
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
         //load highscore to display on game_activity activity
         initScore();
@@ -99,8 +104,9 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level);
+                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool);
                 healthbar.spawnHealth();
+                healthbar.initSound();
                 healthbar.startCheck();
 
                 //Run item spawn runnables
