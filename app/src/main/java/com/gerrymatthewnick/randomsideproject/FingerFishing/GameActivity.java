@@ -23,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
 
     public static final String PREFRENCES_HIGHSCORE = "highscore";
     public static final String PREFERENCES_COINS = "coins";
+    public static final String PREFERENCES_SOUND = "sound";
     public static boolean active = false;
 
     public static boolean cherryExist = false;
@@ -34,7 +35,6 @@ public class GameActivity extends AppCompatActivity {
     private int coins;
     private RelativeLayout rl;
     private Context con = this;
-    private Activity act = this;
     private int score = 0;
     private SoundPool mSoundPool;
 
@@ -104,7 +104,7 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, act, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool);
+                Healthbar healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool);
                 healthbar.spawnHealth();
                 healthbar.initSound();
                 healthbar.startCheck();

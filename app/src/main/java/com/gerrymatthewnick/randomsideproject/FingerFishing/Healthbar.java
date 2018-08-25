@@ -19,6 +19,7 @@ import java.util.concurrent.Future;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_SOUND;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.coinExist;
@@ -37,6 +38,7 @@ public class Healthbar {
     private Activity act;
     private SoundPool mSoundPool;
     private int soundIdWormPickup;
+    private boolean soundOption;
 
     private Handler checkOverlap;
     private Handler changeDelay;
@@ -47,10 +49,10 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Activity act, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, SoundPool mSoundPool) {
+    public Healthbar(RelativeLayout rl, Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, SoundPool mSoundPool) {
         this.rl = rl;
         this.con = con;
-        this.act = act;
+        this.act = (Activity)con;
         this.checkOverlap = checkOverlap;
         this.currentFish = currentFish;
         this.changeDelay = changeDelay;
@@ -71,7 +73,11 @@ public class Healthbar {
 
     //init soundPool
     public void initSound() {
-        soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
+        SharedPreferences settingsSound = act.getSharedPreferences(PREFERENCES_SOUND, MODE_PRIVATE);
+        soundOption = settingsSound.getBoolean("soundOption", true);
+        if (soundOption) {
+            soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
+        }
     }
 
     //check if line is overlapping the fish
