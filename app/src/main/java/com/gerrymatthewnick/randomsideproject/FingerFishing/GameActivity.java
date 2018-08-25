@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
 
     public int level;
     private int fishId;
+    private int coins;
     private RelativeLayout rl;
     private Context con = this;
     private Activity act = this;
@@ -57,37 +58,19 @@ public class GameActivity extends AppCompatActivity {
 
         rl = findViewById(R.id.rlGame);
 
-        ProgressBar health = findViewById(R.id.healthBar);
-        health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
-        health.setX(100);
-        health.setY(100);
-        health.setMinimumWidth(getScreenWidth()/2);
-        health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+        initHealth();
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         //load highscore to display on game_activity activity
-        SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
-        int highscore = settingsHigh.getInt("highest", 0);
-        TextView highDis = findViewById(R.id.highscoreDisplay);
-        highDis.setText(highDis.getText().toString() + Integer.toString(highscore));
+        initScore();
 
         //load coins to display on game activity activity
-        SharedPreferences settingsCoin = getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
-        final int coins = settingsCoin.getInt("coinCount", 0);
-        TextView coinDis = findViewById(R.id.coinDisplay);
-        coinDis.setText(Integer.toString(coins));
+        initCoins();
 
         //get level and score from previous game levels
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            level = extras.getInt("levelNumber");
-            score = extras.getInt("scoreNumber");
-        }
-        else {
-            level = 1;
-        }
+        getLevelScore();
 
         //Start the fish spawning method after 3 seconds
         startSpawnFish.postDelayed(new Runnable() {
@@ -97,15 +80,8 @@ public class GameActivity extends AppCompatActivity {
                 moveFish = new Handler();
                 checkOverlap = new Handler();
 
-                //Display level text
-                TextView levelText = findViewById(R.id.levelDisplay);
-                levelText.setText("Level: " + level);
-                levelText.setTextColor(Color.BLACK);
-                levelText.setTextSize(22);
-
-                //Display score text
-                TextView scoreText = findViewById(R.id.scoreDisplay);
-                scoreText.setText(Integer.toString(score));
+                //Display level text and score text
+                dispLevelScoreText();
 
                 //Get fish image from resources
                 int currentFish = View.generateViewId();
@@ -158,6 +134,49 @@ public class GameActivity extends AppCompatActivity {
     }
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    public void initHealth() {
+        ProgressBar health = findViewById(R.id.healthBar);
+        health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
+        health.setX(100);
+        health.setY(100);
+        health.setMinimumWidth(getScreenWidth()/2);
+        health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
+    }
+
+    public void initScore() {
+        SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+        int highscore = settingsHigh.getInt("highest", 0);
+        TextView highDis = findViewById(R.id.highscoreDisplay);
+        highDis.setText(highDis.getText().toString() + Integer.toString(highscore));
+    }
+
+    public void initCoins() {
+        SharedPreferences settingsCoin = getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
+        coins = settingsCoin.getInt("coinCount", 0);
+        TextView coinDis = findViewById(R.id.coinDisplay);
+        coinDis.setText(Integer.toString(coins));
+    }
+
+    public void getLevelScore() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            level = extras.getInt("levelNumber");
+            score = extras.getInt("scoreNumber");
+        }
+        else {
+            level = 1;
+        }
+    }
+
+    public void dispLevelScoreText() {
+        TextView levelText = findViewById(R.id.levelDisplay);
+        levelText.setText("Level: " + level);
+        levelText.setTextColor(Color.BLACK);
+        levelText.setTextSize(22);
+        TextView scoreText = findViewById(R.id.scoreDisplay);
+        scoreText.setText(Integer.toString(score));
     }
 
     Runnable runnableSpawnItemCherry = new Runnable() {
