@@ -1,7 +1,6 @@
 package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -21,7 +20,7 @@ import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static final String PREFRENCES_HIGHSCORE = "highscore";
+    public static final String PREFERENCES_HIGHSCORE = "highscore";
     public static final String PREFERENCES_COINS = "coins";
     public static final String PREFERENCES_SOUND = "sound";
     public static boolean active = false;
@@ -152,7 +151,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void initScore() {
-        SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+        SharedPreferences settingsHigh = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
         int highscore = settingsHigh.getInt("highest", 0);
         TextView highDis = findViewById(R.id.highscoreDisplay);
         highDis.setText(highDis.getText().toString() + Integer.toString(highscore));

@@ -13,12 +13,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_SOUND;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.cherryExist;
@@ -40,7 +43,6 @@ public class Healthbar {
     private int soundIdWormPickup;
     private int soundIdCherryPickup;
     private boolean soundOption;
-
     private Handler checkOverlap;
     private Handler changeDelay;
     private Handler itemSpawnDelayWorm;
@@ -83,7 +85,7 @@ public class Healthbar {
     }
 
     //check if line is overlapping the fish
-    public boolean overlap(ImageView first) {
+    private boolean overlap(ImageView first) {
         Rect fishRect = new Rect();
         Rect lineRect = new Rect();
 
@@ -143,7 +145,7 @@ public class Healthbar {
     }
 
     //check if line is overlapping a cherry
-    public void overlapItemCherry() {
+    private void overlapItemCherry() {
         ImageView cherryImage = act.findViewById(Cherry.cherryId);
 
         Rect lineRect = new Rect();
@@ -162,10 +164,22 @@ public class Healthbar {
             temp += 100 * level;
             score.setText(Integer.toString(temp));
             mSoundPool.play(soundIdCherryPickup, 1, 1, 0, 0, 1);
+
+            SharedPreferences cherryFile = act.getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
+
+            int highscore = cherryFile.getInt("highest", 0);
+
+            if (temp > highscore) {
+                SharedPreferences.Editor editor = cherryFile.edit();
+                editor.putInt("highest", temp);
+                editor.apply();
+                TextView highScoreText = act.findViewById(R.id.highscoreDisplay);
+                highScoreText.setText("Highscore: " + Integer.toString(temp));
+            }
         }
     }
     //check if line is overlapping a worm
-    public void overlapItemWorm() {
+    private void overlapItemWorm() {
         ImageView wormImage = act.findViewById(Worm.wormId);
 
         Rect lineRect = new Rect();
@@ -185,7 +199,7 @@ public class Healthbar {
     }
 
     //check if line is overlapping a coin
-    public void overlapItemCoin() {
+    private void overlapItemCoin() {
         ImageView coinImage = act.findViewById(Coin.coinId);
 
         Rect lineRect = new Rect();

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFRENCES_HIGHSCORE;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenWidth;
@@ -54,11 +54,11 @@ public class LoseActivity extends AppCompatActivity {
         loseText.setAlpha(0.0f);
         loseText.animate().alpha(1.0f).setListener(null).setDuration(2000);
 
-        SharedPreferences settingsHigh = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+        SharedPreferences settingsHigh = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
         int highscore = settingsHigh.getInt("highest", 0);
 
         if (score > highscore) {
-            SharedPreferences highscoreFile = getSharedPreferences(PREFRENCES_HIGHSCORE, MODE_PRIVATE);
+            SharedPreferences highscoreFile = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
             SharedPreferences.Editor editor = highscoreFile.edit();
             editor.putInt("highest", score);
             editor.apply();
