@@ -78,6 +78,7 @@ public class Healthbar {
         soundOption = settingsSound.getBoolean("soundOption", true);
         if (soundOption) {
             soundIdCherryPickup = mSoundPool.load(act, R.raw.cherry_pickup, 1);
+            soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
         }
     }
 
@@ -179,7 +180,7 @@ public class Healthbar {
             Item.removeItem(wormImage, rl);
             wormExist = false;
             health.incrementProgressBy(100);
-            //mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
+            mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
         }
     }
 

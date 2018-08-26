@@ -66,7 +66,7 @@ public class GameActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
-        mSoundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        mSoundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
 
         //load highscore to display on game_activity activity
         initScore();
