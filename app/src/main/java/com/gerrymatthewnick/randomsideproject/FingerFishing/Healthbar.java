@@ -38,6 +38,7 @@ public class Healthbar {
     private Activity act;
     private SoundPool mSoundPool;
     private int soundIdWormPickup;
+    private int soundIdCherryPickup;
     private boolean soundOption;
 
     private Handler checkOverlap;
@@ -76,7 +77,7 @@ public class Healthbar {
         SharedPreferences settingsSound = act.getSharedPreferences(PREFERENCES_SOUND, MODE_PRIVATE);
         soundOption = settingsSound.getBoolean("soundOption", true);
         if (soundOption) {
-            soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
+            soundIdCherryPickup = mSoundPool.load(act, R.raw.cherry_pickup, 1);
         }
     }
 
@@ -159,6 +160,7 @@ public class Healthbar {
             int temp = Integer.parseInt(score.getText().toString());
             temp += 100 * level;
             score.setText(Integer.toString(temp));
+            mSoundPool.play(soundIdCherryPickup, 1, 1, 0, 0, 1);
         }
     }
     //check if line is overlapping a worm
@@ -177,7 +179,7 @@ public class Healthbar {
             Item.removeItem(wormImage, rl);
             wormExist = false;
             health.incrementProgressBy(100);
-            mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
+            //mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
         }
     }
 

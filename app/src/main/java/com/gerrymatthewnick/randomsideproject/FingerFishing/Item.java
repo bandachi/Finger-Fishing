@@ -56,5 +56,3 @@ public class Item {
         rl.removeView(item);
     }
 }
-
-//TODO make imageviews not static
