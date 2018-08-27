@@ -20,8 +20,10 @@ import java.util.concurrent.Future;
 import static android.content.Context.MODE_PRIVATE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COIN_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_SOUND;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.cherryExist;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.coinExist;
@@ -182,10 +184,10 @@ public class Healthbar {
 
             SharedPreferences cherryCountFile = act.getSharedPreferences(PREFERENCES_CHERRY_COUNT, MODE_PRIVATE);
             int currentCherryCount = cherryCountFile.getInt("cherries", 0);
-            SharedPreferences.Editor editor = cherryCountFile.edit();
+            SharedPreferences.Editor editorStats = cherryCountFile.edit();
 
-            editor.putInt("cherries", currentCherryCount + 1);
-            editor.apply();
+            editorStats.putInt("cherries", currentCherryCount + 1);
+            editorStats.apply();
         }
     }
     //check if line is overlapping a worm
@@ -205,7 +207,16 @@ public class Healthbar {
             wormExist = false;
             health.incrementProgressBy(100);
             mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
+
+            SharedPreferences wormCountFile = act.getSharedPreferences(PREFERENCES_WORM_COUNT, MODE_PRIVATE);
+            int currentWormCount = wormCountFile.getInt("worms", 0);
+            SharedPreferences.Editor editorStats = wormCountFile.edit();
+
+            editorStats.putInt("worms", currentWormCount + 1);
+            editorStats.apply();
         }
+
+
     }
 
     //check if line is overlapping a coin
@@ -224,6 +235,7 @@ public class Healthbar {
             Item.removeItem(coinImage, rl);
             coinExist = false;
 
+            //for current coin count
             coins++;
             SharedPreferences coinsFile = act.getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
             SharedPreferences.Editor editor = coinsFile.edit();
@@ -233,7 +245,16 @@ public class Healthbar {
             TextView coin = act.findViewById(R.id.coinDisplay);
             coin.setText(Integer.toString(coins));
 
+            //for total coin count over the total time played
+            SharedPreferences coinCountFile = act.getSharedPreferences(PREFERENCES_COIN_COUNT, MODE_PRIVATE);
+            int currentCoinCount = coinCountFile.getInt("coins", 0);
+            SharedPreferences.Editor editorStats = coinCountFile.edit();
+
+            editorStats.putInt("coins", currentCoinCount + 1);
+            editorStats.apply();
         }
+
+
     }
 
     //check if line is overlapping any important image views

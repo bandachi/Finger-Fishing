@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COIN_COUNT;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 
 public class StatsActivity extends AppCompatActivity {
 
@@ -16,12 +18,22 @@ public class StatsActivity extends AppCompatActivity {
     private SharedPreferences cherryCountFile;
     private int currentCherryCount;
 
+    private TextView wormCountDisplay;
+    private SharedPreferences wormCountFile;
+    private int currentWormCount;
+
+    private TextView coinCountDisplay;
+    private SharedPreferences coinCountFile;
+    private int currentCoinCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
 
         setCherryDisplay();
+        setWormDisplay();
+        setCoinDisplay();
     }
 
     private void setCherryDisplay() {
@@ -29,9 +41,24 @@ public class StatsActivity extends AppCompatActivity {
         currentCherryCount = cherryCountFile.getInt("cherries", 0);
 
         cherryCountDisplay = findViewById(R.id.cherryCountDisplay);
-        cherryCountDisplay.setText("Number of cherries collected: " + currentCherryCount);
+        cherryCountDisplay.setText("Total Number of cherries collected: " + currentCherryCount);
     }
 
+    private void setWormDisplay() {
+        wormCountFile = getSharedPreferences(PREFERENCES_WORM_COUNT, MODE_PRIVATE);
+        currentWormCount = wormCountFile.getInt("worms", 0);
+
+        wormCountDisplay = findViewById(R.id.wormCountDisplay);
+        wormCountDisplay.setText("Total Number of worms collected: " + currentWormCount);
+    }
+
+    public void setCoinDisplay() {
+        coinCountFile = getSharedPreferences(PREFERENCES_COIN_COUNT, MODE_PRIVATE);
+        currentCoinCount = coinCountFile.getInt("coins", 0);
+
+        coinCountDisplay = findViewById(R.id.coinCountDisplay);
+        coinCountDisplay.setText("Total Number of coins collected: " + currentCoinCount);
+    }
     public void changeToMain(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
