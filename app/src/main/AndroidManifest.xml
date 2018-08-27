@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -27,13 +26,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".WinActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoseActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".InstructionActivity" />
-        <activity android:name=".ShopActivity"></activity>
+        <activity android:name=".ShopActivity" />
+        <activity android:name=".StatsActivity"></activity>
     </application>
 
 </manifest>

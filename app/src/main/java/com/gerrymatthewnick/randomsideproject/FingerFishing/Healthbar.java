@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_SOUND;
@@ -178,6 +179,13 @@ public class Healthbar {
                 TextView highScoreText = act.findViewById(R.id.highscoreDisplay);
                 highScoreText.setText("Highscore: " + Integer.toString(temp));
             }
+
+            SharedPreferences cherryCountFile = act.getSharedPreferences(PREFERENCES_CHERRY_COUNT, MODE_PRIVATE);
+            int currentCherryCount = cherryCountFile.getInt("cherries", 0);
+            SharedPreferences.Editor editor = cherryCountFile.edit();
+
+            editor.putInt("cherries", currentCherryCount + 1);
+            editor.apply();
         }
     }
     //check if line is overlapping a worm

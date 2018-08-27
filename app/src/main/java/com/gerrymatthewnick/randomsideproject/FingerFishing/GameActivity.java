@@ -23,6 +23,9 @@ public class GameActivity extends AppCompatActivity {
     public static final String PREFERENCES_HIGHSCORE = "highscore";
     public static final String PREFERENCES_COINS = "coins";
     public static final String PREFERENCES_SOUND = "sound";
+    public static final String PREFERENCES_CHERRY_COUNT = "cherryCount";
+    public static final String PREFERENCES_COIN_COUNT = "coinCount";
+    public static final String PREFERENCES_WORM_COUNT = "wormCount";
     public static boolean active = false;
 
     public static boolean cherryExist = false;
