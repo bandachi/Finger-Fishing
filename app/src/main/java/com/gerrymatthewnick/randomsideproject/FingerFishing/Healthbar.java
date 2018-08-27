@@ -13,8 +13,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -42,6 +40,7 @@ public class Healthbar {
     private SoundPool mSoundPool;
     private int soundIdWormPickup;
     private int soundIdCherryPickup;
+    private int soundIdWin;
     private boolean soundOption;
     private Handler checkOverlap;
     private Handler changeDelay;
@@ -81,6 +80,7 @@ public class Healthbar {
         if (soundOption) {
             soundIdCherryPickup = mSoundPool.load(act, R.raw.cherry_pickup, 1);
             soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
+            soundIdWin = mSoundPool.load(act, R.raw.win_sound, 1);
         }
     }
 
@@ -134,6 +134,8 @@ public class Healthbar {
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
             intent.putExtra("scoreNumber", temp);
+
+            mSoundPool.play(soundIdWin, 1, 1, 0, 0, 1);
 
             con.startActivity(intent);
             act.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -258,4 +260,4 @@ public class Healthbar {
     }
 }
 
-//TODO Future and make line not static
+//TODO Future

@@ -1,12 +1,9 @@
 package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenWidth;

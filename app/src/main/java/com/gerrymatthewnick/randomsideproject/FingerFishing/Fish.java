@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenWidth;
 
