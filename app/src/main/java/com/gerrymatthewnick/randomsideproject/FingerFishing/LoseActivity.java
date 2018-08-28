@@ -14,6 +14,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_TIME;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenHeight;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.getScreenWidth;
@@ -21,7 +22,7 @@ import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.
 public class LoseActivity extends AppCompatActivity {
 
     int score;
-    double elapsedTime;
+    float elapsedTime;
     private boolean delay = false;
     private AdView adview;
     private Context con = this;
@@ -70,6 +71,16 @@ public class LoseActivity extends AppCompatActivity {
             editor.putInt("highest", score);
             editor.apply();
             loseText.setText("New Highscore!");
+        }
+
+        SharedPreferences settingsTime = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
+        float highTime = settingsTime.getFloat("highestTime", 0);
+
+        if (elapsedTime > highTime) {
+            SharedPreferences timeFile = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = timeFile.edit();
+            editor.putFloat("highestTime", elapsedTime);
+            editor.apply();
         }
 
         changeFishVelocity = new Handler();

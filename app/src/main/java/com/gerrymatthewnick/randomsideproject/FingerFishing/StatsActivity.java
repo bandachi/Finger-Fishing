@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COIN_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGH_LEVEL;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_TIME;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 
 public class StatsActivity extends AppCompatActivity {
@@ -30,6 +33,10 @@ public class StatsActivity extends AppCompatActivity {
     private SharedPreferences highLevelFile;
     private int currentHighLevel;
 
+    private TextView timeDisplay;
+    private SharedPreferences highTimeFile;
+    private float currentTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +46,7 @@ public class StatsActivity extends AppCompatActivity {
         setWormDisplay();
         setCoinDisplay();
         setLevelDisplay();
+        setTimeDisplay();
     }
 
     private void setCherryDisplay() {
@@ -71,6 +79,14 @@ public class StatsActivity extends AppCompatActivity {
 
         highLevelDisplay = findViewById(R.id.highLevelDisplay);
         highLevelDisplay.setText("Highest level reached: " + currentHighLevel);
+    }
+
+    public void setTimeDisplay() {
+        highTimeFile = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
+        currentTime = highTimeFile.getFloat("highestTime", 0);
+
+        timeDisplay = findViewById(R.id.highTimeDisplay);
+        timeDisplay.setText("Longest time lasted: " + currentTime + " seconds");
     }
 
     public void changeToMain(View view) {

@@ -28,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
     public static final String PREFERENCES_COIN_COUNT = "coinCount";
     public static final String PREFERENCES_WORM_COUNT = "wormCount";
     public static final String PREFERENCES_HIGH_LEVEL = "highestLevel";
+    public static final String PREFERENCES_TIME = "highestTime";
     public static boolean active = false;
 
     public static boolean cherryExist = false;
