@@ -111,6 +111,10 @@ public class Healthbar {
 
         //check if healthbar is below 0, if so, go to lose activity
         if (health.getProgress() <= 0 && active) {
+
+            int elapsedMillis = (int) (SystemClock.elapsedRealtime() - timer.getBase());
+            timer.stop();
+
             end.cancel(true);
             itemSpawnDelayWorm.removeCallbacksAndMessages(null);
             itemSpawnDelayCherry.removeCallbacksAndMessages(null);
@@ -120,12 +124,9 @@ public class Healthbar {
             Intent intent = new Intent(con, LoseActivity.class);
             TextView score = act.findViewById(R.id.scoreDisplay);
 
-            int elapsedMillis = (int) (SystemClock.elapsedRealtime() - timer.getBase());
-            intent.putExtra("currentTime", elapsedMillis);
-            timer.stop();
-
             int temp = Integer.parseInt(score.getText().toString());
             intent.putExtra("scoreNumber", temp);
+            intent.putExtra("currentTime", elapsedMillis);
             con.startActivity(intent);
             act.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 

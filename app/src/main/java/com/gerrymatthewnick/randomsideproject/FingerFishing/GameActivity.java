@@ -68,7 +68,7 @@ public class GameActivity extends AppCompatActivity {
         rl = findViewById(R.id.rlGame);
 
         initHealth();
-        timer = new Chronometer(this);
+
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -110,6 +110,8 @@ public class GameActivity extends AppCompatActivity {
 
                 ImageView line = findViewById(R.id.fishingLine);
 
+                timer = new Chronometer(con);
+                timer.start();
                 //Create healthbar and start checking for overlaps
                 Healthbar healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool, timer);
                 healthbar.spawnHealth();
