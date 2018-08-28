@@ -100,5 +100,3 @@ public class StatsActivity extends AppCompatActivity {
         //prevent back press
     }
 }
-//TODO highest level
-//TODO most time lasted

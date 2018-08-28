@@ -88,6 +88,9 @@ public class GameActivity extends AppCompatActivity {
         startSpawnFish.postDelayed(new Runnable() {
             @Override
             public void run() {
+                timer = new Chronometer(con);
+                timer.start();
+
                 changeFishVelocity = new Handler();
                 moveFish = new Handler();
                 checkOverlap = new Handler();
@@ -110,8 +113,6 @@ public class GameActivity extends AppCompatActivity {
 
                 ImageView line = findViewById(R.id.fishingLine);
 
-                timer = new Chronometer(con);
-                timer.start();
                 //Create healthbar and start checking for overlaps
                 Healthbar healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool, timer);
                 healthbar.spawnHealth();
@@ -305,5 +306,3 @@ public class GameActivity extends AppCompatActivity {
         moveFish.removeCallbacksAndMessages(null);
     }
 }
-
-//TODO make fish face direction of velocity

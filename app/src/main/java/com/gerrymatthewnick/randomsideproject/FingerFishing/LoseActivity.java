@@ -52,11 +52,15 @@ public class LoseActivity extends AppCompatActivity {
         TextView timeText = findViewById(R.id.timeDisplayLose);
         timeText.setText("You lasted: " + elapsedTime + " seconds");
 
+        timeText.setVisibility(View.VISIBLE);
+        timeText.setAlpha(0.0f);
+        timeText.animate().alpha(1.0f).setListener(null).setDuration(2000);
+
         scoreText.setText(scoreText.getText() + Integer.toString(score));
 
         scoreText.setVisibility(View.VISIBLE);
         scoreText.setAlpha(0.0f);
-        scoreText.animate().alpha(1.0f).setListener(null).setDuration(1500);
+        scoreText.animate().alpha(1.0f).setListener(null).setDuration(2000);
 
         loseText.setVisibility(View.VISIBLE);
         loseText.setAlpha(0.0f);
