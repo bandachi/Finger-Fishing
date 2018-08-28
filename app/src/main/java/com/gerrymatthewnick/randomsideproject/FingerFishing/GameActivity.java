@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -34,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
     public static boolean coinExist = false;
 
     public int level;
+    public Chronometer timer;
     private int fishId;
     private int coins;
     private RelativeLayout rl;
@@ -65,6 +67,7 @@ public class GameActivity extends AppCompatActivity {
         rl = findViewById(R.id.rlGame);
 
         initHealth();
+        timer = new Chronometer(this);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -107,7 +110,7 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool);
+                Healthbar healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool, timer);
                 healthbar.spawnHealth();
                 healthbar.initSound();
                 healthbar.startCheck();

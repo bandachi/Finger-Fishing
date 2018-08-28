@@ -21,6 +21,7 @@ import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.
 public class LoseActivity extends AppCompatActivity {
 
     int score;
+    double elapsedTime;
     private boolean delay = false;
     private AdView adview;
     private Context con = this;
@@ -43,7 +44,12 @@ public class LoseActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             score = extras.getInt("scoreNumber");
+            elapsedTime = extras.getInt("currentTime");
         }
+        elapsedTime = elapsedTime/1000;
+
+        TextView timeText = findViewById(R.id.timeDisplayLose);
+        timeText.setText("You lasted: " + elapsedTime + " seconds");
 
         scoreText.setText(scoreText.getText() + Integer.toString(score));
 

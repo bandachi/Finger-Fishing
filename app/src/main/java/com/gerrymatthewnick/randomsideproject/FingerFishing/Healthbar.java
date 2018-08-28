@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.media.SoundPool;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -45,6 +47,7 @@ public class Healthbar {
     private int soundIdCherryPickup;
     private int soundIdWin;
     private boolean soundOption;
+    private Chronometer timer;
     private Handler checkOverlap;
     private Handler changeDelay;
     private Handler itemSpawnDelayWorm;
@@ -54,7 +57,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, SoundPool mSoundPool) {
+    public Healthbar(RelativeLayout rl, Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, SoundPool mSoundPool, Chronometer timer) {
         this.rl = rl;
         this.con = con;
         this.act = (Activity)con;
@@ -68,6 +71,7 @@ public class Healthbar {
         this.coins = coins;
         this.level = level;
         this.mSoundPool = mSoundPool;
+        this.timer = timer;
     }
 
     //spawn the healthbar
@@ -115,6 +119,10 @@ public class Healthbar {
             act.finish();
             Intent intent = new Intent(con, LoseActivity.class);
             TextView score = act.findViewById(R.id.scoreDisplay);
+
+            int elapsedMillis = (int) (SystemClock.elapsedRealtime() - timer.getBase());
+            intent.putExtra("currentTime", elapsedMillis);
+            timer.stop();
 
             int temp = Integer.parseInt(score.getText().toString());
             intent.putExtra("scoreNumber", temp);
