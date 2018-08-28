@@ -2,14 +2,14 @@ package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COIN_COUNT;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGH_LEVEL;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 
 public class StatsActivity extends AppCompatActivity {
@@ -26,6 +26,10 @@ public class StatsActivity extends AppCompatActivity {
     private SharedPreferences coinCountFile;
     private int currentCoinCount;
 
+    private TextView highLevelDisplay;
+    private SharedPreferences highLevelFile;
+    private int currentHighLevel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,7 @@ public class StatsActivity extends AppCompatActivity {
         setCherryDisplay();
         setWormDisplay();
         setCoinDisplay();
+        setLevelDisplay();
     }
 
     private void setCherryDisplay() {
@@ -59,6 +64,15 @@ public class StatsActivity extends AppCompatActivity {
         coinCountDisplay = findViewById(R.id.coinCountDisplay);
         coinCountDisplay.setText("Total Number of coins collected: " + currentCoinCount);
     }
+
+    public void setLevelDisplay() {
+        highLevelFile = getSharedPreferences(PREFERENCES_HIGH_LEVEL, MODE_PRIVATE);
+        currentHighLevel = highLevelFile.getInt("highestLevel", 0);
+
+        highLevelDisplay = findViewById(R.id.highLevelDisplay);
+        highLevelDisplay.setText("Highest level reached: " + currentHighLevel);
+    }
+
     public void changeToMain(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -70,3 +84,5 @@ public class StatsActivity extends AppCompatActivity {
         //prevent back press
     }
 }
+//TODO highest level
+//TODO most time lasted

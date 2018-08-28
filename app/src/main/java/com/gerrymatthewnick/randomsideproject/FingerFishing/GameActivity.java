@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     public static final String PREFERENCES_CHERRY_COUNT = "cherryCount";
     public static final String PREFERENCES_COIN_COUNT = "coinCount";
     public static final String PREFERENCES_WORM_COUNT = "wormCount";
+    public static final String PREFERENCES_HIGH_LEVEL = "highestLevel";
     public static boolean active = false;
 
     public static boolean cherryExist = false;
@@ -176,6 +177,15 @@ public class GameActivity extends AppCompatActivity {
         else {
             level = 1;
         }
+
+        SharedPreferences highLevelFile = getSharedPreferences(PREFERENCES_HIGH_LEVEL, MODE_PRIVATE);
+
+        if (level > highLevelFile.getInt("highestLevel", 0)) {
+            SharedPreferences.Editor editor = highLevelFile.edit();
+            editor.putInt("highestLevel", level);
+            editor.apply();
+        }
+
     }
 
     public void dispLevelScoreText() {
