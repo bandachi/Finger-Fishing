@@ -45,7 +45,7 @@ public class LoseActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             score = extras.getInt("scoreNumber");
-            elapsedTime = extras.getInt("currentTime");
+            elapsedTime = extras.getInt("time");
         }
         elapsedTime = elapsedTime/1000;
 

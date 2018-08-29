@@ -16,6 +16,7 @@ public class WinActivity extends AppCompatActivity {
 
     int levelPass;
     int score;
+    float time;
     private boolean delay = false;
     private AdView adview;
     Handler delayHandler = new Handler();
@@ -29,7 +30,7 @@ public class WinActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         adview.loadAd(adRequest);
 
-        TextView winText = findViewById(R.id.win);
+        TextView winText = findViewById(R.id.winTime);
         TextView winScoreText = findViewById(R.id.winScreenScore);
         TextView displayWinScore = findViewById(R.id.winScreenScoreText);
 
@@ -37,6 +38,8 @@ public class WinActivity extends AppCompatActivity {
         if (extras != null) {
             levelPass = extras.getInt("levelNumber");
             score = extras.getInt("scoreNumber");
+            time = extras.getInt("currentTime");
+            time = time/1000;
         }
         displayWinScore.setText(Integer.toString(score));
 
@@ -48,6 +51,7 @@ public class WinActivity extends AppCompatActivity {
         displayWinScore.setAlpha(0.0f);
         displayWinScore.animate().alpha(1.0f).setListener(null).setDuration(1500);
 
+        winText.setText("Current time: " + Float.toString(time) + " seconds");
         winText.setVisibility(View.VISIBLE);
         winText.setAlpha(0.0f);
         winText.animate().alpha(1.0f).setListener(null).setDuration(2000);
@@ -71,6 +75,7 @@ public class WinActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("levelNumber", levelPass);
             intent.putExtra("scoreNumber", score);
+            intent.putExtra("currentTime", time * 1000);
             startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         }

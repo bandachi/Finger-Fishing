@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -39,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     public Chronometer timer;
     private int fishId;
     private int coins;
+    public float time;
     private RelativeLayout rl;
     private Context con = this;
     private int score = 0;
@@ -82,13 +84,14 @@ public class GameActivity extends AppCompatActivity {
         initCoins();
 
         //get level and score from previous game levels
-        getLevelScore();
+        getLevelScoreTime();
 
         //Start the fish spawning method after 3 seconds
         startSpawnFish.postDelayed(new Runnable() {
             @Override
             public void run() {
                 timer = new Chronometer(con);
+                timer.setBase((long)(SystemClock.elapsedRealtime() - time));
                 timer.start();
 
                 changeFishVelocity = new Handler();
@@ -175,14 +178,17 @@ public class GameActivity extends AppCompatActivity {
         coinDis.setText(Integer.toString(coins));
     }
 
-    public void getLevelScore() {
+    public void getLevelScoreTime() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             level = extras.getInt("levelNumber");
             score = extras.getInt("scoreNumber");
+            time = extras.getFloat("currentTime");
         }
         else {
             level = 1;
+            score = 0;
+            time = 0;
         }
 
         SharedPreferences highLevelFile = getSharedPreferences(PREFERENCES_HIGH_LEVEL, MODE_PRIVATE);
