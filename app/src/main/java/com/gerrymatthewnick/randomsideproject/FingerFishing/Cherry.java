@@ -1,8 +1,15 @@
 package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 
 public class Cherry extends Item {
 
@@ -21,15 +28,15 @@ public class Cherry extends Item {
         itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
         super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE);
     }
-    /*
-    public void cherryEffect() {
+
+    public void cherryEffect(Activity act, int scoreIncrease, Sound sound) {
         Item.removeItem(this.getImage(), rl);
 
         TextView score = act.findViewById(R.id.scoreDisplay);
         int temp = Integer.parseInt(score.getText().toString());
-        temp += 100 * level;
+        temp += scoreIncrease;
         score.setText(Integer.toString(temp));
-        mSoundPool.play(soundIdCherryPickup, 1, 1, 0, 0, 1);
+        sound.playCherryPickup();
 
         SharedPreferences cherryFile = act.getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
 
@@ -49,7 +56,7 @@ public class Cherry extends Item {
 
         editorStats.putInt("cherries", currentCherryCount + 1);
         editorStats.apply();
-    }*/
+    }
 
     public int getItemDelay() {
         return itemDelayRand;

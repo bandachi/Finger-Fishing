@@ -1,8 +1,14 @@
 package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 
 public class Worm extends Item {
 
@@ -24,5 +30,19 @@ public class Worm extends Item {
 
     public int getItemDelay() {
         return itemDelayRand;
+    }
+
+    public void wormEffect(Activity act, ProgressBar health, Sound sound) {
+        Item.removeItem(this.getImage(), rl);
+
+        health.incrementProgressBy(100);
+        sound.playWormPickup();
+
+        SharedPreferences wormCountFile = act.getSharedPreferences(PREFERENCES_WORM_COUNT, MODE_PRIVATE);
+        int currentWormCount = wormCountFile.getInt("worms", 0);
+        SharedPreferences.Editor editorStats = wormCountFile.edit();
+
+        editorStats.putInt("worms", currentWormCount + 1);
+        editorStats.apply();
     }
 }

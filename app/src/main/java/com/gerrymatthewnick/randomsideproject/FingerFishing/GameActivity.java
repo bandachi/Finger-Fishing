@@ -114,9 +114,8 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, timer, sound);
+                healthbar = new Healthbar(con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, level, timer, sound);
                 healthbar.spawnHealth();
-                healthbar.initSound();
                 healthbar.startCheck();
 
                 //Run item spawn runnables

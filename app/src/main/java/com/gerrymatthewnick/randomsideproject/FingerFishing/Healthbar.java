@@ -3,7 +3,6 @@ package com.gerrymatthewnick.randomsideproject.FingerFishing;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -18,23 +17,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_CHERRY_COUNT;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COIN_COUNT;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 
 public class Healthbar {
 
     private ProgressBar health;
     private int currentFish;
-    private int coins;
     private int level;
     private ImageView fish;
     private ImageView line;
-    private RelativeLayout rl;
     private Context con;
     private Activity act;
     private Sound sound;
@@ -46,9 +37,9 @@ public class Healthbar {
     private Handler itemSpawnDelayCoin;
 
 
-    private Item cherryObj;
-    private Item wormObj;
-    private Item coinObj;
+    private Cherry cherryObj;
+    private Worm wormObj;
+    private Coin coinObj;
 
     private ImageView cherryImage;
     private ImageView wormImage;
@@ -57,8 +48,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, Chronometer timer, Sound sound) {
-        this.rl = rl;
+    public Healthbar(Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int level, Chronometer timer, Sound sound) {
         this.con = con;
         this.act = (Activity)con;
         this.checkOverlap = checkOverlap;
@@ -68,7 +58,6 @@ public class Healthbar {
         this.itemSpawnDelayWorm = itemSpawnDelayWorm;
         this.itemSpawnDelayCoin = itemSpawnDelayCoin;
         this.line = line;
-        this.coins = coins;
         this.level = level;
         this.timer = timer;
         this.sound = sound;
@@ -78,11 +67,6 @@ public class Healthbar {
     public void spawnHealth() {
         health = act.findViewById(R.id.healthBar);
         fish = act.findViewById(currentFish);
-    }
-
-    //init soundPool
-    public void initSound() {
-
     }
 
     //check if line is overlapping the fish
@@ -169,32 +153,7 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(cherryImage, rl);
-
-            TextView score = act.findViewById(R.id.scoreDisplay);
-            int temp = Integer.parseInt(score.getText().toString());
-            temp += 100 * level;
-            score.setText(Integer.toString(temp));
-            sound.playCherryPickup();
-
-            SharedPreferences cherryFile = act.getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
-
-            int highscore = cherryFile.getInt("highest", 0);
-
-            if (temp > highscore) {
-                SharedPreferences.Editor editor = cherryFile.edit();
-                editor.putInt("highest", temp);
-                editor.apply();
-                TextView highScoreText = act.findViewById(R.id.highscoreDisplay);
-                highScoreText.setText("Highscore: " + Integer.toString(temp));
-            }
-
-            SharedPreferences cherryCountFile = act.getSharedPreferences(PREFERENCES_CHERRY_COUNT, MODE_PRIVATE);
-            int currentCherryCount = cherryCountFile.getInt("cherries", 0);
-            SharedPreferences.Editor editorStats = cherryCountFile.edit();
-
-            editorStats.putInt("cherries", currentCherryCount + 1);
-            editorStats.apply();
+            cherryObj.cherryEffect(act, 100 * level, sound);
         }
     }
     //check if line is overlapping a worm
@@ -209,20 +168,8 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(wormImage, rl);
-
-            health.incrementProgressBy(100);
-            sound.playWormPickup();
-
-            SharedPreferences wormCountFile = act.getSharedPreferences(PREFERENCES_WORM_COUNT, MODE_PRIVATE);
-            int currentWormCount = wormCountFile.getInt("worms", 0);
-            SharedPreferences.Editor editorStats = wormCountFile.edit();
-
-            editorStats.putInt("worms", currentWormCount + 1);
-            editorStats.apply();
+            wormObj.wormEffect(act, health, sound);
         }
-
-
     }
 
     //check if line is overlapping a coin
@@ -237,25 +184,7 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(coinImage, rl);
-
-            //for current coin count
-            coins++;
-            SharedPreferences coinsFile = act.getSharedPreferences(PREFERENCES_COINS, MODE_PRIVATE);
-            SharedPreferences.Editor editor = coinsFile.edit();
-            editor.putInt("coinCount", coins);
-            editor.apply();
-
-            TextView coin = act.findViewById(R.id.coinDisplay);
-            coin.setText(Integer.toString(coins));
-
-            //for total coin count over the total time played
-            SharedPreferences coinCountFile = act.getSharedPreferences(PREFERENCES_COIN_COUNT, MODE_PRIVATE);
-            int currentCoinCount = coinCountFile.getInt("coins", 0);
-            SharedPreferences.Editor editorStats = coinCountFile.edit();
-
-            editorStats.putInt("coins", currentCoinCount + 1);
-            editorStats.apply();
+            coinObj.coinEffect(act);
         }
 
 
@@ -292,15 +221,15 @@ public class Healthbar {
         String type = item.getType();
 
         if (type.equals("cherry")) {
-            cherryObj = item;
+            cherryObj = (Cherry)item;
             cherryImage = item.getImage();
         }
         else if (type.equals("worm")) {
-            wormObj = item;
+            wormObj = (Worm)item;
             wormImage = item.getImage();
         }
         else if (type.equals("coin")){
-            coinObj = item;
+            coinObj = (Coin)item;
             coinImage = item.getImage();
         }
     }
