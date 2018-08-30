@@ -30,9 +30,8 @@ public class Item {
         return itemType;
     }
 
-    public void spawn(int itemDelay, String itemType, int itemSize, int id) {
+    public void spawn(int itemDelay, String itemType, int itemSize) {
         item = new ImageView(con);
-        item.setId(id);
         this.itemType = itemType;
 
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));

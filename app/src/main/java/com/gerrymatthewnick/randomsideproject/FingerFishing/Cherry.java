@@ -2,11 +2,9 @@ package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Context;
 import android.os.Handler;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 public class Cherry extends Item {
-    public static int cherryId;
 
     private final int ITEM_DELAY_MAX = 6000;
     private final int ITEM_DELAY_MIN = 2000;
@@ -21,8 +19,7 @@ public class Cherry extends Item {
 
     public void spawnCherry() {
         itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
-        cherryId = View.generateViewId();
-        super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE, cherryId);
+        super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE);
     }
 
     public int getItemDelay() {

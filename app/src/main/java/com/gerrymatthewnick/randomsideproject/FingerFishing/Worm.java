@@ -2,11 +2,9 @@ package com.gerrymatthewnick.randomsideproject.FingerFishing;
 
 import android.content.Context;
 import android.os.Handler;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 public class Worm extends Item {
-    public static int wormId;
 
     private final int ITEM_DELAY_MAX = 8000;
     private final int ITEM_DELAY_MIN = 4000;
@@ -21,8 +19,7 @@ public class Worm extends Item {
 
     public void spawnWorm() {
         itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
-        wormId = View.generateViewId();
-        super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE, wormId);
+        super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE);
     }
 
     public int getItemDelay() {
