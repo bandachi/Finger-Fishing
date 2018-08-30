@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.media.SoundPool;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.widget.Chronometer;
@@ -24,7 +23,6 @@ import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COINS;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_COIN_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_SOUND;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
 
@@ -39,11 +37,7 @@ public class Healthbar {
     private RelativeLayout rl;
     private Context con;
     private Activity act;
-    private SoundPool mSoundPool;
-    private int soundIdWormPickup;
-    private int soundIdCherryPickup;
-    private int soundIdWin;
-    private boolean soundOption;
+    private Sound sound;
     private Chronometer timer;
     private Handler checkOverlap;
     private Handler changeDelay;
@@ -52,6 +46,9 @@ public class Healthbar {
     private Handler itemSpawnDelayCoin;
 
 
+    private Item cherryObj;
+    private Item wormObj;
+    private Item coinObj;
 
     private ImageView cherryImage;
     private ImageView wormImage;
@@ -60,7 +57,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(RelativeLayout rl, Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, SoundPool mSoundPool, Chronometer timer) {
+    public Healthbar(RelativeLayout rl, Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int coins, int level, Chronometer timer, Sound sound) {
         this.rl = rl;
         this.con = con;
         this.act = (Activity)con;
@@ -73,8 +70,8 @@ public class Healthbar {
         this.line = line;
         this.coins = coins;
         this.level = level;
-        this.mSoundPool = mSoundPool;
         this.timer = timer;
+        this.sound = sound;
     }
 
     //spawn the healthbar
@@ -85,13 +82,7 @@ public class Healthbar {
 
     //init soundPool
     public void initSound() {
-        SharedPreferences settingsSound = act.getSharedPreferences(PREFERENCES_SOUND, MODE_PRIVATE);
-        soundOption = settingsSound.getBoolean("soundOption", true);
-        if (soundOption) {
-            soundIdCherryPickup = mSoundPool.load(act, R.raw.cherry_pickup, 1);
-            soundIdWormPickup = mSoundPool.load(act, R.raw.worm_pickup, 1);
-            soundIdWin = mSoundPool.load(act, R.raw.win_sound, 1);
-        }
+
     }
 
     //check if line is overlapping the fish
@@ -155,7 +146,7 @@ public class Healthbar {
             intent.putExtra("scoreNumber", temp);
             intent.putExtra("currentTime", elapsedMillis);
 
-            mSoundPool.play(soundIdWin, 1, 1, 0, 0, 1);
+            sound.playWin();
 
             con.startActivity(intent);
             act.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -184,7 +175,7 @@ public class Healthbar {
             int temp = Integer.parseInt(score.getText().toString());
             temp += 100 * level;
             score.setText(Integer.toString(temp));
-            mSoundPool.play(soundIdCherryPickup, 1, 1, 0, 0, 1);
+            sound.playCherryPickup();
 
             SharedPreferences cherryFile = act.getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
 
@@ -221,7 +212,7 @@ public class Healthbar {
             Item.removeItem(wormImage, rl);
 
             health.incrementProgressBy(100);
-            mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
+            sound.playWormPickup();
 
             SharedPreferences wormCountFile = act.getSharedPreferences(PREFERENCES_WORM_COUNT, MODE_PRIVATE);
             int currentWormCount = wormCountFile.getInt("worms", 0);
@@ -301,12 +292,15 @@ public class Healthbar {
         String type = item.getType();
 
         if (type.equals("cherry")) {
+            cherryObj = item;
             cherryImage = item.getImage();
         }
         else if (type.equals("worm")) {
+            wormObj = item;
             wormImage = item.getImage();
         }
         else if (type.equals("coin")){
+            coinObj = item;
             coinImage = item.getImage();
         }
     }
