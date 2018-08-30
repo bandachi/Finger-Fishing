@@ -27,9 +27,6 @@ import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_SOUND;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_WORM_COUNT;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.cherryExist;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.coinExist;
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.wormExist;
 
 public class Healthbar {
 
@@ -56,9 +53,9 @@ public class Healthbar {
 
 
 
-    private ImageView cherry;
-    private ImageView worm;
-    private ImageView coin;
+    private ImageView cherryImage;
+    private ImageView wormImage;
+    private ImageView coinImage;
 
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
@@ -171,19 +168,18 @@ public class Healthbar {
 
     //check if line is overlapping a cherry
     private void overlapItemCherry() {
-        //ImageView cherryImage = act.findViewById(Cherry.cherryId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        cherry.getHitRect(itemRect);
+        cherryImage.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(cherry, rl);
-            cherryExist = false;
+            Item.removeItem(cherryImage, rl);
+
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
             temp += 100 * level;
@@ -212,19 +208,18 @@ public class Healthbar {
     }
     //check if line is overlapping a worm
     private void overlapItemWorm() {
-        //ImageView wormImage = act.findViewById(Worm.wormId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        worm.getHitRect(itemRect);
+        wormImage.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(worm, rl);
-            wormExist = false;
+            Item.removeItem(wormImage, rl);
+
             health.incrementProgressBy(100);
             mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
 
@@ -241,19 +236,17 @@ public class Healthbar {
 
     //check if line is overlapping a coin
     private void overlapItemCoin() {
-        //ImageView coinImage = act.findViewById(Coin.coinId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        coin.getHitRect(itemRect);
+        coinImage.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(coin, rl);
-            coinExist = false;
+            Item.removeItem(coinImage, rl);
 
             //for current coin count
             coins++;
@@ -285,13 +278,13 @@ public class Healthbar {
         public void run() {
 
             end.cancel(true);
-            if (cherryExist && act.findViewById(Cherry.cherryId) != null) {
+            if (cherryImage != null) {
                 overlapItemCherry();
             }
-            if (wormExist && act.findViewById(Worm.wormId) != null) {
+            if (wormImage != null) {
                 overlapItemWorm();
             }
-            if (coinExist && act.findViewById(Coin.coinId) != null) {
+            if (coinImage != null) {
                 overlapItemCoin();
             }
 
@@ -308,13 +301,13 @@ public class Healthbar {
         String type = item.getType();
 
         if (type.equals("cherry")) {
-            cherry = item.getImage();
+            cherryImage = item.getImage();
         }
         else if (type.equals("worm")) {
-            worm = item.getImage();
+            wormImage = item.getImage();
         }
         else if (type.equals("coin")){
-            coin = item.getImage();
+            coinImage = item.getImage();
         }
     }
     public void startCheck() {

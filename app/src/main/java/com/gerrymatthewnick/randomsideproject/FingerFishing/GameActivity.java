@@ -32,10 +32,6 @@ public class GameActivity extends AppCompatActivity {
     public static final String PREFERENCES_TIME = "highestTime";
     public static boolean active = false;
 
-    public static boolean cherryExist = false;
-    public static boolean wormExist = false;
-    public static boolean coinExist = false;
-
     public int level;
     public Chronometer timer;
     private int fishId;

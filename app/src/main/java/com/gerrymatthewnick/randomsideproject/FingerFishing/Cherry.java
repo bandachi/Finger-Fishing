@@ -5,8 +5,6 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.cherryExist;
-
 public class Cherry extends Item {
     public static int cherryId;
 
@@ -25,7 +23,6 @@ public class Cherry extends Item {
         itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
         cherryId = View.generateViewId();
         super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE, cherryId);
-        cherryExist = true;
     }
 
     public int getItemDelay() {
