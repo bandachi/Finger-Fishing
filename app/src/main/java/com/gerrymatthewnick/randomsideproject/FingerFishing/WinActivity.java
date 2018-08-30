@@ -21,19 +21,25 @@ public class WinActivity extends AppCompatActivity {
     private AdView adview;
     Handler delayHandler = new Handler();
 
+    public TextView winText;
+    public TextView winScoreText;
+    public TextView displayWinScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
 
+        //Load ads
         adview = findViewById(R.id.adViewWin);
         AdRequest adRequest = new AdRequest.Builder().build();
         adview.loadAd(adRequest);
 
-        TextView winText = findViewById(R.id.winTime);
-        TextView winScoreText = findViewById(R.id.winScreenScore);
-        TextView displayWinScore = findViewById(R.id.winScreenScoreText);
+        winText = findViewById(R.id.winTime);
+        winScoreText = findViewById(R.id.winScreenScore);
+        displayWinScore = findViewById(R.id.winScreenScoreText);
 
+        //Get current level information
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             levelPass = extras.getInt("levelNumber");
@@ -41,36 +47,42 @@ public class WinActivity extends AppCompatActivity {
             time = extras.getInt("currentTime");
             time = time/1000;
         }
-        displayWinScore.setText(Integer.toString(score));
 
-        winScoreText.setVisibility(View.VISIBLE);
-        winScoreText.setAlpha(0.0f);
-        winScoreText.animate().alpha(1.0f).setListener(null).setDuration(1000);
-
-        displayWinScore.setVisibility(View.VISIBLE);
-        displayWinScore.setAlpha(0.0f);
-        displayWinScore.animate().alpha(1.0f).setListener(null).setDuration(1500);
-
-        winText.setText("Current time: " + Float.toString(time) + " seconds");
-        winText.setVisibility(View.VISIBLE);
-        winText.setAlpha(0.0f);
-        winText.animate().alpha(1.0f).setListener(null).setDuration(2000);
+        //Set TextViews with animations
+        setWinScoreText();
+        setDisplayWinScore();
+        setWinText();
 
         delayHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //Delay before user can switch activities
                 delay = true;
             }
         }, 400);
     }
-    public void onWin (View view) {
-        if (delay) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        }
+    public void setWinText() {
+        winText.setText("Current time: " + Float.toString(time) + " seconds");
+        winText.setVisibility(View.VISIBLE);
+        winText.setAlpha(0.0f);
+        winText.animate().alpha(1.0f).setListener(null).setDuration(2000);
     }
+
+    public void setDisplayWinScore() {
+        displayWinScore.setText(Integer.toString(score));
+        displayWinScore.setVisibility(View.VISIBLE);
+        displayWinScore.setAlpha(0.0f);
+        displayWinScore.animate().alpha(1.0f).setListener(null).setDuration(1500);
+    }
+
+    public void setWinScoreText() {
+        winScoreText.setVisibility(View.VISIBLE);
+        winScoreText.setAlpha(0.0f);
+        winScoreText.animate().alpha(1.0f).setListener(null).setDuration(1000);
+    }
+
     public void onWinAgain (View view) {
+        //Pass next level's information
         if (delay) {
             Intent intent = new Intent(this, GameActivity.class);
             intent.putExtra("levelNumber", levelPass);

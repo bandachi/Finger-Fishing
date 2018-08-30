@@ -18,12 +18,14 @@ public class Worm extends Item {
     private final int ITEM_SIZE = 64;
 
     private int itemDelayRand;
+    private int healthbarGain = 100;
 
     public Worm(RelativeLayout rl, Context con, Handler removeItemDelay) {
         super(rl, con, removeItemDelay);
     }
 
     public void spawnWorm() {
+        //Set item delay at random, and spawn with that item delay
         itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
         super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE);
     }
@@ -35,9 +37,13 @@ public class Worm extends Item {
     public void wormEffect(Activity act, ProgressBar health, Sound sound) {
         Item.removeItem(this.getImage(), rl);
 
-        health.incrementProgressBy(100);
+        //Increase healh by healthbarGain
+        health.incrementProgressBy(healthbarGain);
+
+        //Play worm pickup sound
         sound.playWormPickup();
 
+        //get current amount of worms picked and increment by one
         SharedPreferences wormCountFile = act.getSharedPreferences(PREFERENCES_WORM_COUNT, MODE_PRIVATE);
         int currentWormCount = wormCountFile.getInt("worms", 0);
         SharedPreferences.Editor editorStats = wormCountFile.edit();

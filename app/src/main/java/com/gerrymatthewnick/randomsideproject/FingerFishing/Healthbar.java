@@ -66,11 +66,11 @@ public class Healthbar {
     }
 
     //check if line is overlapping the fish
-    private boolean overlap(ImageView first) {
+    private boolean overlap() {
         Rect fishRect = new Rect();
         Rect lineRect = new Rect();
 
-        first.getHitRect(fishRect);
+        fish.getHitRect(fishRect);
         line.getHitRect(lineRect);
 
         lineRect.top = lineRect.bottom - 10;
@@ -152,6 +152,7 @@ public class Healthbar {
             cherryObj.cherryEffect(act, 100 * level, sound);
         }
     }
+
     //check if line is overlapping a worm
     private void overlapItemWorm() {
 
@@ -182,8 +183,6 @@ public class Healthbar {
         if (itemRect.contains(lineRect)) {
             coinObj.coinEffect(act);
         }
-
-
     }
 
     //check if line is overlapping any important image views
@@ -193,6 +192,7 @@ public class Healthbar {
         @Override
         public void run() {
 
+            //Check if line is overlapping items
             end.cancel(true);
             if (cherryImage != null) {
                 overlapItemCherry();
@@ -203,8 +203,8 @@ public class Healthbar {
             if (coinImage != null) {
                 overlapItemCoin();
             }
-
-            done = overlap(fish);
+            //If the game is won or lost, done = true and check runnable is terminated
+            done = overlap();
             if (!done && active) {
                 checkOverlap.postDelayed(check, 10);
             } else {
@@ -216,6 +216,7 @@ public class Healthbar {
     public void setItem(Item item) {
         String type = item.getType();
 
+        //set item and image according to what item type they are
         if (type.equals("cherry")) {
             cherryObj = (Cherry)item;
             cherryImage = item.getImage();

@@ -23,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
 
+                //Set sound options
                 SharedPreferences soundFile = getSharedPreferences(PREFERENCES_SOUND, MODE_PRIVATE);
                 SharedPreferences.Editor editor = soundFile.edit();
                 editor.putBoolean("soundOption", isChecked);

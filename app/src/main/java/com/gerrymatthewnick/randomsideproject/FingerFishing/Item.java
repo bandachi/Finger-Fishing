@@ -30,6 +30,7 @@ public class Item {
         return itemType;
     }
 
+    //Spawn an item and remove it after a delay
     public void spawn(int itemDelay, String itemType, int itemSize) {
         item = new ImageView(con);
         this.itemType = itemType;

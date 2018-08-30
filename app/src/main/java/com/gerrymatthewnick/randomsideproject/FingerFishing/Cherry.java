@@ -25,6 +25,7 @@ public class Cherry extends Item {
     }
 
     public void spawnCherry() {
+        //Set item delay at random, and spawn with that item delay
         itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
         super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE);
     }
@@ -32,16 +33,20 @@ public class Cherry extends Item {
     public void cherryEffect(Activity act, int scoreIncrease, Sound sound) {
         Item.removeItem(this.getImage(), rl);
 
+        //Change score display to display new score number
         TextView score = act.findViewById(R.id.scoreDisplay);
         int temp = Integer.parseInt(score.getText().toString());
         temp += scoreIncrease;
         score.setText(Integer.toString(temp));
+
+        //Play cherry pickup sound
         sound.playCherryPickup();
 
+        //Get highscore
         SharedPreferences cherryFile = act.getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
-
         int highscore = cherryFile.getInt("highest", 0);
 
+        //Check if current score is higher than highscore, if so change highscore
         if (temp > highscore) {
             SharedPreferences.Editor editor = cherryFile.edit();
             editor.putInt("highest", temp);
@@ -50,6 +55,7 @@ public class Cherry extends Item {
             highScoreText.setText("Highscore: " + Integer.toString(temp));
         }
 
+        //Increase cherry picked up count by 1
         SharedPreferences cherryCountFile = act.getSharedPreferences(PREFERENCES_CHERRY_COUNT, MODE_PRIVATE);
         int currentCherryCount = cherryCountFile.getInt("cherries", 0);
         SharedPreferences.Editor editorStats = cherryCountFile.edit();

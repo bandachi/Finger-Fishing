@@ -22,6 +22,7 @@ public class Sound {
         this.act = act;
     }
 
+    //initialize sound and assign sound ids for later use
     public void initSound() {
         mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 0);
 

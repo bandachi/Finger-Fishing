@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import org.w3c.dom.Text;
+
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_TIME;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
@@ -24,6 +26,8 @@ public class LoseActivity extends AppCompatActivity {
     int score;
     float elapsedTime;
     private boolean delay = false;
+    public TextView scoreText;
+    public TextView loseText;
     private AdView adview;
     private Context con = this;
     Handler handlerDelay = new Handler();
@@ -35,9 +39,7 @@ public class LoseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lose);
 
-        TextView loseText = findViewById(R.id.lose);
-        TextView scoreText = findViewById(R.id.scoreLoseDisplay);
-
+        //Load ads
         adview = findViewById(R.id.adViewLose);
         AdRequest adRequest = new AdRequest.Builder().build();
         adview.loadAd(adRequest);
@@ -49,43 +51,16 @@ public class LoseActivity extends AppCompatActivity {
         }
         elapsedTime = elapsedTime/1000;
 
-        TextView timeText = findViewById(R.id.timeDisplayLose);
-        timeText.setText("You lasted: " + elapsedTime + " seconds");
+        scoreText = findViewById(R.id.scoreLoseDisplay);
+        loseText = findViewById(R.id.lose);
 
-        timeText.setVisibility(View.VISIBLE);
-        timeText.setAlpha(0.0f);
-        timeText.animate().alpha(1.0f).setListener(null).setDuration(2000);
+        //Set text with animation
+        setLoseText();
+        setScoreText();
+        setTimeText();
 
-        scoreText.setText(scoreText.getText() + Integer.toString(score));
-
-        scoreText.setVisibility(View.VISIBLE);
-        scoreText.setAlpha(0.0f);
-        scoreText.animate().alpha(1.0f).setListener(null).setDuration(2000);
-
-        loseText.setVisibility(View.VISIBLE);
-        loseText.setAlpha(0.0f);
-        loseText.animate().alpha(1.0f).setListener(null).setDuration(2000);
-
-        SharedPreferences settingsHigh = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
-        int highscore = settingsHigh.getInt("highest", 0);
-
-        if (score > highscore) {
-            SharedPreferences highscoreFile = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
-            SharedPreferences.Editor editor = highscoreFile.edit();
-            editor.putInt("highest", score);
-            editor.apply();
-            loseText.setText("New Highscore!");
-        }
-
-        SharedPreferences settingsTime = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
-        float highTime = settingsTime.getFloat("highestTime", 0);
-
-        if (elapsedTime > highTime) {
-            SharedPreferences timeFile = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = timeFile.edit();
-            editor.putFloat("highestTime", elapsedTime);
-            editor.apply();
-        }
+        //Check if time lasted is a highscore
+        setHighestTime();
 
         changeFishVelocity = new Handler();
         moveFish = new Handler();
@@ -93,19 +68,75 @@ public class LoseActivity extends AppCompatActivity {
         handlerDelay.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //Delay for spawning fish and for changing activities
                 delay = true;
-                int fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
-                RelativeLayout rl = findViewById(R.id.rlLose);
+                spawnFish();
 
-                Fish fish = new Fish(fishId, 1000, 10, rl, con, View.generateViewId(), changeFishVelocity, moveFish, 2);
-                fish.spawnFish();
-                fish.setX(getScreenWidth()/2);
-                fish.setY(getScreenHeight()/2);
-
-                fish.startChangeVelocity();
-                fish.startVelocity();
             }
         }, 400);
+    }
+
+    public void spawnFish() {
+        //Spawn a fish in the lose screen
+
+        int fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+        RelativeLayout rl = findViewById(R.id.rlLose);
+
+        Fish fish = new Fish(fishId, 1000, 10, rl, con, View.generateViewId(), changeFishVelocity, moveFish, 2);
+        fish.spawnFish();
+        fish.setX(getScreenWidth()/2);
+        fish.setY(getScreenHeight()/2);
+
+        fish.startChangeVelocity();
+        fish.startVelocity();
+    }
+
+    public void setHighestTime() {
+        //Get highest time
+        SharedPreferences settingsTime = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
+        float highTime = settingsTime.getFloat("highestTime", 0);
+
+        //If elapsed time is more than highest time, set highest time equal to elapsed time
+        if (elapsedTime > highTime) {
+            SharedPreferences timeFile = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = timeFile.edit();
+            editor.putFloat("highestTime", elapsedTime);
+            editor.apply();
+        }
+    }
+
+    public void setLoseText() {
+        loseText.setVisibility(View.VISIBLE);
+        loseText.setAlpha(0.0f);
+        loseText.animate().alpha(1.0f).setListener(null).setDuration(2000);
+
+        //Get highscore
+        SharedPreferences settingsHigh = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
+        int highscore = settingsHigh.getInt("highest", 0);
+
+        //Display different message if highscore
+        if (score > highscore) {
+            SharedPreferences highscoreFile = getSharedPreferences(PREFERENCES_HIGHSCORE, MODE_PRIVATE);
+            SharedPreferences.Editor editor = highscoreFile.edit();
+            editor.putInt("highest", score);
+            editor.apply();
+            loseText.setText("New Highscore!");
+        }
+    }
+
+    public void setScoreText() {
+        scoreText.setText(scoreText.getText() + Integer.toString(score));
+        scoreText.setVisibility(View.VISIBLE);
+        scoreText.setAlpha(0.0f);
+        scoreText.animate().alpha(1.0f).setListener(null).setDuration(2000);
+    }
+
+    public void setTimeText() {
+        TextView timeText = findViewById(R.id.timeDisplayLose);
+        timeText.setText("You lasted: " + elapsedTime + " seconds");
+        timeText.setVisibility(View.VISIBLE);
+        timeText.setAlpha(0.0f);
+        timeText.animate().alpha(1.0f).setListener(null).setDuration(2000);
     }
 
     public void onLose(View view) {
