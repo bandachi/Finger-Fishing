@@ -10,7 +10,6 @@ import android.os.SystemClock;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.concurrent.ExecutorService;
@@ -31,11 +30,9 @@ public class Healthbar {
     private Sound sound;
     private Chronometer timer;
     private Handler checkOverlap;
-    private Handler changeDelay;
     private Handler itemSpawnDelayWorm;
     private Handler itemSpawnDelayCherry;
     private Handler itemSpawnDelayCoin;
-
 
     private Cherry cherryObj;
     private Worm wormObj;
@@ -48,12 +45,11 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(Context con, Handler checkOverlap, int currentFish, Handler changeDelay, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int level, Chronometer timer, Sound sound) {
+    public Healthbar(Context con, Handler checkOverlap, int currentFish, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int level, Chronometer timer, Sound sound) {
         this.con = con;
         this.act = (Activity)con;
         this.checkOverlap = checkOverlap;
         this.currentFish = currentFish;
-        this.changeDelay = changeDelay;
         this.itemSpawnDelayCherry = itemSpawnDelayCherry;
         this.itemSpawnDelayWorm = itemSpawnDelayWorm;
         this.itemSpawnDelayCoin = itemSpawnDelayCoin;

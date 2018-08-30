@@ -54,7 +54,6 @@ public class GameActivity extends AppCompatActivity {
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
-    Handler changeDelay;
 
 
     @Override
@@ -114,7 +113,7 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                healthbar = new Healthbar(con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, level, timer, sound);
+                healthbar = new Healthbar(con, checkOverlap, currentFish, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, level, timer, sound);
                 healthbar.spawnHealth();
                 healthbar.startCheck();
 
