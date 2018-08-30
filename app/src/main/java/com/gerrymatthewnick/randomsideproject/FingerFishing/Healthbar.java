@@ -54,6 +54,12 @@ public class Healthbar {
     private Handler itemSpawnDelayCherry;
     private Handler itemSpawnDelayCoin;
 
+
+
+    private ImageView cherry;
+    private ImageView worm;
+    private ImageView coin;
+
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
@@ -165,18 +171,18 @@ public class Healthbar {
 
     //check if line is overlapping a cherry
     private void overlapItemCherry() {
-        ImageView cherryImage = act.findViewById(Cherry.cherryId);
+        //ImageView cherryImage = act.findViewById(Cherry.cherryId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        cherryImage.getHitRect(itemRect);
+        cherry.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(cherryImage, rl);
+            Item.removeItem(cherry, rl);
             cherryExist = false;
             TextView score = act.findViewById(R.id.scoreDisplay);
             int temp = Integer.parseInt(score.getText().toString());
@@ -206,18 +212,18 @@ public class Healthbar {
     }
     //check if line is overlapping a worm
     private void overlapItemWorm() {
-        ImageView wormImage = act.findViewById(Worm.wormId);
+        //ImageView wormImage = act.findViewById(Worm.wormId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        wormImage.getHitRect(itemRect);
+        worm.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(wormImage, rl);
+            Item.removeItem(worm, rl);
             wormExist = false;
             health.incrementProgressBy(100);
             mSoundPool.play(soundIdWormPickup, 1, 1, 0, 0, 1);
@@ -235,18 +241,18 @@ public class Healthbar {
 
     //check if line is overlapping a coin
     private void overlapItemCoin() {
-        ImageView coinImage = act.findViewById(Coin.coinId);
+        //ImageView coinImage = act.findViewById(Coin.coinId);
 
         Rect lineRect = new Rect();
         Rect itemRect = new Rect();
 
         line.getHitRect(lineRect);
-        coinImage.getHitRect(itemRect);
+        coin.getHitRect(itemRect);
 
         lineRect.top = lineRect.bottom - 10;
 
         if (itemRect.contains(lineRect)) {
-            Item.removeItem(coinImage, rl);
+            Item.removeItem(coin, rl);
             coinExist = false;
 
             //for current coin count
@@ -297,10 +303,24 @@ public class Healthbar {
             }
         }
     };
+
+    public void setItem(Item item) {
+        String type = item.getType();
+
+        if (type.equals("cherry")) {
+            cherry = item.getImage();
+        }
+        else if (type.equals("worm")) {
+            worm = item.getImage();
+        }
+        else if (type.equals("coin")){
+            coin = item.getImage();
+        }
+    }
     public void startCheck() {
         end = threadPoolExecutor.submit(check);
         check.run();
     }
 }
 
-//TODO Future
+//TODO pass health bar object into Item class, split health bar class into 2 classes, one overlap checking and one health bar

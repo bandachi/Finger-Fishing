@@ -15,6 +15,7 @@ public class Item {
     protected Context con;
     protected Handler removeItemDelay;
     protected ImageView item;
+    protected String itemType;
 
     public Item(RelativeLayout rl, Context con, Handler removeItemDelay) {
         this.rl = rl;
@@ -22,13 +23,17 @@ public class Item {
         this.removeItemDelay = removeItemDelay;
     }
 
-    protected ImageView getImage() {
+    public ImageView getImage() {
         return item;
+    }
+    public String getType() {
+        return itemType;
     }
 
     public void spawn(int itemDelay, String itemType, int itemSize, int id) {
         item = new ImageView(con);
         item.setId(id);
+        this.itemType = itemType;
 
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -49,6 +54,7 @@ public class Item {
             }
         }, itemDelay/4);
     }
+
     public static void removeItem(ImageView item, RelativeLayout rl) {
         rl.removeView(item);
     }

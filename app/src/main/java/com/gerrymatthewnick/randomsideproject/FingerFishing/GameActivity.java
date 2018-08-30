@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
     private Context con = this;
     private int score = 0;
     private SoundPool mSoundPool;
+    private Healthbar healthbar;
 
     Handler initialDelayCherry = new Handler();
     Handler initialDelayWorm = new Handler();
@@ -117,7 +118,7 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                Healthbar healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool, timer);
+                healthbar = new Healthbar(rl, con, checkOverlap, currentFish, changeDelay, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, coins, level, mSoundPool, timer);
                 healthbar.spawnHealth();
                 healthbar.initSound();
                 healthbar.startCheck();
@@ -217,6 +218,7 @@ public class GameActivity extends AppCompatActivity {
 
             Cherry cherry = new Cherry(rl, con, removeItemDelayCherry);
             cherry.spawnCherry();
+            healthbar.setItem(cherry);
 
             if (active) {
                 itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, cherry.getItemDelay());
@@ -233,6 +235,7 @@ public class GameActivity extends AppCompatActivity {
             //spawn worm randomly on screen every SPAWN_DELAY_WORM
             Worm worm = new Worm(rl, con, removeItemDelayWorm);
             worm.spawnWorm();
+            healthbar.setItem(worm);
 
             if (active) {
                 itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, worm.getItemDelay());
@@ -249,6 +252,7 @@ public class GameActivity extends AppCompatActivity {
             //spawn coin randomly on screen every SPAWN_DELAY_COIN
             Coin coin = new Coin(rl, con, removeItemDelayCoin);
             coin.spawnCoin();
+            healthbar.setItem(coin);
 
             if (active) {
                 itemSpawnDelayCoin.postDelayed(runnableSpawnItemCoin, coin.getItemDelay());
