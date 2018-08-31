@@ -47,7 +47,7 @@ public class Healthbar {
 
     public Healthbar(Context con, Handler checkOverlap, int currentFish, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int level, Chronometer timer, Sound sound) {
         this.con = con;
-        this.act = (Activity)con;
+        this.act = (Activity) con;
         this.checkOverlap = checkOverlap;
         this.currentFish = currentFish;
         this.itemSpawnDelayCherry = itemSpawnDelayCherry;
@@ -218,18 +218,17 @@ public class Healthbar {
 
         //set item and image according to what item type they are
         if (type.equals("cherry")) {
-            cherryObj = (Cherry)item;
+            cherryObj = (Cherry) item;
             cherryImage = item.getImage();
-        }
-        else if (type.equals("worm")) {
-            wormObj = (Worm)item;
+        } else if (type.equals("worm")) {
+            wormObj = (Worm) item;
             wormImage = item.getImage();
-        }
-        else if (type.equals("coin")){
-            coinObj = (Coin)item;
+        } else if (type.equals("coin")) {
+            coinObj = (Coin) item;
             coinImage = item.getImage();
         }
     }
+
     public void startCheck() {
         end = threadPoolExecutor.submit(check);
         check.run();

@@ -45,7 +45,7 @@ public class WinActivity extends AppCompatActivity {
             levelPass = extras.getInt("levelNumber");
             score = extras.getInt("scoreNumber");
             time = extras.getInt("currentTime");
-            time = time/1000;
+            time = time / 1000;
         }
 
         //Set TextViews with animations
@@ -61,6 +61,7 @@ public class WinActivity extends AppCompatActivity {
             }
         }, 400);
     }
+
     public void setWinText() {
         winText.setText("Current time: " + Float.toString(time) + " seconds");
         winText.setVisibility(View.VISIBLE);
@@ -81,7 +82,7 @@ public class WinActivity extends AppCompatActivity {
         winScoreText.animate().alpha(1.0f).setListener(null).setDuration(1000);
     }
 
-    public void onWinAgain (View view) {
+    public void onWinAgain(View view) {
         //Pass next level's information
         if (delay) {
             Intent intent = new Intent(this, GameActivity.class);

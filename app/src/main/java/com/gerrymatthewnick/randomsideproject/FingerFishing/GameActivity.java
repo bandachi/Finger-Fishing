@@ -65,7 +65,6 @@ public class GameActivity extends AppCompatActivity {
 
         initHealth();
 
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
@@ -87,7 +86,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void run() {
                 timer = new Chronometer(con);
-                timer.setBase((long)(SystemClock.elapsedRealtime() - time));
+                timer.setBase((long) (SystemClock.elapsedRealtime() - time));
                 timer.start();
 
                 changeFishVelocity = new Handler();
@@ -99,13 +98,13 @@ public class GameActivity extends AppCompatActivity {
 
                 //Get fish image from resources
                 int currentFish = View.generateViewId();
-                fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+                fishId = getResources().getIdentifier("fish1", "drawable", getPackageName());
 
                 //Create fish object and start moving it
                 Fish fish = new Fish(fishId, 1000, 9 + level, rl, con, currentFish, changeFishVelocity, moveFish, level);
                 fish.spawnFish();
-                fish.setX(getScreenWidth()/2);
-                fish.setY(getScreenHeight()/2);
+                fish.setX(getScreenWidth() / 2);
+                fish.setY(getScreenHeight() / 2);
                 fish.startChangeVelocity();
                 fish.startVelocity();
 
@@ -145,6 +144,7 @@ public class GameActivity extends AppCompatActivity {
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
+
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
@@ -154,7 +154,7 @@ public class GameActivity extends AppCompatActivity {
         health.setLayoutParams(new RelativeLayout.LayoutParams(getScreenWidth() - 200, 50));
         health.setX(100);
         health.setY(100);
-        health.setMinimumWidth(getScreenWidth()/2);
+        health.setMinimumWidth(getScreenWidth() / 2);
         health.getProgressDrawable().setColorFilter(Color.RED, android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
@@ -178,8 +178,7 @@ public class GameActivity extends AppCompatActivity {
             level = extras.getInt("levelNumber");
             score = extras.getInt("scoreNumber");
             time = extras.getFloat("currentTime");
-        }
-        else {
+        } else {
             level = 1;
             score = 0;
             time = 0;
@@ -215,8 +214,7 @@ public class GameActivity extends AppCompatActivity {
 
             if (active) {
                 itemSpawnDelayCherry.postDelayed(runnableSpawnItemCherry, cherry.getItemDelay());
-            }
-            else {
+            } else {
                 itemSpawnDelayCherry.removeCallbacksAndMessages(runnableSpawnItemCherry);
             }
         }
@@ -232,8 +230,7 @@ public class GameActivity extends AppCompatActivity {
 
             if (active) {
                 itemSpawnDelayWorm.postDelayed(runnableSpawnItemWorm, worm.getItemDelay());
-            }
-            else {
+            } else {
                 itemSpawnDelayWorm.removeCallbacksAndMessages(runnableSpawnItemWorm);
             }
         }
@@ -249,8 +246,7 @@ public class GameActivity extends AppCompatActivity {
 
             if (active) {
                 itemSpawnDelayCoin.postDelayed(runnableSpawnItemCoin, coin.getItemDelay());
-            }
-            else {
+            } else {
                 itemSpawnDelayCoin.removeCallbacksAndMessages(runnableSpawnItemCoin);
             }
         }
@@ -301,6 +297,7 @@ public class GameActivity extends AppCompatActivity {
     public void onBackPressed() {
         //prevent back button
     }
+
     @Override
     public void onPause() {
         super.onPause();

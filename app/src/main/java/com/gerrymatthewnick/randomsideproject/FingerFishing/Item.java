@@ -26,6 +26,7 @@ public class Item {
     public ImageView getImage() {
         return item;
     }
+
     public String getType() {
         return itemType;
     }
@@ -38,8 +39,8 @@ public class Item {
         item.setImageResource(con.getResources().getIdentifier(itemType, "drawable", con.getPackageName()));
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         item.setLayoutParams(lp);
-        int x = (int)Math.floor(Math.random() * (getScreenWidth() - itemSize*2));
-        int y = (int)Math.floor(Math.random() * (getScreenHeight()/2 - itemSize*2)) + getScreenHeight()/2 - itemSize;
+        int x = (int) Math.floor(Math.random() * (getScreenWidth() - itemSize * 2));
+        int y = (int) Math.floor(Math.random() * (getScreenHeight() / 2 - itemSize * 2)) + getScreenHeight() / 2 - itemSize;
 
         item.setX(x);
         item.setY(y);
@@ -52,7 +53,7 @@ public class Item {
                     rl.removeView(item);
                 }
             }
-        }, itemDelay/4);
+        }, itemDelay / 4);
     }
 
     public static void removeItem(ImageView item, RelativeLayout rl) {

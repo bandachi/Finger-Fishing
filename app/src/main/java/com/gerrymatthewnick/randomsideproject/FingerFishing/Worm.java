@@ -26,7 +26,7 @@ public class Worm extends Item {
 
     public void spawnWorm() {
         //Set item delay at random, and spawn with that item delay
-        itemDelayRand = (int)(Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
+        itemDelayRand = (int) (Math.random() * (ITEM_DELAY_MAX - ITEM_DELAY_MIN)) + ITEM_DELAY_MIN;
         super.spawn(itemDelayRand, ITEM_TYPE, ITEM_SIZE);
     }
 

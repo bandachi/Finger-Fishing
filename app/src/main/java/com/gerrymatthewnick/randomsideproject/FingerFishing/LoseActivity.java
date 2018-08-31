@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import org.w3c.dom.Text;
-
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_HIGHSCORE;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.PREFERENCES_TIME;
 import static com.gerrymatthewnick.randomsideproject.FingerFishing.GameActivity.active;
@@ -49,7 +47,7 @@ public class LoseActivity extends AppCompatActivity {
             score = extras.getInt("scoreNumber");
             elapsedTime = extras.getInt("time");
         }
-        elapsedTime = elapsedTime/1000;
+        elapsedTime = elapsedTime / 1000;
 
         scoreText = findViewById(R.id.scoreLoseDisplay);
         loseText = findViewById(R.id.lose);
@@ -79,13 +77,13 @@ public class LoseActivity extends AppCompatActivity {
     public void spawnFish() {
         //Spawn a fish in the lose screen
 
-        int fishId = getResources().getIdentifier("fish1" , "drawable", getPackageName());
+        int fishId = getResources().getIdentifier("fish1", "drawable", getPackageName());
         RelativeLayout rl = findViewById(R.id.rlLose);
 
         Fish fish = new Fish(fishId, 1000, 10, rl, con, View.generateViewId(), changeFishVelocity, moveFish, 2);
         fish.spawnFish();
-        fish.setX(getScreenWidth()/2);
-        fish.setY(getScreenHeight()/2);
+        fish.setX(getScreenWidth() / 2);
+        fish.setY(getScreenHeight() / 2);
 
         fish.startChangeVelocity();
         fish.startVelocity();

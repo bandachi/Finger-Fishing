@@ -44,6 +44,7 @@ public class Fish {
     public void setX(float x) {
         fish.setX(x);
     }
+
     public void setY(float y) {
         fish.setY(y);
     }
@@ -55,16 +56,16 @@ public class Fish {
 
             velX = 0;
             velY = 0;
-            velX = (float)(Math.random() * vel);
-            velY = (float)(Math.random() * vel);
+            velX = (float) (Math.random() * vel);
+            velY = (float) (Math.random() * vel);
 
             if (level >= 2) {
-                velX = (float)(Math.random() * (8 + (0.3 * level * level) - level)) + level;
-                velY = (float)(Math.random() * (8 + (0.3 * level * level) - level)) + level;
+                velX = (float) (Math.random() * (8 + (0.3 * level * level) - level)) + level;
+                velY = (float) (Math.random() * (8 + (0.3 * level * level) - level)) + level;
             }
 
-            int rand1 = (int)(Math.floor(Math.random() * 10) + 1);
-            int rand2 = (int)(Math.floor(Math.random() * 10) + 1);
+            int rand1 = (int) (Math.floor(Math.random() * 10) + 1);
+            int rand2 = (int) (Math.floor(Math.random() * 10) + 1);
 
             //randomly make value velocity negative
             if (rand1 > 5) {
@@ -102,12 +103,14 @@ public class Fish {
         public void run() {
             fish.setX(fish.getX() + velX);
             fish.setY(fish.getY() + velY);
-
+            
             if (velX > 0) {
                 fish.setScaleX(-1f);
-            }
-            else {
+                fish.setRotation((float)Math.toDegrees(Math.atan(velY/velX)));
+
+            } else {
                 fish.setScaleX(1f);
+                fish.setRotation((float)Math.toDegrees(Math.atan(velY/velX)));
             }
 
             if (fish.getX() < 0 || fish.getX() > (getScreenWidth() - fish.getWidth()) || fish.getY() < getScreenHeight() / 3 || fish.getY() > (getScreenHeight() - fish.getHeight())) {
@@ -118,6 +121,7 @@ public class Fish {
             frames.postDelayed(runnableVelocity, 20);
         }
     };
+
     public void startVelocity() {
         runnableVelocity.run();
     }
