@@ -83,8 +83,34 @@ public class StatsActivity extends AppCompatActivity {
         highTimeFile = getSharedPreferences(PREFERENCES_TIME, MODE_PRIVATE);
         currentTime = highTimeFile.getFloat("highestTime", 0);
 
+        int minutes = (int)Math.floor(currentTime / 60);
+        int seconds = (int)currentTime % 60;
+
+        String minuteText;
+        String secondText;
+
+        if (minutes == 0) {
+            minuteText = "";
+        }
+        else if (minutes == 1) {
+            minuteText = Integer.toString(minutes) + " minute and ";
+        }
+        else {
+            minuteText = Integer.toString(minutes) + " minutes and ";
+        }
+
+        if (seconds == 0) {
+            secondText = "";
+        }
+        else if (seconds == 1) {
+            secondText = Integer.toString(seconds) + " second";
+        }
+        else {
+            secondText = Integer.toString(seconds) + " seconds";
+        }
+
         timeDisplay = findViewById(R.id.highTimeDisplay);
-        timeDisplay.setText("Longest time lasted: " + currentTime + " seconds");
+        timeDisplay.setText("Longest time lasted: " + minuteText + secondText);
     }
 
     public void changeToMain(View view) {
