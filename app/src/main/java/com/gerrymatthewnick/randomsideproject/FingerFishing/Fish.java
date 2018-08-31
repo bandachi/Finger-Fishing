@@ -103,7 +103,7 @@ public class Fish {
         public void run() {
             fish.setX(fish.getX() + velX);
             fish.setY(fish.getY() + velY);
-            
+
             if (velX > 0) {
                 fish.setScaleX(-1f);
                 fish.setRotation((float)Math.toDegrees(Math.atan(velY/velX)));

@@ -51,6 +51,7 @@ public class GameActivity extends AppCompatActivity {
     Handler removeItemDelayCherry = new Handler();
     Handler removeItemDelayWorm = new Handler();
     Handler removeItemDelayCoin = new Handler();
+    Handler changeHealthDecay = new Handler();
     Handler changeFishVelocity;
     Handler moveFish;
     Handler checkOverlap;
@@ -111,8 +112,9 @@ public class GameActivity extends AppCompatActivity {
                 ImageView line = findViewById(R.id.fishingLine);
 
                 //Create healthbar and start checking for overlaps
-                healthbar = new Healthbar(con, checkOverlap, currentFish, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, level, timer, sound);
+                healthbar = new Healthbar(con, checkOverlap, currentFish, itemSpawnDelayWorm, itemSpawnDelayCherry, itemSpawnDelayCoin, line, level, timer, sound, changeHealthDecay);
                 healthbar.spawnHealth();
+                healthbar.startTime();
                 healthbar.startCheck();
 
                 //Run item spawn runnables

@@ -23,6 +23,8 @@ public class Healthbar {
     private ProgressBar health;
     private int currentFish;
     private int level;
+    private int decayRate = -1;
+    private int increaseRate = 3;
     private ImageView fish;
     private ImageView line;
     private Context con;
@@ -33,6 +35,7 @@ public class Healthbar {
     private Handler itemSpawnDelayWorm;
     private Handler itemSpawnDelayCherry;
     private Handler itemSpawnDelayCoin;
+    private Handler changeHealthDecay;
 
     private Cherry cherryObj;
     private Worm wormObj;
@@ -45,7 +48,7 @@ public class Healthbar {
     ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
     Future end;
 
-    public Healthbar(Context con, Handler checkOverlap, int currentFish, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int level, Chronometer timer, Sound sound) {
+    public Healthbar(Context con, Handler checkOverlap, int currentFish, Handler itemSpawnDelayWorm, Handler itemSpawnDelayCherry, Handler itemSpawnDelayCoin, ImageView line, int level, Chronometer timer, Sound sound, Handler changeHealthDecay) {
         this.con = con;
         this.act = (Activity) con;
         this.checkOverlap = checkOverlap;
@@ -57,6 +60,7 @@ public class Healthbar {
         this.level = level;
         this.timer = timer;
         this.sound = sound;
+        this.changeHealthDecay = changeHealthDecay;
     }
 
     //spawn the healthbar
@@ -76,10 +80,10 @@ public class Healthbar {
         lineRect.top = lineRect.bottom - 10;
 
         if (fishRect.contains(lineRect)) {
-            health.incrementProgressBy(3);
+            health.incrementProgressBy(increaseRate);
             this.fish.setColorFilter(Color.CYAN * health.getProgress());
         } else {
-            health.incrementProgressBy(-1);
+            health.incrementProgressBy(decayRate);
             this.fish.clearColorFilter();
         }
 
@@ -87,14 +91,8 @@ public class Healthbar {
         if (health.getProgress() <= 0 && active) {
 
             int elapsedMillis = (int) (SystemClock.elapsedRealtime() - timer.getBase());
-            timer.stop();
+            finish();
 
-            end.cancel(true);
-            itemSpawnDelayWorm.removeCallbacksAndMessages(null);
-            itemSpawnDelayCherry.removeCallbacksAndMessages(null);
-            itemSpawnDelayCoin.removeCallbacksAndMessages(null);
-
-            act.finish();
             Intent intent = new Intent(con, LoseActivity.class);
             TextView score = act.findViewById(R.id.scoreDisplay);
 
@@ -110,14 +108,8 @@ public class Healthbar {
         else if (health.getProgress() >= 1000 && active) {
 
             int elapsedMillis = (int) (SystemClock.elapsedRealtime() - timer.getBase());
-            timer.stop();
+            finish();
 
-            end.cancel(true);
-            itemSpawnDelayWorm.removeCallbacksAndMessages(null);
-            itemSpawnDelayCherry.removeCallbacksAndMessages(null);
-            itemSpawnDelayCoin.removeCallbacksAndMessages(null);
-
-            act.finish();
             Intent intent = new Intent(con, WinActivity.class);
             intent.putExtra("levelNumber", level + 1);
 
@@ -135,6 +127,18 @@ public class Healthbar {
         } else {
             return false;
         }
+    }
+
+    public void finish() {
+        timer.stop();
+
+        end.cancel(true);
+        itemSpawnDelayWorm.removeCallbacksAndMessages(null);
+        itemSpawnDelayCherry.removeCallbacksAndMessages(null);
+        itemSpawnDelayCoin.removeCallbacksAndMessages(null);
+        changeHealthDecay.removeCallbacksAndMessages(null);
+
+        act.finish();
     }
 
     //check if line is overlapping a cherry
@@ -213,6 +217,18 @@ public class Healthbar {
         }
     };
 
+    Runnable decay = new Runnable() {
+        @Override
+        public void run() {
+            decayRate--;
+            if (active) {
+                changeHealthDecay.postDelayed(decay, 15000);
+            } else {
+                changeHealthDecay.removeCallbacksAndMessages(null);
+            }
+        }
+    };
+
     public void setItem(Item item) {
         String type = item.getType();
 
@@ -233,6 +249,8 @@ public class Healthbar {
         end = threadPoolExecutor.submit(check);
         check.run();
     }
-}
 
-//TODO pass health bar object into Item class, split health bar class into 2 classes, one overlap checking and one health bar
+    public void startTime() {
+        decay.run();
+    }
+}
